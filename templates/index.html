@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Försäkrings Verktyg</title>
+        <script type=text/javascript src="{{url_for('static', filename='js/main.js') }}"></script>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+    </head>
+    <body>
+        <div id="header">
+            <img id="title_image" src="{{ url_for('static',filename='content/logo_main.svg') }}" alt="logo">
+            <h1 id="title">Beräkningsverktyg byggnadsvärde kyrkor</h1>
+        </div>
+        <div id="form">
+            <h2>Byggnad</h2>
+            <form>
+                <label for="BRA">BRA-yta (kvm):</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="BRA" name="BRA" class="value"><br><br>
+
+                <label for="kategori">Kategori:</label>
+                <select id="kategori" name="kategori" class="value">
+                    {%for i in range(0, len["types"])%}
+                      <option value="{{categories["types"][i]}}">{{categories["types"][i]}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="utsmyckning">Utsmyckning:</label>
+                <select id="utsmyckning" name="utsmyckning" class="value">
+                    {%for i in range(0, len["decorations"])%}
+                      <option value="{{categories["decorations"][i]}}">{{categories["decorations"][i]}}</option>
+                    {%endfor%}
+                </select>
+            </form>
+            <h2>Kalkylvärde kyrkobyggnad</h2>
+            <form>
+                <label for="vägg">Vägg:</label>
+                <select id="vägg" name="vägg" class="value_byggnad">
+                    {%for i in range(0, len["walls"])%}
+                      <option value="{{categories["walls"][i]}}">{{categories["walls"][i]}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="golv">Golv:</label>
+                <select id="golv" name="golv" class="value_byggnad">
+                    {%for i in range(0, len["floors"])%}
+                      <option value="{{categories["floors"][i]}}">{{categories["floors"][i]}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="innertak">Innertak:</label>
+                <select id="innertak" name="innertak" class="value_byggnad">
+                    {%for i in range(0, len["inner_roof"])%}
+                      <option value="{{categories["inner_roof"][i]}}">{{categories["inner_roof"][i]}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="yttertak">Golv:</label>
+                <select id="yttertak" name="yttertak" class="value_byggnad">
+                    {%for i in range(0, len["outer_roof"])%}
+                      <option value="{{categories["outer_roof"][i]}}">{{categories["outer_roof"][i]}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="läktare">Läktare (kvm):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktare" name="läktare" class="value_byggnad"><br><br>
+
+                <label for="takryttare">Takryttare (pris):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="takryttare" name="takryttare" class="value_byggnad">
+                <label for="takryttare_antal">Takryttare (antal):</label>
+                <select id="takryttare_antal" name="takryttare_antal" class="value_byggnad">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="del_byggnad">Delsumma: </label>
+                <span id="del_byggnad">0</span>
+            </form>
+            <h2>Kalkylvärde tornbyggnad och torntak</h2>
+            <form>
+                <label>Mått tornbyggnad</label><br>
+                <label for="torn_bredd">Bredd (m):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="torn_bredd" name="torn_bredd" class="value_torn">
+                <label for="torn_längd">Längd (m):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="torn_längd" name="torn_längd" class="value_torn"><br><br>
+                <label for="torn_vägg">Vägg:</label>
+                <select id="torn_vägg" name="torn_vägg" class="value_torn">
+                    {%for i in range(0, len["tower_walls"])%}
+                      <option value="{{categories["tower_walls"][i]}}">{{categories["tower_walls"][i]}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="torn_golv">Golv:</label>
+                <select id="torn_golv" name="torn_golv" class="value_torn">
+                    {%for i in range(0, len["tower_floor"])%}
+                      <option value="{{categories["tower_floor"][i]}}">{{categories["tower_floor"][i]}}</option>
+                    {%endfor%}
+                </select><br><br>
+
+                <label>Torntak</label><br>
+                <label for="torn_tak">Typ:</label>
+                <select id="torn_tak" name="torn_tak" class="value_torn">
+                    {%for i in range(0, len["tower_roof"])%}
+                      <option value="{{categories["tower_roof"][i]}}">{{categories["tower_roof"][i]}}</option>
+                    {%endfor%}
+                </select>
+                <label for="tak_höjd">Höjd (m):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_höjd" name="tak_höjd" class="value_torn">
+                <label for="tak_bredd">Bredd (m):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_bredd" name="tak_bredd" class="value_torn">
+                <label for="tak_längd">Längd (m):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_längd" name="tak_längd" class="value_torn">
+                <label for="tak_antal">Antal:</label>
+                <select id="tak_antal" name="tak_antal" class="value_torn">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label>Dekorerade Fönster</label><br>
+                <label for="fönster_ett">Typ 1 (kvm):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_ett" name="fönster_ett" class="value_torn"><br>
+                <label for="fönster_två">Typ 2 (kvm):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_två" name="fönster_två" class="value_torn"><br>
+                <label for="fönster_tre">Typ 3 (kvm):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_tre" name="fönster_tre" class="value_torn"><br><br>
+
+                <label>Fial</label><br>
+                <label for="fial_pris">Typ/pris:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fial_pris" name="fial_pris" class="value_torn">
+                <label for="fial_antal">Antal:</label>
+                <select id="elektrisk" name="elektrisk" class="value_torn">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="del_torn">Delsumma: </label>
+                <span id="del_torn">0</span>
+            </form>
+            <h2>Byggnadens tillbehör</h2>
+            <form>
+                <label>Klockor</label><br>
+                <label for="klocka_diameter">Diameter:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_diameter" name="klocka_diameter">
+                <label for="klocka_vikt">Vikt (kg):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_vikt" name="klocka_vikt">
+                <button onclick="add_clock()" id="klocka_knapp" type='button'>Lägg till</button><br id="klock_break">
+                <br><label for="elektrisk">Elektrisk ringanordning (Antal klockor):</label>
+                <select id="elektrisk" name="elektrisk" class="value_tillbehör">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="tornur">Tornur (Antal):</label>
+                <select id="tornur" name="tornur" class="value_tillbehör">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label>Bänkar</label><br>
+                <label for="bänkar_enkla">Enkla:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_enkla" name="bänkar_enkla" class="value_tillbehör">
+                <label for="bänkar_påkostade">Påkostade:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_påkostade" name="bänkar_påkostade" class="value_tillbehör"><br><br>
+                <label>Stolar</label><br>
+                <label for="stolar_enkla">Enkla:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_enkla" name="stolar_enkla" class="value_tillbehör">
+                <label for="stolar_påkostade">Påkostade:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_påkostade" name="stolar_påkostade" class="value_tillbehör"><br><br>
+                <label>Orgel</label><br>
+                <label for="kororgel">Kororgel:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="kororgel" name="kororgel" class="value_tillbehör">
+                <label for="läktarorgel">Läktarorgel:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktarorgel" name="läktarorgel" class="value_tillbehör"><br><br>
+                <label for="del_tillbehör">Delsumma: </label>
+                <span id="del_tillbehör">0</span>
+            </form>
+            <h2>Särskilt värderade tillbehör</h2>
+            <form>
+                <label for="altargrund">Altargrund (Antal):</label>
+                <select id="altargrund" name="altargrund" class="value_särskilt">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="altare">Altare (Antal):</label>
+                <select id="altare" name="altare" class="value_särskilt">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="altaruppstas">Altaruppstas/skåp (Antal):</label>
+                <select id="altaruppstas" name="altaruppstas" class="value_särskilt">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="dopfunt">Dopfunt (Antal):</label>
+                <select id="dopfunt" name="dopfunt" class="value_särskilt">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="predikstol">Predikstol (Antal):</label>
+                <select id="predikstol" name="predikstol" class="value_särskilt">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="ljuskronor">Ljuskronor (Antal):</label>
+                <select id="ljuskronor" name="ljuskronor" class="value_särskilt">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label>Annat</label><br>
+                <label for="namn_eget">Namn:</label>
+                <input id="namn_eget" name="namn_eget">
+                <label for="pris_eget">Pris (kr):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="pris_eget" name="pris_eget">
+                <select id="antal_eget" name="antal_eget">
+                    {%for i in range(1, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select>
+                <button onclick="add_own()" id="eget_knapp" type='button'>Lägg till</button><br id="eget_break">
+                <br><label for="del_särskilt">Delsumma: </label>
+                <span id="del_särskilt">0</span>
+            </form>
+            <h2>Klockstapel</h2>
+            <form>
+                <label>Klockstapel</label><br>
+                <label for="stapel_ett">Typ 1 (höjd, m):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_ett" name="stapel_ett" class="value_stapel"><br>
+                <label for="stapel_två">Typ 2 (höjd, m):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_två" name="stapel_två" class="value_stapel"><br>
+                <label for="stapel_tre">Typ 3 (höjd, m):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_tre" name="stapel_tre" class="value_stapel"><br><br>
+
+                <label>Klockor</label><br>
+                <label for="stapel_klocka_diameter">Diameter:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_klocka_diameter" name="stapel_klocka_diameter" class="value_stapel">
+                <label for="stapel_klocka_vikt">Vikt (kg):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_klocka_vikt" name="stapel_klocka_vikt" class="value_stapel">
+                <button onclick="add_stapel_clock()" id="stapel_klocka_knapp" type='button'>Lägg till</button><br id="stapel_klock_break">
+                <br><label for="stapel_elektrisk">Elektrisk ringanordning (Antal klockor):</label>
+                <select id="stapel_elektrisk" name="stapel_elektrisk" class="value_stapel">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <label for="del_stapel">Delsumma: </label>
+                <span id="del_stapel">0</span>
+            </form>
+            <button id="submit">Submit</button>
+        </div>
+        <div id="sammanställning" onclick="hide_sum()">
+            <h1>Sammanställning</h1>
+            <form id="sam_form">
+
+                <label for="sam_byggnad">Byggnad: </label>
+                <span id="sam_byggnad">0</span><br><br>
+                <label for="sam_btillbehör">Byggnadstillbehör: </label>
+                <span id="sam_btillbehör">0</span><br><br>
+                <label for="sam_särskilt">Särskilt värderade tillbehör: </label>
+                <span id="sam_särskilt">0</span><br><br>
+                <label for="sam_utsmyckning">Byggnadens utsmyckning: </label>
+                <span id="sam_byggnad">0</span><br><br>
+                <label for="sam_stapel">Klockstapel: </label>
+                <span id="sam_stapel">0</span><br><br>
+                <label for="sum">Summa: </label>
+                <span id="sum">0</span><br>
+            </form>
+            <img src="{{ url_for('static',filename='content/up.png') }}" alt="logo" id="arrow">
+
+        </div>
+        <div id="import">
+            <form action = "/import" method = "POST"
+                 enctype = "multipart/form-data">
+                 <input type = "file" name = "file" />
+                 <input type = "submit"/>
+            </form>
+        </div>
+    </body>
+</html>

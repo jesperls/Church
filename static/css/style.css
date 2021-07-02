@@ -1,0 +1,58 @@
+body{
+    text-align: center;
+    font-family: Arial;
+    display: flex;
+    flex-direction: column;
+}
+#title{
+    font-size: 30pt;
+}
+body{
+    margin: 0;
+    padding: 0;
+}
+#form{
+    margin: 0;
+    padding: 0;
+    background-color: lightslategray;
+}
+form{
+    background-color:slategray;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5pt 5pt 5pt 5pt;
+}
+#header{
+
+}
+#sammanställning{
+    position: fixed;
+    top: 3pt;
+    right: 3pt;
+    width: 20%;
+    background-color: lightslategray;
+    border: solid;
+    display: flex;
+    flex-direction: column;
+}
+#arrow{
+    width: 10pt;
+    height: 10pt;
+}
+#import{
+    position: fixed;
+    top: 3pt;
+    left: 3pt;
+    background-color: lightslategray;
+}
+input{
+    width: 100pt;
+}
+select{
+    width: 100pt;
+}
+#title_image{
+    width: 40%;
+    margin: auto;
+}

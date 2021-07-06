@@ -6,6 +6,7 @@
         <title>Försäkrings Verktyg</title>
         <script type=text/javascript src="{{url_for('static', filename='js/main.js') }}"></script>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+        <link rel="icon" href="{{ url_for('static',filename='content/logo.png') }}">
     </head>
     <body>
         <div id="header">
@@ -18,12 +19,12 @@
                 <label for="BRA">BRA-yta (kvm):</label>
                 <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="BRA" name="BRA" class="value"><br><br>
 
-                <label for="kategori">Kategori:</label>
+                <!-- <label for="kategori">Kategori:</label>
                 <select id="kategori" name="kategori" class="value">
                     {%for i in range(0, len["types"])%}
                       <option value="{{categories["types"][i]}}">{{categories["types"][i]}}</option>
                     {%endfor%}
-                </select><br><br>
+                </select><br><br> -->
                 <label for="utsmyckning">Utsmyckning:</label>
                 <select id="utsmyckning" name="utsmyckning" class="value">
                     {%for i in range(0, len["decorations"])%}
@@ -110,16 +111,29 @@
                       <option value="{{i}}">{{i}}</option>
                     {%endfor%}
                 </select><br><br>
-                <label>Dekorerade Fönster</label><br>
-                <label for="fönster_ett">Typ 1 (kvm):</label>
+                <!--<label for="fönster_ett">Typ 1 (kvm):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_ett" name="fönster_ett" class="value_torn"><br>
                 <label for="fönster_två">Typ 2 (kvm):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_två" name="fönster_två" class="value_torn"><br>
                 <label for="fönster_tre">Typ 3 (kvm):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_tre" name="fönster_tre" class="value_torn"><br><br>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_tre" name="fönster_tre" class="value_torn"><br><br>-->
 
-                <label>Fial</label><br>
-                <label for="fial_pris">Typ/pris:</label>
+
+                <label for="fönster_typ">Dekorerade Fönster</label><br>
+                <span>Typ</span>
+                <select id="fönster_typ" name="fönster_typ" class="fönster_typ">
+                    {%for i in range(0, len["fönster_typer"])%}
+                      <option value="{{categories["fönster_typer"][i]}}">{{categories["fönster_typer"][i]}}</option>
+                    {%endfor%}
+                </select>
+                <label for="fönster_storlek">Area (kvm):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_storlek" name="fönster_storlek" class="value_stapel">
+                <button onclick="add_window()" id="fönster_knapp" type='button'>Lägg till</button><br id="fönster_break">
+
+
+
+                <br><label>Fial</label><br>
+                <label for="fial_pris">Pris:</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fial_pris" name="fial_pris" class="value_torn">
                 <label for="fial_antal">Antal:</label>
                 <select id="elektrisk" name="elektrisk" class="value_torn">
@@ -222,13 +236,25 @@
             </form>
             <h2>Klockstapel</h2>
             <form>
-                <label>Klockstapel</label><br>
-                <label for="stapel_ett">Typ 1 (höjd, m):</label>
+                <!--<label for="stapel_ett">Typ 1 (höjd, m):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_ett" name="stapel_ett" class="value_stapel"><br>
                 <label for="stapel_två">Typ 2 (höjd, m):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_två" name="stapel_två" class="value_stapel"><br>
                 <label for="stapel_tre">Typ 3 (höjd, m):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_tre" name="stapel_tre" class="value_stapel"><br><br>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_tre" name="stapel_tre" class="value_stapel"><br><br>-->
+
+                <label for="stapel_typ">Klockstapel</label><br>
+                <span>Typ</span>
+                <select id="stapel_typ" name="stapel_typ" class="value_stapel">
+                    {%for i in range(0, len["stapel_typer"])%}
+                      <option value="{{categories["stapel_typer"][i]}}">{{categories["stapel_typer"][i]}}</option>
+                    {%endfor%}
+                </select>
+                <label for="stapel_höjd">Höjd (m):</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_höjd" name="stapel_höjd" class="value_stapel">
+                <!--<button onclick="add_stapel()" id="stepl_knapp" type='button'>Lägg till</button><br id="stapel_break">--><br><br>
+
+
 
                 <label>Klockor</label><br>
                 <label for="stapel_klocka_diameter">Diameter:</label>

@@ -41,7 +41,7 @@ function add_stapel_clock(){
     clock.setAttributeNode(cl);
     clock.setAttributeNode(del);
     stapel_clock_amounts += 1;
-    clock.innerHTML = "Klocka ".concat(stapel_clock_amounts, ": Diameter : ", diam.value, " Vikt: ", weight.value)
+    clock.innerHTML = "Klocka ".concat(stapel_clock_amounts, ": Diameter : ", diam.value, " Vikt: ", weight.value, "     ✖")
     insertAfter(div, clock);
 }
 function add_own(){
@@ -62,8 +62,50 @@ function add_own(){
     del.value = "delete_this(this)"
     eget.setAttributeNode(cl);
     eget.setAttributeNode(del);
-    eget.innerHTML = "Namn: ".concat(name.value, " Pris: ", price.value, " Antal: ", choice)
+    eget.innerHTML = "Namn: ".concat(name.value, " Pris: ", price.value, " Antal: ", choice, "     ✖")
     insertAfter(div, eget);
+}
+
+function add_stapel(){
+    var name = document.getElementById("stapel_typ");
+    var choice = name.options[name.selectedIndex].value;
+    var height = document.getElementById("stapel_höjd");
+    if(choice == null || height.value == null || choice == "" || height.value == ""){
+        alert("Fyll i alla fält!");
+        return false;
+    }
+    var br = document.createElement("br");
+    var div = document.getElementById("stapel_break");
+    var stapel = document.createElement("div");
+    var cl = document.createAttribute("class");
+    var del = document.createAttribute("onclick");
+    cl.value = "stapel";
+    del.value = "delete_this(this)"
+    stapel.setAttributeNode(cl);
+    stapel.setAttributeNode(del);
+    stapel.innerHTML = "".concat(choice, " Höjd: ", height.value, "m     ✖")
+    insertAfter(div, stapel);
+}
+
+function add_window(){
+    var name = document.getElementById("fönster_typ");
+    var choice = name.options[name.selectedIndex].value;
+    var height = document.getElementById("fönster_storlek");
+    if(choice == null || height.value == null || choice == "" || height.value == ""){
+        alert("Fyll i alla fält!");
+        return false;
+    }
+    var br = document.createElement("br");
+    var div = document.getElementById("fönster_break");
+    var window = document.createElement("div");
+    var cl = document.createAttribute("class");
+    var del = document.createAttribute("onclick");
+    cl.value = "fönster";
+    del.value = "delete_this(this)"
+    window.setAttributeNode(cl);
+    window.setAttributeNode(del);
+    window.innerHTML = "".concat(choice, "  ", height.value, "kvm     ✖")
+    insertAfter(div, window);
 }
 
 function delete_this(el){

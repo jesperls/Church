@@ -83,7 +83,7 @@ def load_dfs():
     tower_roof = []
     for index, row in df.iterrows():
         tower_roof.append(row["Beskrivning"])
-    df.to_json('./static/data/tower_roof.json', orient='records')
+    df.to_json('./static/data/tower_roofs.json', orient='records')
 
 
 

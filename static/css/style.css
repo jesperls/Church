@@ -1,32 +1,34 @@
-body{
+body {
     text-align: center;
     font-family: Arial;
     display: flex;
     flex-direction: column;
 }
-#title{
+
+#title {
     font-size: 30pt;
 }
-body{
+
+body {
     margin: 0;
     padding: 0;
 }
-#form{
+
+#form {
     margin: 0;
     padding: 0;
     background-color: lightslategray;
 }
-form{
-    background-color:slategray;
+
+form {
+    background-color: slategray;
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
     padding: 5pt 5pt 5pt 5pt;
 }
-#header{
 
-}
-#sammanställning{
+#sammanställning {
     position: fixed;
     top: 3pt;
     right: 3pt;
@@ -36,23 +38,28 @@ form{
     display: flex;
     flex-direction: column;
 }
-#arrow{
+
+#arrow {
     width: 10pt;
     height: 10pt;
 }
-#import{
+
+#import {
     position: fixed;
     top: 3pt;
     left: 3pt;
     background-color: lightslategray;
 }
-input{
+
+input {
     width: 100pt;
 }
-select{
+
+select {
     width: 100pt;
 }
-#title_image{
+
+#title_image {
     width: 40%;
     margin: auto;
 }

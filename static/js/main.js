@@ -226,7 +226,30 @@ function get_factor(id, json_name, second_id=null){
             }
         }
     }
+}
 
+function get_tower(id, json_name, height){
+    var selected = document.getElementById(id);
+    var choice = selected.options[selected.selectedIndex].value;
+    var json = loadJSON(json_name)
+    for (var key in json) {
+        if (json.hasOwnProperty(key)) {
+            if (json[key]["Beskrivning"] == choice){
+                if(height < 4){
+                    return json[key]["Pris2_4"]
+                }
+                else if(height <= 12){
+                    return json[key]["Pris2_4_12"]
+                }
+                else if (height <= 20){
+                    return json[key]["Pris2_12_20"]
+                }
+                else{
+                    return json[key]["Pris2_20"]
+                }
+            }
+        }
+    }
 }
 
 var BPI = 42870;
@@ -285,9 +308,20 @@ function update_tower(){
 
     var value_tower = tower_length * tower_width * prod_factor * BPI;
 
-    //TORN TAK IMPLEMENTERAS SENARE
 
-    var value_roof = 0;
+    var roof_height = document.getElementById("tak_höjd").value;
+    var roof_width = document.getElementById("tak_bredd").value;
+    var roof_length = document.getElementById("tak_längd").value;
+    var roof_amount = document.getElementById("tak_antal").value;
+    
+    var price_tower = get_tower("torn_tak", "tower_roofs", roof_height);
+
+    var value_roof = roof_height * roof_width * roof_amount * roof_length * price_tower;
+
+
+
+
+
 
     var value_windows = 0;
     var windows = document.getElementsByClassName("fönster_2");

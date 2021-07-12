@@ -28,4 +28,4 @@ if __name__ == '__main__':
     df.columns = ["Typ", "Beskrivning", "Pris_4", "Pris_4_12", "Pris_12_20", "Pris_20", "Pris2_4", "Pris2_4_12",
                   "Pris2_12_20", "Pris2_20"]
     df.dropna(axis=0, thresh=4, inplace=True)
-    df.to_json('./static/data/tower_roof.json', orient='records')
+    df.to_json('./static/data/tower_roofs.json', orient='records')

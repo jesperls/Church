@@ -29,23 +29,7 @@ jobs:
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
+        context: .
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_255271bf520f4496b272f384616a1467 }}/jesperls/church:${{ github.sha }}
+        tags: jesperls/church:latest
         file: ./Dockerfile
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'churchDocker'
-        slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_4a73cee8ddc84fa3beab36b91c9f21ff }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_255271bf520f4496b272f384616a1467 }}/jesperls/church:${{ github.sha }}'

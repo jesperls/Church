@@ -1,17 +1,18 @@
 from flask import Flask, render_template, request
 import pandas as pd
+import json
 
 app = Flask(__name__)
 
-types = ["Tegnerlada", "Katedral", "Medeltidskyrka", "Salkyrka", "Hallkyrka", "Roundkyrka", "Korskyrka", "Kapell"]
+types = []
 decorations = ["Enkel", "Något påkostad", "Påkostad"]
-walls = ["1A Fasadtegel, Natursten, Tegel", "1B Puts, Tegel, Natursten, Tegel, Puts", "2A Natursten, Puts"]
-floors = ["1A Tegel, Sand", "1B Tegel, Bruk, Betong", "2A Natursten, Sand"]
-inner_roof = ["1A Natursten", "2A ½-sten tegel", "2B ½-sten tegel, Puts"]
-outer_roof = ["1A Eternit på reglar", "1B Korrugerad plåt på reglar", "1C Falor på reglar"]
-tower_walls = ["1A Fasadtegel, Natursten, Tegel", "1B Puts, Tegel, Natursten, Tegel, Puts", "2A Natursten, Puts"]
-tower_floor = ["1A Tegel, Sand", "1B Tegel, Bruk, Betong", "2A Natursten, Sand"]
-tower_roof = ["1A Falor", "1B Spån", "1C Galvaniserad plåt eller skiffer"]
+walls = []
+floors = []
+inner_roof = []
+outer_roof = []
+tower_walls = []
+tower_floor = []
+tower_roof = []
 stapel_typer = ["Typ 1", "Typ 2", "Typ 3"]
 fönster_typer = ["Typ 1", "Typ 2", "Typ 3"]
 
@@ -28,6 +29,9 @@ def homepage():
                                        "inner_roof": inner_roof, "outer_roof": outer_roof, "tower_roof": tower_roof,
                                        "stapel_typer": stapel_typer, "fönster_typer": fönster_typer})
 
+@app.route('/admin')
+def admin():
+    return render_template("admin.html")
 
 @app.route('/import', methods=["POST"])
 def upload(name="json"):
@@ -38,6 +42,21 @@ def upload(name="json"):
             load_dfs()
             return "Lyckades ladda upp!"
     return "Ej excel fil!"
+
+@app.route('/import_json', methods=["POST"])
+def upload_json(name="misc"):
+    if request.method == 'POST':
+        json_file = request.json
+        print(json)
+        if json:
+            jsonFile = open(f"./static/data/{name}.json", "w")
+            jsonFile.write(json.dumps(json_file))
+            jsonFile.close()
+        #if(f.filename[-4:] == "json"):
+        #    f.save(f"./static/data/{name}.json")
+        ##    load_dfs()
+            return "Lyckades ladda upp!"
+    return "Ej json fil!"
 
 
 def load_dfs():
@@ -84,6 +103,12 @@ def load_dfs():
     for index, row in df.iterrows():
         tower_roof.append(row["Beskrivning"])
     df.to_json('./static/data/tower_roofs.json', orient='records')
+
+    
+    #df = pd.read_excel("static/data/HiQ.xlsx", sheet_name="Data", skiprows=3, usecols=[4, 5, 35, 56, 61, 62, 64])
+    #df.dropna(axis=0, thresh=4, inplace=True)
+    #df.columns = ["BPI", "moms", "platform_price", "klock_kg", "pris_klock", "mount_klock", "pris_torn"]
+    #df.to_json('./static/data/misc.json', orient='records')
 
 
 

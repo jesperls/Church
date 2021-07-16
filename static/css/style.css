@@ -23,6 +23,7 @@ body {
 form {
     background-color: slategray;
     width: fit-content;
+    width: -moz-fit-content;
     margin-left: auto;
     margin-right: auto;
     padding: 5pt 5pt 5pt 5pt;
@@ -45,6 +46,20 @@ form {
 }
 
 #import {
+    position: fixed;
+    top: 3pt;
+    left: 3pt;
+    background-color: lightslategray;
+}
+
+#json{
+    position: fixed;
+    top: 3pt;
+    left: 100pt;
+    background-color: lightslategray;
+}
+
+#admin {
     position: fixed;
     top: 3pt;
     left: 3pt;

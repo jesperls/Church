@@ -1,9 +1,93 @@
+//THINGS TO LOAD
+var pillar_prices = {"Typ 1" : 37879, "Typ 2": 89531, "Typ 3": 261706};
+var BPI = 42870;
+var platform_price = 5165;
+var win_values = {"Typ 1" : 18078, "Typ 2" : 49931, "Typ 3": 86088};
+//var win_types = ["Typ 1", "Typ 2", "Typ 3"];
+var moms = 1.25;
+var klock_kg = 400;
+var mount_clock = 25826;
+var pris_klock = 43044;
+var pris_torn = 43044;
+var benches = {"Enkla" : 3000, "Påkostade" : 4800};
+var chairs = {"Enkla" : 1400, "Påkostade" : 3000};
+var pianos = {"Kororgel" : 190000, "Läktarorgel" : 235000};
+var spec_prices = {"altargrund": 172175, "altare": 430438, "altaruppstas": 1205225, "dopfunt": 258263, "predikstol": 1033050, "ljuskronor": 137740}
+
+//THINGS THAT INCREMENT
+var clock_amounts = 0;
+var stapel_clock_amounts = 0;
+
+function loadJSON(name){
+    var json = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': "static/data/".concat(name, ".json"),
+            'dataType': "json",
+            'success': function (data) {
+                json = data;
+            }
+        });
+        return json;
+}
+
+function make_json(){
+    var json = {"pillar_prices" : JSON.stringify(pillar_prices), "BPI": JSON.stringify(BPI), "platform_price": JSON.stringify(platform_price), "win_values": JSON.stringify(win_values), 
+                "moms": JSON.stringify(moms), "klock_kg": JSON.stringify(klock_kg), "mount_clock": JSON.stringify(mount_clock), "pris_klock": JSON.stringify(pris_klock), 
+                "pris_torn": JSON.stringify(pris_torn), "benches": JSON.stringify(benches), "chairs": JSON.stringify(chairs), "pianos": JSON.stringify(pianos),
+                "spec_prices": JSON.stringify(spec_prices)}
+    send_json(json)
+    //download(JSON.stringify(json), 'json.json', 'text/plain');
+}
+
+function send_json(json){
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(json),
+        dataType: 'json',
+        url: '/import_json',
+        success: function (e) {
+            console.log(e);
+            //window.location = "http://192.168.57.223:5000/preview";
+        },
+        error: function(error) {
+            console.log(error);
+        }
+     });
+}
+
+function read_json(){
+    json = loadJSON("misc");
+    pillar_prices = JSON.parse(json["pillar_prices"]);
+    BPI = json["BPI"];
+    platform_price = json["platform_price"];
+    win_values = JSON.parse(json["win_values"]);
+    moms = json["moms"];
+    klock_kg = json["klock_kg"];
+    mount_clock = json["mount_clock"];
+    pris_klock = json["pris_klock"];
+    pris_torn = json["pris_torn"];
+    benches = JSON.parse(json["benches"]);
+    chairs = JSON.parse(json["chairs"]);
+    pianos = JSON.parse(json["pianos"]);
+    spec_prices = JSON.parse(json["spec_prices"]);
+
+}
+
 function insertAfter(referenceNode, newNode) {
   referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
-var clock_amounts = 0;
-var stapel_clock_amounts = 0;
+function download(content, fileName, contentType) {
+    var a = document.createElement("a");
+    var file = new Blob([content], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = fileName;
+    a.click();
+}
+
 function add_clock(){
     var diam = document.getElementById("klocka_diameter");
     var weight = document.getElementById("klocka_vikt");
@@ -18,8 +102,8 @@ function add_clock(){
     var del = document.createAttribute("onclick");
     var att_name = document.createAttribute("name");
     var att_value = document.createAttribute("value");
-    att_value.value = diam.value;
-    att_name.value = weight.value;
+    att_value.value = weight.value;
+    att_name.value = diam.value;
     clock.setAttributeNode(att_name);
     clock.setAttributeNode(att_value);
     cl.value = "klocka";
@@ -31,6 +115,7 @@ function add_clock(){
     insertAfter(div, clock);
     update();
 }
+
 function add_stapel_clock(){
     var diam = document.getElementById("stapel_klocka_diameter");
     var weight = document.getElementById("stapel_klocka_vikt");
@@ -45,8 +130,8 @@ function add_stapel_clock(){
     var del = document.createAttribute("onclick");
     var att_name = document.createAttribute("name");
     var att_value = document.createAttribute("value");
-    att_value.value = diam.value;
-    att_name.value = weight.value;
+    att_value.value = weight.value;
+    att_name.value = diam.value;
     clock.setAttributeNode(att_name);
     clock.setAttributeNode(att_value);
     cl.value = "stapel_klocka";
@@ -58,6 +143,7 @@ function add_stapel_clock(){
     insertAfter(div, clock);
     update();
 }
+
 function add_own(){
     var name = document.getElementById("namn_eget");
     var price = document.getElementById("pris_eget");
@@ -74,7 +160,7 @@ function add_own(){
     var att_name = document.createAttribute("name");
     var att_value = document.createAttribute("value");
     att_value.value = price.value;
-    att_name.value = name.value;
+    att_name.value = amount.value;
     eget.setAttributeNode(att_name);
     eget.setAttributeNode(att_value);
     var choice = amount.options[amount.selectedIndex].value;
@@ -176,6 +262,7 @@ function delete_this(el){
     element.remove();
     update();
 }
+
 function hide_sum(){
     var x = document.getElementById("sam_form");
     var arrow = document.getElementById("arrow");
@@ -188,21 +275,6 @@ function hide_sum(){
         arrow.src = "/static/content/down.png";
       }
 }
-
-function loadJSON(name){
-    var json = null;
-        $.ajax({
-            'async': false,
-            'global': false,
-            'url': "static/data/".concat(name, ".json"),
-            'dataType': "json",
-            'success': function (data) {
-                json = data;
-            }
-        });
-        return json;
-}
-
 
 function get_factor(id, json_name, second_id=null){
     var selected = document.getElementById(id);
@@ -252,15 +324,14 @@ function get_tower(id, json_name, height){
     }
 }
 
-var BPI = 42870;
-var platform_price = 5165;
-var win_values = {"Typ 1" : 18078, "Typ 2" : 49931, "Typ 3": 86088};
-var win_types = ["Typ 1", "Typ 2", "Typ 3"];
-
 function update(){
-    update_building()
-    update_tower()
-
+    var total = 0;
+    total += update_building();
+    total += update_tower();
+    total += update_accessories();
+    total += update_special();
+    total += update_pillar();
+    document.getElementById("sum").innerHTML = total;
 }
 
 function update_building(){
@@ -280,10 +351,18 @@ function update_building(){
 
     var value_windows = 0;
     var windows = document.getElementsByClassName("fönster");
+    //for(var i = 0; i < windows.length; i++){
+    //    for(var j = 0; j < win_types.length; j++){
+    //        if(windows[i].attributes["name"].value == win_types[j]){
+    //            value_windows = value_windows + win_values[windows[i].attributes["name"].value] * windows[i].attributes["value"].value;
+    //        }
+    //    }
+    //}
+
     for(var i = 0; i < windows.length; i++){
-        for(var j = 0; j < win_types.length; j++){
-            if(windows[i].attributes["name"].value == win_types[j]){
-                value_windows = value_windows + win_values[windows[i].attributes["name"].value] * windows[i].attributes["value"].value;
+        for(var key in win_values){
+            if(windows[i].attributes["name"].value == key){
+                value_windows += win_values[key] * windows[i].attributes["value"].value;
             }
         }
     }
@@ -293,10 +372,10 @@ function update_building(){
 
     var value_roof_rider = document.getElementById("takryttare").value * choice;
 
-    var result_building = document.getElementById("del_byggnad");
-    result_building.innerHTML = Math.trunc(value_building + value_platform + value_windows + value_roof_rider);
-    document.getElementById("sam_byggnad").innerHTML = result_building.innerHTML;
-    //alert(value_byggnad);
+    var result_building = Math.round(value_building + value_platform + value_windows + value_roof_rider);
+    document.getElementById("del_byggnad").innerHTML = result_building;
+    document.getElementById("sam_byggnad").innerHTML = result_building;
+    return(result_building);
 }
 
 function update_tower(){
@@ -308,7 +387,6 @@ function update_tower(){
 
     var value_tower = tower_length * tower_width * prod_factor * BPI;
 
-
     var roof_height = document.getElementById("tak_höjd").value;
     var roof_width = document.getElementById("tak_bredd").value;
     var roof_length = document.getElementById("tak_längd").value;
@@ -318,17 +396,21 @@ function update_tower(){
 
     var value_roof = roof_height * roof_width * roof_amount * roof_length * price_tower;
 
-
-
-
-
-
     var value_windows = 0;
     var windows = document.getElementsByClassName("fönster_2");
+
+    //for(var i = 0; i < windows.length; i++){
+    //    for(var j = 0; j < win_types.length; j++){
+    //        if(windows[i].attributes["name"].value == win_types[j]){
+    //            value_windows = value_windows + win_values[windows[i].attributes["name"].value] * windows[i].attributes["value"].value;
+    //        }
+    //    }
+    //}
+
     for(var i = 0; i < windows.length; i++){
-        for(var j = 0; j < win_types.length; j++){
-            if(windows[i].attributes["name"].value == win_types[j]){
-                value_windows = value_windows + win_values[windows[i].attributes["name"].value] * windows[i].attributes["value"].value;
+        for(var key in win_values){
+            if(windows[i].attributes["name"].value == key){
+                value_windows += win_values[key] * windows[i].attributes["value"].value;
             }
         }
     }
@@ -338,9 +420,84 @@ function update_tower(){
 
     var value_top = document.getElementById("fial_pris").value * choice;
 
-    var result_tower = document.getElementById("del_torn");
-    result_tower.innerHTML = Math.trunc(value_tower + value_windows + value_roof + value_top);
-    document.getElementById("sam_torn").innerHTML = result_tower.innerHTML;
+    var result_tower = Math.round(value_tower + value_windows + value_roof + value_top);
+    document.getElementById("del_torn").innerHTML = result_tower;
+    document.getElementById("sam_torn").innerHTML = result_tower;
+    return(result_tower);
+
+}
+
+
+function update_accessories(){
+    var value_clocks = 0;
+    var clocks = document.getElementsByClassName("klocka");
+    for(var i = 0; i < clocks.length; i++){
+        value_clocks += moms * 1.3 * clocks[i].attributes["value"].value * klock_kg + mount_clock;
+    }
+    var elektrisk = document.getElementById("elektrisk");
+    var elek_choice = elektrisk.options[elektrisk.selectedIndex].value;
+    var value_elek = elek_choice * pris_klock;
+
+    var tower_clock = document.getElementById("tornur");
+    var t_choice = tower_clock.options[tower_clock.selectedIndex].value;
+    var value_tower = t_choice * pris_torn;
+
+    var value_misc = 0;
+
+    value_misc += document.getElementById("bänkar_enkla").value * benches["Enkla"];
+    value_misc += document.getElementById("bänkar_påkostade").value * benches["Påkostade"];
+    value_misc += document.getElementById("stolar_enkla").value * chairs["Enkla"];
+    value_misc += document.getElementById("stolar_påkostade").value * chairs["Påkostade"];
+    value_misc += document.getElementById("kororgel").value * pianos["Kororgel"];
+    value_misc += document.getElementById("läktarorgel").value * pianos["Läktarorgel"];
+
+    var result_accessories = Math.round(value_clocks + value_elek + value_tower + value_misc);
+    document.getElementById("del_tillbehör").innerHTML = result_accessories;
+    document.getElementById("sam_btillbehör").innerHTML = result_accessories;
+    return(result_accessories);
+
+}
+
+function update_special(){
+    var value_spec = 0
+    for (var key in spec_prices){
+        var obj = document.getElementById(key);
+        var val = obj.options[obj.selectedIndex].value;
+        value_spec += val * spec_prices[key];
+    }
+    
+    var value_own = 0;
+    var own = document.getElementsByClassName("eget");
+    for(var i = 0; i < own.length; i++){
+        value_own += own[i].attributes["value"].value * own[i].attributes["name"].value;
+    }
+    
+    var result_special = Math.round(value_spec + value_own);
+    document.getElementById("del_särskilt").innerHTML = result_special;
+    document.getElementById("sam_särskilt").innerHTML = result_special;
+    return(result_special);
+}
+
+function update_pillar(){
+    var pillar = document.getElementById("stapel_typ");
+    var pillar_choice = pillar.options[pillar.selectedIndex].value;
+    var pillar_height = document.getElementById("stapel_höjd").value;
+    var value_pillar = pillar_prices[pillar_choice] * pillar_height;
+    
+    var value_clocks = 0;
+    var clocks = document.getElementsByClassName("stapel_klocka");
+    for(var i = 0; i < clocks.length; i++){
+        value_clocks += moms * 1.3 * clocks[i].attributes["value"].value * klock_kg + mount_clock;
+    }
+
+    var elektrisk = document.getElementById("stapel_elektrisk");
+    var elek_choice = elektrisk.options[elektrisk.selectedIndex].value;
+    var value_elek = elek_choice * pris_klock;
+
+    var result_pillar = Math.round(value_pillar + value_clocks + value_elek);
+    document.getElementById("del_stapel").innerHTML = result_pillar;
+    document.getElementById("sam_stapel").innerHTML = result_pillar;
+    return(result_pillar);
 
 }
 

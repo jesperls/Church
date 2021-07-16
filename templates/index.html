@@ -9,7 +9,7 @@
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
         <link rel="icon" href="{{ url_for('static',filename='content/logo.png') }}">
     </head>
-    <body>
+    <body onload="read_json()">
         <div id="header">
             <img id="title_image" src="{{ url_for('static',filename='content/logo_main.svg') }}" alt="logo">
             <h1 id="title">Beräkningsverktyg byggnadsvärde kyrkor</h1>
@@ -114,7 +114,7 @@
                     {%endfor%}
                 </select><br><br>
 
-                <label>Torntak (EJ FÄRDIG IMPLEMENTERAT)</label><br>
+                <label>Torntak</label><br>
                 <label for="torn_tak">Typ:</label>
                 <select id="torn_tak" name="torn_tak" class="value_torn">
                     {%for i in range(0, len["tower_roof"])%}
@@ -167,7 +167,7 @@
                 <span id="del_torn">0</span>
             </form>
             <h2>Byggnadens tillbehör</h2>
-            <form>
+            <form onchange="update()">
                 <label>Klockor</label><br>
                 <label for="klocka_diameter">Diameter:</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_diameter" name="klocka_diameter">
@@ -205,7 +205,7 @@
                 <span id="del_tillbehör">0</span>
             </form>
             <h2>Särskilt värderade tillbehör</h2>
-            <form>
+            <form onchange="update()">
                 <label for="altargrund">Altargrund (Antal):</label>
                 <select id="altargrund" name="altargrund" class="value_särskilt">
                     {%for i in range(0, 10)%}
@@ -257,7 +257,7 @@
                 <span id="del_särskilt">0</span>
             </form>
             <h2>Klockstapel</h2>
-            <form>
+            <form onchange="update()">
                 <!--<label for="stapel_ett">Typ 1 (höjd, m):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_ett" name="stapel_ett" class="value_stapel"><br>
                 <label for="stapel_två">Typ 2 (höjd, m):</label>
@@ -307,8 +307,8 @@
                 <span id="sam_btillbehör">0</span><br><br>
                 <label for="sam_särskilt">Särskilt värderade tillbehör: </label>
                 <span id="sam_särskilt">0</span><br><br>
-                <label for="sam_utsmyckning">Byggnadens utsmyckning: </label>
-                <span id="sam_byggnad">0</span><br><br>
+                <!-- <label for="sam_utsmyckning">Byggnadens utsmyckning: </label>
+                <span id="sam_byggnad">0</span><br><br> -->
                 <label for="sam_stapel">Klockstapel: </label>
                 <span id="sam_stapel">0</span><br><br>
                 <label for="sum">Summa: </label>
@@ -317,12 +317,9 @@
             <img src="{{ url_for('static',filename='content/up.png') }}" alt="logo" id="arrow">
 
         </div>
-        <div id="import">
-            <form action = "/import" method = "POST"
-                 enctype = "multipart/form-data">
-                 <input type = "file" name = "file" />
-                 <input type = "submit"/>
-            </form>
-        </div>
+        <a href="/admin" id="admin">  
+          <button src="/admin" type='button'>Admin</button>
+        </a>
+        <button type="button" id="json" onclick="make_json()">JSON</button>
     </body>
 </html>

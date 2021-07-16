@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Försäkrings Verktyg</title>
+        <script type=text/javascript src="{{url_for('static', filename='js/main.js') }}"></script>
+        <script type=text/javascript src="{{url_for('static', filename='js/jquery.js') }}"></script>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+        <link rel="icon" href="{{ url_for('static',filename='content/logo.png') }}">
+    </head>
+    <body onload="read_json()">
+        <div id="header">
+            <img id="title_image" src="{{ url_for('static',filename='content/logo_main.svg') }}" alt="logo">
+            <h1 id="title">Beräkningsverktyg adminpanel</h1>
+        </div>
+        <!-- 
+            pillar_prices 
+            BPI;
+            platform_price
+            win_values
+            win_types
+            moms
+            klock_kg
+            mount_clock
+            pris_klock
+            benches
+            chairs
+            pianos
+            spec_prices
+        -->
+        <div id="form">
+            <form>
+                <!--PILLAR-->
+                <label>Stapel priser</label><br>
+                <label for="stapel_ett">Typ 1</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="pillar_one" name="pillar_one" class="value">
+                <label for="stapel_tvp">Typ 2</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="pillar_two" name="pillar_two" class="value">
+                <label for="stapel_tre">Typ 3</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="pillar_three" name="pillar_three" class="value"><br><br>
+
+                <label for="BPI">BPI-värde:</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="BPI" name="BPI" class="value"><br><br>
+                <label for="läktare">Läktare pris/kvm:</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktare" name="läktare" class="value"><br><br>
+                <!--WIN VALUES-->
+                <label>Fönster priser</label><br>
+                <label for="fönster_ett">Typ 1</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="window_one" name="window_one" class="value">
+                <label for="fönster_två">Typ 2</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="window_two" name="window_two" class="value">
+                <label for="fönster_tre">Typ 3</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="window_three" name="window_three" class="value"><br><br>
+
+                <label for="moms">Moms:</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="moms" name="moms" class="value"><br><br>
+                <label for="klock_kg">Pris klocka/kg:</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klock_kg" name="klock_kg" class="value"><br><br>
+                <label for="mount_clock">Pris montering klocka:</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="mount_clock" name="mount_clock" class="value"><br><br>
+                <label for="pris_klock">Pris elektrisk ringanordning klocka:</label>
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="pris_klock" name="pris_klock" class="value"><br><br>
+                <!--
+                benches
+                chairs
+                pianos
+                spec_prices
+                -->
+                
+                <label>Bänkar Pris</label><br>
+                <label for="bänkar_enkla">Enkla:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_enkla" name="bänkar_enkla" class="value_tillbehör">
+                <label for="bänkar_påkostade">Påkostade:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_påkostade" name="bänkar_påkostade" class="value_tillbehör"><br><br>
+                <label>Stolar Prs</label><br>
+                <label for="stolar_enkla">Enkla:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_enkla" name="stolar_enkla" class="value_tillbehör">
+                <label for="stolar_påkostade">Påkostade:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_påkostade" name="stolar_påkostade" class="value_tillbehör"><br><br>
+                <label>Orgel Pris</label><br>
+                <label for="kororgel">Kororgel:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="kororgel" name="kororgel" class="value_tillbehör">
+                <label for="läktarorgel">Läktarorgel:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktarorgel" name="läktarorgel" class="value_tillbehör"><br><br>
+            </form>
+        </div>
+        <div id="import">
+            <form action = "/import" method = "POST"
+                 enctype = "multipart/form-data">
+                 <input type = "file" name = "file" />
+                 <input type = "submit"/>
+            </form>
+        </div>
+    </body>
+</html>

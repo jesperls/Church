@@ -47,10 +47,9 @@ function send_json(json){
         contentType: 'application/json',
         data: JSON.stringify(json),
         dataType: 'json',
-        url: '/import_json',
+        url: '/import_json/misc',
         success: function (e) {
             console.log(e);
-            //window.location = "http://192.168.57.223:5000/preview";
         },
         error: function(error) {
             console.log(error);
@@ -58,22 +57,81 @@ function send_json(json){
      });
 }
 
-function read_json(){
+function load_values(){
     json = loadJSON("misc");
     pillar_prices = JSON.parse(json["pillar_prices"]);
-    BPI = json["BPI"];
-    platform_price = json["platform_price"];
+    BPI = JSON.parse(json["BPI"]);
+    platform_price = JSON.parse(json["platform_price"]);
     win_values = JSON.parse(json["win_values"]);
-    moms = json["moms"];
-    klock_kg = json["klock_kg"];
-    mount_clock = json["mount_clock"];
-    pris_klock = json["pris_klock"];
-    pris_torn = json["pris_torn"];
+    moms = JSON.parse(json["moms"]);
+    klock_kg = JSON.parse(json["klock_kg"]);
+    mount_clock = JSON.parse(json["mount_clock"]);
+    pris_klock = JSON.parse(json["pris_klock"]);
+    pris_torn = JSON.parse(json["pris_torn"]);
     benches = JSON.parse(json["benches"]);
     chairs = JSON.parse(json["chairs"]);
     pianos = JSON.parse(json["pianos"]);
     spec_prices = JSON.parse(json["spec_prices"]);
+}
 
+function submit_misc(){
+    pillar_prices["Typ 1"] = document.getElementById("pillar_one").value;
+    pillar_prices["Typ 2"] = document.getElementById("pillar_two").value;
+    pillar_prices["Typ 3"] = document.getElementById("pillar_three").value;
+    BPI = document.getElementById("BPI").value;
+    platform_price = document.getElementById("läktare").value;
+    win_values["Typ 1"] = document.getElementById("window_one").value;
+    win_values["Typ 2"] = document.getElementById("window_two").value;
+    win_values["Typ 3"] = document.getElementById("window_three").value;
+    moms = document.getElementById("moms").value;
+    klock_kg = document.getElementById("klock_kg").value;
+    mount_clock = document.getElementById("mount_clock").value;
+    pris_klock = document.getElementById("pris_klock").value;
+    pris_torn = document.getElementById("pris_torn").value;
+    benches["Enkla"] = document.getElementById("bänkar_enkla").value;
+    benches["Påkostade"] = document.getElementById("bänkar_påkostade").value;
+    chairs["Enkla"] = document.getElementById("stolar_enkla").value;
+    chairs["Påkostade"] = document.getElementById("stolar_påkostade").value;
+    pianos["Kororgel"] = document.getElementById("kororgel").value;
+    pianos["Läktarorgel"]= document.getElementById("läktarorgel").value;
+    make_json();
+    alert("Nya värden inlästa");
+}
+
+function load_boxes(){
+    document.getElementById("pillar_one").value = pillar_prices["Typ 1"];
+    document.getElementById("pillar_two").value = pillar_prices["Typ 2"];
+    document.getElementById("pillar_three").value = pillar_prices["Typ 3"];
+    document.getElementById("BPI").value = BPI;
+    document.getElementById("läktare").value = platform_price;
+    document.getElementById("window_one").value = win_values["Typ 1"];
+    document.getElementById("window_two").value = win_values["Typ 2"];
+    document.getElementById("window_three").value = win_values["Typ 3"];
+    document.getElementById("moms").value = moms;
+    document.getElementById("klock_kg").value = klock_kg;
+    document.getElementById("mount_clock").value = mount_clock;
+    document.getElementById("pris_klock").value = pris_klock;
+    document.getElementById("pris_torn").value = pris_torn;
+    document.getElementById("bänkar_enkla").value = benches["Enkla"];
+    document.getElementById("bänkar_påkostade").value = benches["Påkostade"];
+    document.getElementById("stolar_enkla").value = chairs["Enkla"];
+    document.getElementById("stolar_påkostade").value = chairs["Påkostade"];
+    document.getElementById("kororgel").value = pianos["Kororgel"];
+    document.getElementById("läktarorgel").value = pianos["Läktarorgel"];
+}
+
+function get_bra(){
+    var bra = document.getElementById("BRA");
+    var choice = document.getElementById("church_choice").value;
+    var json = loadJSON("churches");
+    for (var key in json) {
+        if (json.hasOwnProperty(key)) {
+            if(choice == json[key]["Enhetsnamn"].concat(" ", json[key]["BV-id"])){
+                bra.value = json[key]["Bruksarea(m²)"];
+                return;
+            }
+        }
+    }
 }
 
 function insertAfter(referenceNode, newNode) {
@@ -434,9 +492,11 @@ function update_accessories(){
     for(var i = 0; i < clocks.length; i++){
         value_clocks += moms * 1.3 * clocks[i].attributes["value"].value * klock_kg + mount_clock;
     }
-    var elektrisk = document.getElementById("elektrisk");
-    var elek_choice = elektrisk.options[elektrisk.selectedIndex].value;
-    var value_elek = elek_choice * pris_klock;
+    //var elektrisk = document.getElementById("elektrisk");
+    //var elek_choice = elektrisk.options[elektrisk.selectedIndex].value;
+    //var value_elek = elek_choice * pris_klock;
+
+    var value_elek = clocks.length * pris_klock;
 
     var tower_clock = document.getElementById("tornur");
     var t_choice = tower_clock.options[tower_clock.selectedIndex].value;
@@ -490,9 +550,11 @@ function update_pillar(){
         value_clocks += moms * 1.3 * clocks[i].attributes["value"].value * klock_kg + mount_clock;
     }
 
-    var elektrisk = document.getElementById("stapel_elektrisk");
-    var elek_choice = elektrisk.options[elektrisk.selectedIndex].value;
-    var value_elek = elek_choice * pris_klock;
+    //var elektrisk = document.getElementById("stapel_elektrisk");
+    //var elek_choice = elektrisk.options[elektrisk.selectedIndex].value;
+    //var value_elek = elek_choice * pris_klock;
+    
+    var value_elek = clocks.length * pris_klock;
 
     var result_pillar = Math.round(value_pillar + value_clocks + value_elek);
     document.getElementById("del_stapel").innerHTML = result_pillar;
@@ -501,6 +563,110 @@ function update_pillar(){
 
 }
 
-function submit(){
-
+function init_auto(){
+    var arr = []
+    json = loadJSON("churches");
+    for (var key in json) {
+        if (json.hasOwnProperty(key)) {
+            arr.push(json[key]["Enhetsnamn"].concat(" ", json[key]["BV-id"]))
+        }
+    }
+    autocomplete(document.getElementById("church_choice"), arr);
 }
+
+function autocomplete(inp, arr) {
+    /*the autocomplete function takes two arguments,
+    the text field element and an array of possible autocompleted values:*/
+    var currentFocus;
+    /*execute a function when someone writes in the text field:*/
+    inp.addEventListener("input", function(e) {
+        var a, b, i, val = this.value;
+        /*close any already open lists of autocompleted values*/
+        closeAllLists();
+        if (!val) { return false;}
+        currentFocus = -1;
+        /*create a DIV element that will contain the items (values):*/
+        a = document.createElement("DIV");
+        a.setAttribute("id", this.id + "autocomplete-list");
+        a.setAttribute("class", "autocomplete-items");
+        /*append the DIV element as a child of the autocomplete container:*/
+        this.parentNode.appendChild(a);
+        /*for each item in the array...*/
+        for (i = 0; i < arr.length; i++) {
+          /*check if the item starts with the same letters as the text field value:*/
+          if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            /*create a DIV element for each matching element:*/
+            b = document.createElement("DIV");
+            /*make the matching letters bold:*/
+            b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+            b.innerHTML += arr[i].substr(val.length);
+            /*insert a input field that will hold the current array item's value:*/
+            b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+            /*execute a function when someone clicks on the item value (DIV element):*/
+                b.addEventListener("click", function(e) {
+                /*insert the value for the autocomplete text field:*/
+                inp.value = this.getElementsByTagName("input")[0].value;
+                /*close the list of autocompleted values,
+                (or any other open lists of autocompleted values:*/
+                closeAllLists();
+            });
+            a.appendChild(b);
+          }
+        }
+    });
+    /*execute a function presses a key on the keyboard:*/
+    inp.addEventListener("keydown", function(e) {
+        var x = document.getElementById(this.id + "autocomplete-list");
+        if (x) x = x.getElementsByTagName("div");
+        if (e.keyCode == 40) {
+          /*If the arrow DOWN key is pressed,
+          increase the currentFocus variable:*/
+          currentFocus++;
+          /*and and make the current item more visible:*/
+          addActive(x);
+        } else if (e.keyCode == 38) { //up
+          /*If the arrow UP key is pressed,
+          decrease the currentFocus variable:*/
+          currentFocus--;
+          /*and and make the current item more visible:*/
+          addActive(x);
+        } else if (e.keyCode == 13) {
+          /*If the ENTER key is pressed, prevent the form from being submitted,*/
+          e.preventDefault();
+          if (currentFocus > -1) {
+            /*and simulate a click on the "active" item:*/
+            if (x) x[currentFocus].click();
+          }
+        }
+    });
+    function addActive(x) {
+      /*a function to classify an item as "active":*/
+      if (!x) return false;
+      /*start by removing the "active" class on all items:*/
+      removeActive(x);
+      if (currentFocus >= x.length) currentFocus = 0;
+      if (currentFocus < 0) currentFocus = (x.length - 1);
+      /*add class "autocomplete-active":*/
+      x[currentFocus].classList.add("autocomplete-active");
+    }
+    function removeActive(x) {
+      /*a function to remove the "active" class from all autocomplete items:*/
+      for (var i = 0; i < x.length; i++) {
+        x[i].classList.remove("autocomplete-active");
+      }
+    }
+    function closeAllLists(elmnt) {
+      /*close all autocomplete lists in the document,
+      except the one passed as an argument:*/
+      var x = document.getElementsByClassName("autocomplete-items");
+      for (var i = 0; i < x.length; i++) {
+        if (elmnt != x[i] && elmnt != inp) {
+        x[i].parentNode.removeChild(x[i]);
+      }
+    }
+  }
+  /*execute a function when someone clicks in the document:*/
+  document.addEventListener("click", function (e) {
+      closeAllLists(e.target);
+  });
+  }

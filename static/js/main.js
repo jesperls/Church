@@ -18,6 +18,14 @@ var spec_prices = {"altargrund": 172175, "altare": 430438, "altaruppstas": 12052
 var clock_amounts = 0;
 var stapel_clock_amounts = 0;
 
+function switch_tab(new_tab){
+    pages = document.getElementsByClassName("pages");
+    for(var i = 0; i < pages.length; i++){
+        pages[i].hidden = true;
+    }
+    document.getElementById(new_tab).hidden = false;
+}
+
 function loadJSON(name){
     var json = null;
         $.ajax({
@@ -120,13 +128,13 @@ function load_boxes(){
     document.getElementById("läktarorgel").value = pianos["Läktarorgel"];
 }
 
-function get_bra(){
-    var bra = document.getElementById("BRA");
-    var choice = document.getElementById("church_choice").value;
+function get_bra(id, selector){
+    var bra = document.getElementById(id);
+    var choice = document.getElementById(selector).value;
     var json = loadJSON("churches");
     for (var key in json) {
         if (json.hasOwnProperty(key)) {
-            if(choice == json[key]["Enhetsnamn"].concat(" ", json[key]["BV-id"])){
+            if(choice == json[key]["Enhetsnamn"].concat(" ", json[key]["Byggnadsverksnamn"])){
                 bra.value = json[key]["Bruksarea(m²)"];
                 return;
             }
@@ -490,7 +498,7 @@ function update_accessories(){
     var value_clocks = 0;
     var clocks = document.getElementsByClassName("klocka");
     for(var i = 0; i < clocks.length; i++){
-        value_clocks += moms * 1.3 * clocks[i].attributes["value"].value * klock_kg + mount_clock;
+        value_clocks += parseInt(moms) * 1.3 * parseInt(clocks[i].attributes["value"].value) * parseInt(klock_kg) + parseInt(mount_clock);
     }
     //var elektrisk = document.getElementById("elektrisk");
     //var elek_choice = elektrisk.options[elektrisk.selectedIndex].value;
@@ -568,10 +576,11 @@ function init_auto(){
     json = loadJSON("churches");
     for (var key in json) {
         if (json.hasOwnProperty(key)) {
-            arr.push(json[key]["Enhetsnamn"].concat(" ", json[key]["BV-id"]))
+            arr.push(json[key]["Enhetsnamn"].concat(" ", json[key]["Byggnadsverksnamn"]))
         }
     }
     autocomplete(document.getElementById("church_choice"), arr);
+    autocomplete(document.getElementById("church_choice_2"), arr);
 }
 
 function autocomplete(inp, arr) {

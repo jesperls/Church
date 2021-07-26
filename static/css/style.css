@@ -20,6 +20,34 @@ body {
     background-color: lightslategray;
 }
 
+#första_risk {
+    margin: 0;
+    padding: 0;
+    background-color: lightslategray;
+}
+
+#menubar{
+    width:100%;
+    align-items:center;
+    justify-content: center;
+    background-color: lightcyan;
+    display:flex;
+    flex-direction: row;
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -ms-sticky;
+    position: -o-sticky;
+    top: 30pt;
+}
+
+.menuitem{
+    margin-left: 10pt;
+    margin-right: 10pt;
+    padding: 5pt;
+    font-size: 20pt;
+    background-color: lightblue;
+}
+
 form {
     background-color: slategray;
     width: -moz-fit-content;

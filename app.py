@@ -14,6 +14,7 @@ tower_walls = []
 tower_floor = []
 tower_roof = []
 churches = []
+parishes = []
 stapel_typer = ["Typ 1", "Typ 2", "Typ 3"]
 fönster_typer = ["Typ 1", "Typ 2", "Typ 3"]
 
@@ -25,10 +26,10 @@ def homepage():
                            len={"types": len(types), "decorations": len(decorations), "walls": len(walls),
                                 "floors": len(floors), "inner_roof": len(inner_roof), "outer_roof": len(outer_roof),
                                 "tower_roof": len(tower_roof), "stapel_typer": len(stapel_typer),
-                                "fönster_typer": len(fönster_typer), "churches": len(churches)},
+                                "fönster_typer": len(fönster_typer), "churches": len(churches), "parishes": len(parishes)},
                            categories={"types": types, "decorations": decorations, "walls": walls, "floors": floors,
                                        "inner_roof": inner_roof, "outer_roof": outer_roof, "tower_roof": tower_roof,
-                                       "stapel_typer": stapel_typer, "fönster_typer": fönster_typer, "churches": churches})
+                                       "stapel_typer": stapel_typer, "fönster_typer": fönster_typer, "churches": churches, "parishes": parishes})
 
 @app.route('/admin_panel')
 def admin():
@@ -106,13 +107,13 @@ def load_dfs():
     df.to_json('./static/data/tower_roofs.json', orient='records')
 
     df = pd.read_excel("kyrkor.xlsx")
-    df.drop(df.columns.difference(['BV-id','Funktion', "Bruksarea(m²)", "Enhetsnamn"]), 1, inplace=True)
+    df.drop(df.columns.difference(['Byggnadsverksnamn','Funktion', "Bruksarea(m²)", "Enhetsnamn"]), 1, inplace=True)
     df = df[df["Funktion"] == "Kyrka/kapell"]
     df = df[df["Enhetsnamn"].notna()]
     df = df.sort_values(by="Enhetsnamn")
     churches = []
     for index, row in df.iterrows():
-        churches.append(f"{row['Enhetsnamn']} {row['BV-id']}")
+        churches.append(f"{row['Enhetsnamn']} {row['Byggnadsverksnamn']}")
     df.to_json('./static/data/churches.json', orient='records')
     #df = pd.read_excel("static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[4, 5, 35, 56, 61, 62, 64])
     #df.dropna(axis=0, thresh=4, inplace=True)

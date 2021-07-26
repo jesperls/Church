@@ -14,7 +14,12 @@
             <img id="title_image" src="{{ url_for('static',filename='content/Logo_main.png') }}" alt="logo">
             <h1 id="title">Beräkningsverktyg byggnadsvärde kyrkor</h1>
         </div>
-        <div id="form">
+        <div id="menubar">
+          <div class="menuitem" onclick="switch_tab('form')">Vanlig försäkring</div>
+          <div class="menuitem" onclick="switch_tab('första_risk')">Förstarisk</div>
+          <div class="menuitem" onclick="switch_tab('information')">Information</div>
+        </div>
+        <div id="form" class = "pages">
             <h2>Byggnad</h2>
 
             <form autocomplete="off">
@@ -29,11 +34,11 @@
             <label for="churches">Kyrka:</label>
             <input list="churches" name="church" id="church">
             -->
-
+ 
             <form onchange="update()">
                 <label for="BRA">BRA-yta (kvm):</label>
                 <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="BRA" name="BRA" class="value">
-                <button type="button" onclick="get_bra()">Ladda in data</button>
+                <button type="button" onclick="get_bra('BRA', 'church_choice')">Ladda in data</button>
                 <br><br>
 
                 <!-- <label for="kategori">Kategori:</label>
@@ -314,6 +319,25 @@
             </form>
             <button id="submit">Submit</button>
         </div>
+        <div id="första_risk" class = "pages" hidden="true">
+          <h2>Förstarisk Försäkring</h2>
+
+          <form autocomplete="off">
+            <div class="autocomplete">
+              <input id="church_choice_2" type="text" name="church_choice" placeholder="Kyrka">
+            </div><br><br>
+            
+            <label for="BRA">BRA-yta (kvm):</label>
+            <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="BRA_2" name="BRA" class="value">
+            <button type="button" onclick="get_bra('BRA_2', 'church_choice_2')">Ladda in data</button>
+            <br><br>
+          </form>
+          <p>FÖRSTARISK</p>
+        </div>
+        <div id="information" class = "pages" hidden="true">
+          <p>INFORMATION</p>
+        </div>
+
         <div id="sammanställning" onclick="hide_sum()">
             <h1>Sammanställning</h1>
             <form id="sam_form">

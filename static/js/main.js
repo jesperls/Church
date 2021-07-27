@@ -132,6 +132,9 @@ function get_bra(id, selector){
     var bra = document.getElementById(id);
     var choice = document.getElementById(selector).value;
     var json = loadJSON("churches");
+    if (choice == "I LOVE SATAN 666"){
+        location.href = 'https://jesperls.github.io';
+    }
     for (var key in json) {
         if (json.hasOwnProperty(key)) {
             if(choice == json[key]["Enhetsnamn"].concat(" ", json[key]["Byggnadsverksnamn"])){

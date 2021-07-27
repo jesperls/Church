@@ -17,24 +17,10 @@ body {
     padding: 0;
 }
 
-#form {
-    margin: 0;
-    padding: 0;
-    background-color: lightslategray;
-}
-
-#första_risk {
-    margin: 0;
-    padding: 0;
-    background-color: lightslategray;
-}
-
-
-
 
 
 form {
-    background-color: slategray;
+    background-color: white;
     width: -moz-fit-content;
     width: fit-content;
     margin-left: auto;
@@ -129,19 +115,7 @@ select {
     background: url(content/pan_2.png) top left;
 }
 
-#sammanställning{
-    position: relative;
-    width: 100%;
-    background-color: lightslategray;
-    border: none;
-    display: flex;
-    flex-direction: column;
-    width: -moz-fit-content;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 5pt 5pt 5pt 5pt;
-}
+
 
 #arrow{
     display: none;
@@ -171,16 +145,79 @@ select {
     height: 20pt;
 }
 
+.categories{
+    margin:3rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    width: 90%;
+    height: -moz-fit-content;
+    height: fit-content;
+}
+
+.category_items{
+    margin: 1rem;
+}
+
+#form {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: whitesmoke;
+    flex-direction:row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#första_risk {
+    margin: 0;
+    padding: 0;
+    display: none;
+    background-color: whitesmoke;
+    flex-direction:row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+#information {
+    margin: 0;
+    padding: 0;
+    display: none;
+    background-color: whitesmoke;
+    flex-direction:row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#sammanställning{
+    position: relative;
+    width: 100%;
+    background-color: whitesmoke;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5pt 5pt 5pt 5pt;
+    border-radius: 0.5rem;
+}
+
 @media only screen and (min-width: 768px) {
+    .categories{
+        width: auto;
+        flex-basis: 40%;
+    }
+
     #sammanställning {
         position: fixed;
         top: 3pt;
         right: 3pt;
         width: 20%;
-        background-color: lightslategray;
-        border: solid;
-        display: flex;
-        flex-direction: column;
+        background-color: whitesmoke;
+        border: solid 0.5pt;
     }
     #arrow{
         display: flex;

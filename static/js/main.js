@@ -21,9 +21,9 @@ var stapel_clock_amounts = 0;
 function switch_tab(new_tab){
     pages = document.getElementsByClassName("pages");
     for(var i = 0; i < pages.length; i++){
-        pages[i].hidden = true;
+        pages[i].style.display = 'none';
     }
-    document.getElementById(new_tab).hidden = false;
+    document.getElementById(new_tab).style.display = 'flex';
 }
 
 function loadJSON(name){

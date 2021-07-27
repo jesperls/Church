@@ -136,6 +136,8 @@ function get_bra(id, selector){
         if (json.hasOwnProperty(key)) {
             if(choice == json[key]["Enhetsnamn"].concat(" ", json[key]["Byggnadsverksnamn"])){
                 bra.value = json[key]["Bruksarea(m²)"];
+                alert("Dubbelkolla så att BRA värdet är rimligt!");
+                update();
                 return;
             }
         }
@@ -177,7 +179,7 @@ function add_clock(){
     clock.setAttributeNode(cl);
     clock.setAttributeNode(del);
     clock_amounts += 1;
-    clock.innerHTML = "Klocka ".concat(clock_amounts, ": Diameter : ", diam.value, " Vikt: ", weight.value)
+    clock.innerHTML = "Klocka ".concat(clock_amounts, ": Diameter : ", diam.value, " Vikt: ", weight.value, "     ✖")
     insertAfter(div, clock);
     update();
 }

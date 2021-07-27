@@ -50,7 +50,7 @@
                 </select><br><br> -->
               <div class="category_items">
                 <label for="utsmyckning">Utsmyckning:</label>
-                <select id="utsmyckning" name="utsmyckning" class="value">
+                <select id="utsmyckning" name="utsmyckning" class="value" disabled>
                     {%for i in range(0, len["decorations"])%}
                       <option value="{{categories["decorations"][i]}}">{{categories["decorations"][i]}}</option>
                     {%endfor%}
@@ -77,6 +77,7 @@
               </div>
               <div class="category_items">
                 <label for="innertak">Innertak:</label>
+                <br class="mobile_break">
                 <select id="innertak" name="innertak" class="value_byggnad">
                     {%for i in range(0, len["inner_roof"])%}
                       <option value="{{categories["inner_roof"][i]}}">{{categories["inner_roof"][i]}}</option>
@@ -89,6 +90,7 @@
               </div>
               <div class="category_items">
                 <label for="yttertak">Yttertak:</label>
+                <br class="mobile_break">
                 <select id="yttertak" name="yttertak" class="value_byggnad">
                     {%for i in range(0, len["outer_roof"])%}
                       <option value="{{categories["outer_roof"][i]}}">{{categories["outer_roof"][i]}}</option>
@@ -111,8 +113,10 @@
                       <option value="{{categories["fönster_typer"][i]}}">{{categories["fönster_typer"][i]}}</option>
                     {%endfor%}
                 </select>
+                <br class="mobile_break">
                 <label for="fönster_storlek">Area (kvm):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_storlek" name="fönster_storlek" class="value_stapel">
+                <br class="mobile_break">
                 <button onclick="add_window()" id="fönster_knapp" type='button'>Lägg till</button><br id="fönster_break">
               </div>
               <div class="category_items">
@@ -136,6 +140,7 @@
                 <label>Mått tornbyggnad</label><br>
                 <label for="torn_bredd">Bredd (m):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="torn_bredd" name="torn_bredd" class="value_torn">
+                <br class="mobile_break">
                 <label for="torn_längd">Längd (m):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="torn_längd" name="torn_längd" class="value_torn">
               </div>
@@ -163,12 +168,16 @@
                       <option value="{{categories["tower_roof"][i]}}">{{categories["tower_roof"][i]}}</option>
                     {%endfor%}
                 </select>
+                <br class="mobile_break">
                 <label for="tak_höjd">Höjd (m):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_höjd" name="tak_höjd" class="value_torn">
+                <br class="mobile_break">
                 <label for="tak_bredd">Bredd (m):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_bredd" name="tak_bredd" class="value_torn">
+                <br>
                 <label for="tak_längd">Längd (m):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_längd" name="tak_längd" class="value_torn">
+                <br class="mobile_break">
                 <label for="tak_antal">Antal:</label>
                 <select id="tak_antal" name="tak_antal" class="value_torn">
                     {%for i in range(0, 10)%}
@@ -192,6 +201,7 @@
                       <option value="{{categories["fönster_typer"][i]}}">{{categories["fönster_typer"][i]}}</option>
                     {%endfor%}
                 </select>
+                <br class="mobile_break">
                 <label for="fönster_storlek_2">Area (kvm):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_storlek_2" name="fönster_storlek_2" class="value_stapel">
                 <button onclick="add_window_2()" id="fönster_knapp_2" type='button'>Lägg till</button><br id="fönster_break_2">
@@ -200,6 +210,7 @@
                 <label>Fial</label><br>
                 <label for="fial_pris">Pris:</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fial_pris" name="fial_pris" class="value_torn">
+                <br class="mobile_break">
                 <label for="fial_antal">Antal:</label>
                 <select id="fial_antal" name="fial_antal" class="value_torn">
                     {%for i in range(0, 10)%}
@@ -218,8 +229,10 @@
                 <label>Klockor</label><br>
                 <label for="klocka_diameter">Diameter:</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_diameter" name="klocka_diameter">
+                <br class="mobile_break">
                 <label for="klocka_vikt">Vikt (kg):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_vikt" name="klocka_vikt">
+                <br class="mobile_break">
                 <button onclick="add_clock()" id="klocka_knapp" type='button'>Lägg till</button><br id="klock_break">
               </div>
                 <!--<label for="elektrisk">Elektrisk ringanordning (Antal klockor):</label>
@@ -239,6 +252,7 @@
                 <label>Bänkar</label><br>
                 <label for="bänkar_enkla">Enkla:</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_enkla" name="bänkar_enkla" class="value_tillbehör">
+                <br class="mobile_break">
                 <label for="bänkar_påkostade">Påkostade:</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_påkostade" name="bänkar_påkostade" class="value_tillbehör">
               </div>
@@ -246,6 +260,7 @@
                 <label>Stolar</label><br>
                 <label for="stolar_enkla">Enkla:</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_enkla" name="stolar_enkla" class="value_tillbehör">
+                <br class="mobile_break">
                 <label for="stolar_påkostade">Påkostade:</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_påkostade" name="stolar_påkostade" class="value_tillbehör">
               </div>
@@ -253,6 +268,7 @@
                 <label>Orgel</label><br>
                 <label for="kororgel">Kororgel:</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="kororgel" name="kororgel" class="value_tillbehör">
+                <br class="mobile_break">
                 <label for="läktarorgel">Läktarorgel:</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktarorgel" name="läktarorgel" class="value_tillbehör">
               </div>
@@ -315,13 +331,17 @@
                 <label>Annat</label><br>
                 <label for="namn_eget">Namn:</label>
                 <input id="namn_eget" name="namn_eget">
+                <br class="mobile_break">
                 <label for="pris_eget">Pris (kr):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="pris_eget" name="pris_eget">
+                <br class="mobile_break">
+                <label for="antal_eget">Antal:</label>
                 <select id="antal_eget" name="antal_eget">
                     {%for i in range(1, 10)%}
                       <option value="{{i}}">{{i}}</option>
                     {%endfor%}
                 </select>
+                <br class="mobile_break">
                 <button onclick="add_own()" id="eget_knapp" type='button'>Lägg till</button><br id="eget_break">
               </div>
               <div class="category_items">
@@ -346,6 +366,7 @@
                       <option value="{{categories["stapel_typer"][i]}}">{{categories["stapel_typer"][i]}}</option>
                     {%endfor%}
                 </select>
+                <br class="mobile_break">
                 <label for="stapel_höjd">Höjd (m):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_höjd" name="stapel_höjd" class="value_stapel">
                 <!--<button onclick="add_stapel()" id="stepl_knapp" type='button'>Lägg till</button><br id="stapel_break">-->
@@ -354,8 +375,10 @@
                 <label>Klockor</label><br>
                 <label for="stapel_klocka_diameter">Diameter:</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_klocka_diameter" name="stapel_klocka_diameter" class="value_stapel">
+                <br class="mobile_break">
                 <label for="stapel_klocka_vikt">Vikt (kg):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_klocka_vikt" name="stapel_klocka_vikt" class="value_stapel">
+                <br class="mobile_break">
                 <button onclick="add_stapel_clock()" id="stapel_klocka_knapp" type='button'>Lägg till</button><br id="stapel_klock_break">
               </div>
                 

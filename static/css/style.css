@@ -230,4 +230,7 @@ select {
         width: 50rem;
         margin: auto;
     }
+    .mobile_break{
+        display: none;
+    }
 }

@@ -13,11 +13,11 @@
         <div id="header">
             <img id="title_image" src="{{ url_for('static',filename='content/Logo_main.png') }}" alt="logo">
             <h1 id="title">Beräkningsverktyg byggnadsvärde kyrkor</h1>
-        </div>
-        <div id="menubar">
-          <div class="menuitem" onclick="switch_tab('form')">Vanlig försäkring</div>
-          <div class="menuitem" onclick="switch_tab('första_risk')">Förstarisk</div>
-          <div class="menuitem" onclick="switch_tab('information')">Information</div>
+            <div id="menubar">
+              <div class="menuitem" onclick="switch_tab('form')">Vanlig försäkring</div>
+              <div class="menuitem" onclick="switch_tab('första_risk')">Förstarisk</div>
+              <div class="menuitem" onclick="switch_tab('information')">Information</div>
+            </div>
         </div>
         <div id="form" class = "pages">
             <h2>Byggnad</h2>
@@ -317,6 +317,28 @@
                 <label for="del_stapel">Delsumma: </label>
                 <span id="del_stapel">0</span>
             </form>
+            <div id="sammanställning" >
+              <h1>Sammanställning</h1>
+              <form id="sam_form">
+  
+                  <label for="sam_byggnad">Byggnad: </label>
+                  <span id="sam_byggnad">0</span><br><br>
+                  <label for="sam_torn">Torn: </label>
+                  <span id="sam_torn">0</span><br><br>
+                  <label for="sam_btillbehör">Byggnadstillbehör: </label>
+                  <span id="sam_btillbehör">0</span><br><br>
+                  <label for="sam_särskilt">Särskilt värderade tillbehör: </label>
+                  <span id="sam_särskilt">0</span><br><br>
+                  <!-- <label for="sam_utsmyckning">Byggnadens utsmyckning: </label>
+                  <span id="sam_byggnad">0</span><br><br> -->
+                  <label for="sam_stapel">Klockstapel: </label>
+                  <span id="sam_stapel">0</span><br><br>
+                  <label for="sum">Summa: </label>
+                  <span id="sum">0</span><br>
+              </form>
+              <img src="{{ url_for('static',filename='content/up.png') }}" alt="logo" id="arrow" onclick="hide_sum()">
+  
+          </div>
             <button id="submit">Submit</button>
         </div>
         <div id="första_risk" class = "pages" hidden="true">
@@ -336,33 +358,20 @@
         </div>
         <div id="information" class = "pages" hidden="true">
           <p>INFORMATION</p>
+          <a href="/admin_panel" id="admin">  
+            <button src="/admin_panel" type='button'>Admin</button>
+          </a>
+          <iframe
+            src="{{ url_for('static',filename='content/info.pdf') }}"
+            frameBorder="0"
+            scrolling="auto"
+            height="1000px"
+            width="100%"
+          ></iframe>
         </div>
 
-        <div id="sammanställning" onclick="hide_sum()">
-            <h1>Sammanställning</h1>
-            <form id="sam_form">
-
-                <label for="sam_byggnad">Byggnad: </label>
-                <span id="sam_byggnad">0</span><br><br>
-                <label for="sam_torn">Torn: </label>
-                <span id="sam_torn">0</span><br><br>
-                <label for="sam_btillbehör">Byggnadstillbehör: </label>
-                <span id="sam_btillbehör">0</span><br><br>
-                <label for="sam_särskilt">Särskilt värderade tillbehör: </label>
-                <span id="sam_särskilt">0</span><br><br>
-                <!-- <label for="sam_utsmyckning">Byggnadens utsmyckning: </label>
-                <span id="sam_byggnad">0</span><br><br> -->
-                <label for="sam_stapel">Klockstapel: </label>
-                <span id="sam_stapel">0</span><br><br>
-                <label for="sum">Summa: </label>
-                <span id="sum">0</span><br>
-            </form>
-            <img src="{{ url_for('static',filename='content/up.png') }}" alt="logo" id="arrow">
-
-        </div>
-        <a href="/admin_panel" id="admin">  
-          <button src="/admin_panel" type='button'>Admin</button>
-        </a>
-        <button type="button" id="json" onclick="make_json()">JSON</button>
+        
+        
+        <!-- <button type="button" id="json" onclick="make_json()">JSON</button> -->
     </body>
 </html>

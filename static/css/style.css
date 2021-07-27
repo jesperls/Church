@@ -7,7 +7,10 @@ body {
 
 #title {
     font-size: 30pt;
+    color:white;
+    text-shadow: 0 0 5px black;
 }
+
 
 body {
     margin: 0;
@@ -26,27 +29,9 @@ body {
     background-color: lightslategray;
 }
 
-#menubar{
-    width:100%;
-    align-items:center;
-    justify-content: center;
-    background-color: lightcyan;
-    display:flex;
-    flex-direction: row;
-    position: -webkit-sticky;
-    position: -moz-sticky;
-    position: -ms-sticky;
-    position: -o-sticky;
-    top: 30pt;
-}
 
-.menuitem{
-    margin-left: 10pt;
-    margin-right: 10pt;
-    padding: 5pt;
-    font-size: 20pt;
-    background-color: lightblue;
-}
+
+
 
 form {
     background-color: slategray;
@@ -57,16 +42,6 @@ form {
     padding: 5pt 5pt 5pt 5pt;
 }
 
-#sammanställning {
-    position: fixed;
-    top: 3pt;
-    right: 3pt;
-    width: 20%;
-    background-color: lightslategray;
-    border: solid;
-    display: flex;
-    flex-direction: column;
-}
 
 #arrow {
     width: 10pt;
@@ -103,10 +78,14 @@ select {
 }
 
 #title_image {
-    width: 40%;
+    width: 100%;
     margin: auto;
 }
 
+
+.klocka, .stapel_klocka, .eget, .stapel, .fönster, .fönster_2 {
+    font-size: 13pt;
+}
 
 
 #church_choice {
@@ -144,3 +123,74 @@ select {
   background-color: DodgerBlue !important;
   color: #ffffff;
 } 
+
+
+#header{
+    background: url(content/pan_2.png) top left;
+}
+
+#sammanställning{
+    position: relative;
+    width: 100%;
+    background-color: lightslategray;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5pt 5pt 5pt 5pt;
+}
+
+#arrow{
+    display: none;
+}
+
+#menubar{
+    width:100%;
+    align-items:center;
+    justify-content: center;
+    background-color: transparent;
+    display:flex;
+    flex-direction: column;
+    top: 0pt;
+}
+
+.menuitem{
+    margin: 1rem;
+    align-items:center;
+    justify-content: center;
+    padding: 5pt;
+    font-size: 2rem;
+    background-color: #fed831;
+    border-radius: 7px;
+    text-decoration: none;
+    text-align: left;
+    display: flex;
+    height: 20pt;
+}
+
+@media only screen and (min-width: 768px) {
+    #sammanställning {
+        position: fixed;
+        top: 3pt;
+        right: 3pt;
+        width: 20%;
+        background-color: lightslategray;
+        border: solid;
+        display: flex;
+        flex-direction: column;
+    }
+    #arrow{
+        display: flex;
+    }
+
+    #menubar{
+        flex-direction: row;
+    }
+    #title_image {
+        width: 50rem;
+        margin: auto;
+    }
+}

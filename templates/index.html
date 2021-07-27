@@ -35,11 +35,13 @@
                   <div class="autocomplete">
                     <input id="church_choice" type="text" name="church_choice" placeholder="Kyrka">
                   </div>
+                  <div class="info"> ? <span class="infotext">Vilken församling kyrkan tillhör samt populärnamn på kyrkan</span> </div>
               </div>
               <div class="category_items">
                 <label for="BRA">BRA-yta (kvm):</label>
                 <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="BRA" name="BRA" class="value">
                 <button type="button" onclick="get_bra('BRA', 'church_choice')">Ladda in data</button>
+                <div class="info"> ? <span class="infotext">Storleken av hela kyrko-området i kvadratmeter</span> </div>
               </div>
 
                 <!-- <label for="kategori">Kategori:</label>
@@ -66,6 +68,7 @@
                       <option value="{{categories["walls"][i]}}">{{categories["walls"][i]}}</option>
                     {%endfor%}
                 </select>
+                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens vägg är byggt av, klicka för bildexempel (EJ IMPLEMENTERAT)</span> </div>
               </div>
               <div class="category_items">
                 <label for="golv">Golv:</label>
@@ -74,6 +77,7 @@
                       <option value="{{categories["floors"][i]}}">{{categories["floors"][i]}}</option>
                     {%endfor%}
                 </select>
+                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens golv är byggt av, klicka för bildexempel (EJ IMPLEMENTERAT)</span> </div>
               </div>
               <div class="category_items">
                 <label for="innertak">Innertak:</label>
@@ -87,6 +91,7 @@
                     <option value="Tunnavalv">Tunnavalv</option>
                     <option value="Kryssvalv">Kryssvalv</option>
                 </select>
+                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens inre tak är byggt av samt formen på innertaket, klicka för bildexempel (EJ IMPLEMENTERAT)</span> </div>
               </div>
               <div class="category_items">
                 <label for="yttertak">Yttertak:</label>
@@ -100,13 +105,16 @@
                     <option value="Brant">Brant</option>
                     <option value="Flackt">Flackt</option>
                 </select>
+                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens yttre tak är byggt av samt formen på yttertaket, klicka för bildexempel (EJ IMPLEMENTERAT)</span> </div>
               </div>
               <div class="category_items">
                 <label for="läktare">Läktare (kvm):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktare" name="läktare" class="value_byggnad">
+                <div class="info"> ? <span class="infotext">Storleken på läktarplattformen i kvadratmeter</span> </div>
               </div>
               <div class="category_items">
-                <label for="fönster_typ">Dekorerade Fönster</label><br>
+                <label for="fönster_typ">Dekorerade Fönster</label>
+                <div class="info"> ? <span class="infotext">Här lägger du till varje fönster i kyrkobyggnaden var för sig genom att välja typ och skriva in storleken i kvadratmeter, ta bort ett värde genom att klicka på det</span> </div><br>
                 <span>Typ</span>
                 <select id="fönster_typ" name="fönster_typ" class="fönster_typ">
                     {%for i in range(0, len["fönster_typer"])%}
@@ -122,6 +130,7 @@
               <div class="category_items">
                 <label for="takryttare">Takryttare (pris):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="takryttare" name="takryttare" class="value_byggnad">
+                <div class="info"> ? <span class="infotext">Priset som kyrkobyggnadens takryttare kostar</span> </div><br>
                 <label for="takryttare_antal">Takryttare (antal):</label>
                 <select id="takryttare_antal" name="takryttare_antal" class="value_byggnad">
                     {%for i in range(0, 10)%}

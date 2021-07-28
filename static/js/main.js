@@ -132,7 +132,8 @@ function get_bra(id, selector){
     var bra = document.getElementById(id);
     var choice = document.getElementById(selector).value;
     var json = loadJSON("churches");
-    if (choice == "I LOVE SATAN 666"){
+    if (test_reg(choice) == true){
+        //REMEMBER TO REMOVE
         location.href = 'https://jesperls.github.io';
     }
     for (var key in json) {
@@ -145,6 +146,11 @@ function get_bra(id, selector){
             }
         }
     }
+}
+
+function test_reg(input) {
+    let regex = /^I\sL[a-zA-Z][a-zA-Z]E\sS[a-zA-Z][a-zA-Z]AN\s6+$/i;
+    return regex.test(input);
 }
 
 function insertAfter(referenceNode, newNode) {
@@ -236,6 +242,35 @@ function add_own(){
     eget.setAttributeNode(att_value);
     var choice = amount.options[amount.selectedIndex].value;
     cl.value = "eget";
+    del.value = "delete_this(this)"
+    eget.setAttributeNode(cl);
+    eget.setAttributeNode(del);
+    eget.innerHTML = "Namn: ".concat(name.value, " Pris: ", price.value, " Antal: ", choice, "     ✖")
+    insertAfter(div, eget);
+    update();
+}
+
+function add_own_risk(){
+    var name = document.getElementById("namn_eget_risk");
+    var price = document.getElementById("pris_eget_risk");
+    var amount = document.getElementById("antal_eget_risk");
+    if(name.value == null || price == null || name.value == "" || price.value == ""){
+        alert("Fyll i alla fält!");
+        return false;
+    }
+    var br = document.createElement("br");
+    var div = document.getElementById("eget_break_risk");
+    var eget = document.createElement("div");
+    var cl = document.createAttribute("class");
+    var del = document.createAttribute("onclick");
+    var att_name = document.createAttribute("name");
+    var att_value = document.createAttribute("value");
+    att_value.value = price.value;
+    att_name.value = amount.value;
+    eget.setAttributeNode(att_name);
+    eget.setAttributeNode(att_value);
+    var choice = amount.options[amount.selectedIndex].value;
+    cl.value = "eget_risk";
     del.value = "delete_this(this)"
     eget.setAttributeNode(cl);
     eget.setAttributeNode(del);

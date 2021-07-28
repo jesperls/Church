@@ -18,6 +18,8 @@ parishes = []
 stapel_typer = ["Typ 1", "Typ 2", "Typ 3"]
 fönster_typer = ["Typ 1", "Typ 2", "Typ 3"]
 
+frames = ["Sten", "Trä"]
+
 
 @app.route('/')
 def homepage():
@@ -26,10 +28,12 @@ def homepage():
                            len={"types": len(types), "decorations": len(decorations), "walls": len(walls),
                                 "floors": len(floors), "inner_roof": len(inner_roof), "outer_roof": len(outer_roof),
                                 "tower_roof": len(tower_roof), "stapel_typer": len(stapel_typer),
-                                "fönster_typer": len(fönster_typer), "churches": len(churches), "parishes": len(parishes)},
+                                "fönster_typer": len(fönster_typer), "churches": len(churches), "parishes": len(parishes),
+                                "frames": len(frames)},
                            categories={"types": types, "decorations": decorations, "walls": walls, "floors": floors,
                                        "inner_roof": inner_roof, "outer_roof": outer_roof, "tower_roof": tower_roof,
-                                       "stapel_typer": stapel_typer, "fönster_typer": fönster_typer, "churches": churches, "parishes": parishes})
+                                       "stapel_typer": stapel_typer, "fönster_typer": fönster_typer, "churches": churches, "parishes": parishes,
+                                       "frames": frames})
 
 @app.route('/admin_panel')
 def admin():

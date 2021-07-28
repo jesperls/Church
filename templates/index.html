@@ -69,7 +69,7 @@
                       <option value="{{categories["walls"][i]}}">{{categories["walls"][i]}}</option>
                     {%endfor%}
                 </select>
-                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens vägg är byggt av, se fliken bildexempel för klarifikation (EJ IMPLEMENTERAT)</span> </div>
+                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens vägg är byggt av, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div>
               </div>
               <div class="category_items">
                 <label for="golv">Golv:</label>
@@ -78,7 +78,7 @@
                       <option value="{{categories["floors"][i]}}">{{categories["floors"][i]}}</option>
                     {%endfor%}
                 </select>
-                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens golv är byggt av, se fliken bildexempel för klarifikation (EJ IMPLEMENTERAT)</span> </div>
+                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens golv är byggt av, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div>
               </div>
               <div class="category_items">
                 <label for="innertak">Innertak:</label>
@@ -92,7 +92,7 @@
                     <option value="Tunnavalv">Tunnavalv</option>
                     <option value="Kryssvalv">Kryssvalv</option>
                 </select>
-                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens inre tak är byggt av samt formen på innertaket, se fliken bildexempel för klarifikation (EJ IMPLEMENTERAT)</span> </div>
+                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens inre tak är byggt av samt formen på innertaket, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div>
               </div>
               <div class="category_items">
                 <label for="yttertak">Yttertak:</label>
@@ -106,7 +106,7 @@
                     <option value="Brant">Brant</option>
                     <option value="Flackt">Flackt</option>
                 </select>
-                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens yttre tak är byggt av samt formen på yttertaket, se fliken bildexempel för klarifikation (EJ IMPLEMENTERAT)</span> </div>
+                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens yttre tak är byggt av samt formen på yttertaket, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div>
               </div>
               <div class="category_items">
                 <label for="läktare">Läktare (kvm):</label>
@@ -164,7 +164,7 @@
                       <option value="{{categories["walls"][i]}}">{{categories["walls"][i]}}</option>
                     {%endfor%}
                 </select>
-                <div class="info"> ? <span class="infotext">Materialet kyrkotornets vägg är byggt av, se fliken bildexempel för klarifikation (EJ IMPLEMENTERAT)</span> </div><br>
+                <div class="info"> ? <span class="infotext">Materialet kyrkotornets vägg är byggt av, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div><br>
               </div>
               <div class="category_items">
                 <label for="torn_golv">Golv:</label>
@@ -173,7 +173,7 @@
                       <option value="{{categories["floors"][i]}}">{{categories["floors"][i]}}</option>
                     {%endfor%}
                 </select>
-                <div class="info"> ? <span class="infotext">Materialet kyrkotornets golv är byggt av, se fliken bildexempel för klarifikation (EJ IMPLEMENTERAT)</span> </div><br>
+                <div class="info"> ? <span class="infotext">Materialet kyrkotornets golv är byggt av, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div><br>
               </div>
               <div class="category_items">
                 <label>Torntak</label>
@@ -384,7 +384,7 @@
 
               <div class="category_items">
                 <label>Klockstapel</label>
-                <div class="info"> ? <span class="infotext">Vilken typ av klockstapel kyrkan har samt hur hög den är, se fliken bildexempel för klarifikation (EJ IMPLEMENTERAT)</span> </div><br>
+                <div class="info"> ? <span class="infotext">Vilken typ av klockstapel kyrkan har samt hur hög den är, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div><br>
                 <label for="stapel_typ">Typ</span>
                 <select id="stapel_typ" name="stapel_typ" class="value_stapel">
                     {%for i in range(0, len["stapel_typer"])%}
@@ -467,6 +467,7 @@
                     <option value="{{categories["frames"][i]}}">{{categories["frames"][i]}}</option>
                   {%endfor%}
               </select>
+              <div class="info"> ? <span class="infotext">Vad kyrkogrunder är uppbyggd av</span> </div><br>
             </div>
             <div class="category_items">
               <label>Byggnadsdelar</label><br>
@@ -499,6 +500,18 @@
               <label for="konst">Konstnärlig utsmyckning, vägg- tak- och glasmålningar: </label>
               <input type="checkbox" id="konst" name="konst">
             </div>
+          </form>
+          <form class="categories">
+            <h2>Justering av förstarisk belopp</h2>
+            <div class="category_items">
+              <label for="rivning">Enbart rivning/sanering vid totalskada: </label>
+              <input type="checkbox" id="rivning" name="rivning">
+            </div>
+            <div class="category_items">
+              <label for="state_risk">Fastighetens skick: </label>
+              <input type="checkbox" id="state_risk" name="state_risk">
+            </div>
+          </form>
         </div>
         <div id="information" class = "pages" hidden="true">
           <a href="/admin_panel" id="admin">  

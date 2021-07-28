@@ -19,6 +19,7 @@ stapel_typer = ["Typ 1", "Typ 2", "Typ 3"]
 fönster_typer = ["Typ 1", "Typ 2", "Typ 3"]
 
 frames = ["Sten", "Trä"]
+church_states = ["Normalt bruksskick", "Underhållsbehov", "Nyrenoverat/Toppskick"]
 
 
 @app.route('/')
@@ -40,11 +41,12 @@ def admin():
     return render_template("admin.html")
 
 @app.route('/import', methods=["POST"])
-def upload(name="json"):
+def upload():
+    print("AAAA")
     if request.method == 'POST':
         f = request.files['file']
         if(f.filename[-4:] == "xlsx"):
-            f.save(f"data.xlsx")
+            f.save(f"./static/data/data.xlsx")
             load_dfs()
             return "Lyckades ladda upp!"
     return "Ej excel fil!"
@@ -67,7 +69,7 @@ def upload_json(name):
 
 def load_dfs():
     global walls, floors, inner_roof, outer_roof, tower_roof, churches
-    df = pd.read_excel("data.xlsx", sheet_name="Data", skiprows=3, usecols=[8, 9, 10, 11, 12, 13])
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[8, 9, 10, 11, 12, 13])
     df.columns = ["Tjocklek", "Typ", "Beskrivning", "Pris", "Jmf_pris", "Faktor"]
     df.dropna(axis=0, thresh=4, inplace=True)
     walls = []
@@ -75,7 +77,7 @@ def load_dfs():
         walls.append(row["Beskrivning"])
     df.to_json('./static/data/walls.json', orient='records')
 
-    df = pd.read_excel("data.xlsx", sheet_name="Data", skiprows=3, usecols=[18, 19, 20, 21])
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[18, 19, 20, 21])
     df.columns = ["Typ", "Beskrivning", "Pris", "Faktor"]
     df.dropna(axis=0, thresh=4, inplace=True)
     floors = []
@@ -83,7 +85,7 @@ def load_dfs():
         floors.append(row["Beskrivning"])
     df.to_json('./static/data/floors.json', orient='records')
 
-    df = pd.read_excel("data.xlsx", sheet_name="Data", skiprows=3, usecols=[22, 23, 24, 25, 26, 27, 28, 29])
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[22, 23, 24, 25, 26, 27, 28, 29])
     df.columns = ["Typ", "Beskrivning", "Plant", "Tunnavalv", "Kryssvalv", "Plant_faktor", "Tunnavalv_faktor",
                   "Kryssvalv_faktor"]
     df.dropna(axis=0, thresh=4, inplace=True)
@@ -92,7 +94,7 @@ def load_dfs():
         inner_roof.append(row["Beskrivning"])
     df.to_json('./static/data/inner_roofs.json', orient='records')
 
-    df = pd.read_excel("data.xlsx", sheet_name="Data", skiprows=3, usecols=[30, 31, 32, 33, 34, 35])
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[30, 31, 32, 33, 34, 35])
     df.columns = ["Typ", "Beskrivning", "Flack", "Brant", "Flackt_faktor", "Brant_faktor"]
     df.dropna(axis=0, thresh=4, inplace=True)
     outer_roof = []
@@ -100,7 +102,7 @@ def load_dfs():
         outer_roof.append(row["Beskrivning"])
     df.to_json('./static/data/outer_roofs.json', orient='records')
 
-    df = pd.read_excel("data.xlsx", sheet_name="Data", skiprows=3, usecols=[46, 47, 48, 49, 50, 51, 52, 53,
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[46, 47, 48, 49, 50, 51, 52, 53,
                                                                                        54, 55])
     df.columns = ["Typ", "Beskrivning", "Pris_4", "Pris_4_12", "Pris_12_20", "Pris_20", "Pris2_4", "Pris2_4_12",
                   "Pris2_12_20", "Pris2_20"]

@@ -36,10 +36,7 @@ form {
 }
 
 #import {
-    position: fixed;
-    top: 3pt;
-    left: 3pt;
-    background-color: lightslategray;
+    width: 90%;
 }
 
 #json{
@@ -75,7 +72,7 @@ select {
 }
 
 
-#church_choice {
+#church_choice, #church_choice_2 {
     width: 90%;
 }
 .autocomplete {
@@ -122,6 +119,9 @@ select {
 #arrow{
     display: none;
 }
+#arrow:hover{
+    cursor: pointer;
+}
 
 #menubar{
     width:100%;
@@ -147,6 +147,9 @@ select {
     height: 20pt;
     flex-basis: 20%;
 }
+.menuitem:hover{
+    cursor: pointer;
+}
 
 .categories{
     margin:3rem;
@@ -158,6 +161,7 @@ select {
     width: 95%;
     height: -moz-fit-content;
     height: fit-content;
+    background-color: white;
 }
 
 .category_items{

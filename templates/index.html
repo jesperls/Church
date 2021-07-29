@@ -178,28 +178,38 @@
               <div class="category_items">
                 <label>Torntak</label>
                 <div class="info"> ? <span class="infotext">Diverse mått på kyrktornets tak, allting mäts i meter</span> </div><br>
-                <label for="torn_tak">Typ:</label>
-                <select id="torn_tak" name="torn_tak" class="value_torn">
-                    {%for i in range(0, len["tower_roof"])%}
-                      <option value="{{categories["tower_roof"][i]}}">{{categories["tower_roof"][i]}}</option>
-                    {%endfor%}
-                </select>
-                <br class="mobile_break">
-                <label for="tak_höjd">Höjd (m):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_höjd" name="tak_höjd" class="value_torn">
-                <br class="mobile_break">
-                <label for="tak_bredd">Bredd (m):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_bredd" name="tak_bredd" class="value_torn">
-                <br>
-                <label for="tak_längd">Längd (m):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_längd" name="tak_längd" class="value_torn">
-                <br class="mobile_break">
-                <label for="tak_antal">Antal:</label>
-                <select id="tak_antal" name="tak_antal" class="value_torn">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
-                </select>
+                <div>
+                  <label for="torn_tak">Typ:</label>
+                  <select id="torn_tak" name="torn_tak" class="value_torn">
+                      {%for i in range(0, len["tower_roof"])%}
+                        <option value="{{categories["tower_roof"][i]}}">{{categories["tower_roof"][i]}}</option>
+                      {%endfor%}
+                  </select>
+                </div>
+                
+                <div>
+                  <label for="tak_höjd">Höjd (m):</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_höjd" name="tak_höjd" class="value_torn">
+                </div>
+                
+                <div>
+                  <label for="tak_bredd">Bredd (m):</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_bredd" name="tak_bredd" class="value_torn">
+                </div>
+                
+                <div>
+                  <label for="tak_längd">Längd (m):</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_längd" name="tak_längd" class="value_torn">
+                </div>
+                
+                <div>
+                  <label for="tak_antal">Antal:</label>
+                  <select id="tak_antal" name="tak_antal" class="value_torn">
+                      {%for i in range(0, 10)%}
+                        <option value="{{i}}">{{i}}</option>
+                      {%endfor%}
+                  </select>
+                </div>
               </div>
                 <!--<label for="fönster_ett">Typ 1 (kvm):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_ett" name="fönster_ett" class="value_torn"><br>
@@ -271,29 +281,38 @@
               <div class="category_items">
                 <label>Bänkar</label>
                 <div class="info"> ? <span class="infotext">Hur många av varje typ av bänk som finns i kyrkan</span> </div><br>
-                <label for="bänkar_enkla">Enkla:</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_enkla" name="bänkar_enkla" class="value_tillbehör">
-                <br class="mobile_break">
-                <label for="bänkar_påkostade">Påkostade:</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_påkostade" name="bänkar_påkostade" class="value_tillbehör">
-              </div>
+                <div>
+                  <label for="bänkar_enkla">Enkla:</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_enkla" name="bänkar_enkla" class="value_tillbehör">                
+                </div>
+                <div>
+                  <label for="bänkar_påkostade">Påkostade:</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_påkostade" name="bänkar_påkostade" class="value_tillbehör">
+                </div>
+                </div>
               <div class="category_items">
                 <label>Stolar</label>
                 <div class="info"> ? <span class="infotext">Hur många av varje typ av stol som finns i kyrkan</span> </div><br>
-                <label for="stolar_enkla">Enkla:</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_enkla" name="stolar_enkla" class="value_tillbehör">
-                <br class="mobile_break">
-                <label for="stolar_påkostade">Påkostade:</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_påkostade" name="stolar_påkostade" class="value_tillbehör">
+                <div>
+                  <label for="stolar_enkla">Enkla:</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_enkla" name="stolar_enkla" class="value_tillbehör">             
+                </div>
+                <div>
+                  <label for="stolar_påkostade">Påkostade:</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_påkostade" name="stolar_påkostade" class="value_tillbehör">             
+                </div>
               </div>
               <div class="category_items">
                 <label>Orgel</label>
                 <div class="info"> ? <span class="infotext">Priset på en orgel mäts i stämmor så hur många stämmor varje typ av orgel har</span> </div><br>
-                <label for="kororgel">Kororgel(stämmor):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="kororgel" name="kororgel" class="value_tillbehör">
-                <br class="mobile_break">
-                <label for="läktarorgel">Läktarorgel(stämmor):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktarorgel" name="läktarorgel" class="value_tillbehör">
+                <div>
+                  <label for="kororgel">Kororgel(stämmor):</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="kororgel" name="kororgel" class="value_tillbehör">
+                </div>
+                <div>
+                  <label for="läktarorgel">Läktarorgel(stämmor):</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktarorgel" name="läktarorgel" class="value_tillbehör">
+                </div>
               </div>
               <div class="category_items">
                 <label for="del_tillbehör">Delsumma: </label>
@@ -419,7 +438,7 @@
               </div>
             </form>
             <div id="sammanställning">
-              <h1>Sammanställning</h1>
+              <h1 id="sam_title">Sammanställning</h1>
               <form id="sam_form">
   
                   <label for="sam_byggnad">Byggnad: </label>

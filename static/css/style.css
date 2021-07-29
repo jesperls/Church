@@ -54,11 +54,11 @@ form {
 }
 
 input {
-    width: 100pt;
+    width: 68pt;
 }
 
 select {
-    width: 100pt;
+    width: fit-content;
 }
 
 #title_image {
@@ -149,6 +149,10 @@ select {
 }
 .menuitem:hover{
     cursor: pointer;
+}
+
+#sam_form{
+    border-radius: 0.5rem;
 }
 
 .categories{
@@ -252,33 +256,52 @@ label{
     font-weight: bold;
 }
 
+
+
+
+/* EVERYTHING ABOVE PHONE  */
+
+
 @media only screen and (min-width: 768px) {
-    .infotext{
-        left:100%;
+    /* LANDSCAPE IPAD  */
+    #sam_title{
+        font-size:1.2rem;
+    }
+    .menuitem{
+        flex-basis: 18%;
+        font-size: 1rem;
+    }
+    #menubar{
+        flex-direction: row;
     }
     .categories{
-        width: auto;
-        flex-basis: 40%;
+        flex-basis: 41%;
+        flex-grow: 1.5;
     }
-
     #sammanställning {
         position: fixed;
         top: 3pt;
         right: 3pt;
         width: 20%;
-        background-color: whitesmoke;
         border: solid 0.5pt;
     }
     #arrow{
         display: flex;
     }
+    #header{
+        background: url(content/pan_2.png) top left no-repeat;
+    }    
+}
 
-    #menubar{
-        flex-direction: row;
+
+@media only screen and (min-width: 992px) {
+    /* PC   */
+    #sam_title{
+        font-size:1.6rem;
     }
     .menuitem{
-        flex-basis: 12%;
-        font-size: 1.5rem;
+        flex-basis: 15.5%;
+        font-size: 1.3rem;
     }
     #title_image {
         width: 50rem;
@@ -287,7 +310,4 @@ label{
     .mobile_break{
         display: none;
     }
-    #header{
-        background: url(content/pan_2.png) top left no-repeat;
-    }    
 }

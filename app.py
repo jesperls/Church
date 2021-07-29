@@ -20,6 +20,7 @@ fönster_typer = ["Typ 1", "Typ 2", "Typ 3"]
 
 frames = ["Sten", "Trä"]
 church_states = ["Normalt bruksskick", "Underhållsbehov", "Nyrenoverat/Toppskick"]
+material_restoration = ["Budget", "Standard", "Exklusivt"]
 
 
 @app.route('/')
@@ -30,11 +31,11 @@ def homepage():
                                 "floors": len(floors), "inner_roof": len(inner_roof), "outer_roof": len(outer_roof),
                                 "tower_roof": len(tower_roof), "stapel_typer": len(stapel_typer),
                                 "fönster_typer": len(fönster_typer), "churches": len(churches), "parishes": len(parishes),
-                                "frames": len(frames)},
+                                "frames": len(frames), "church_states": len(church_states), "material_restoration": len(material_restoration)},
                            categories={"types": types, "decorations": decorations, "walls": walls, "floors": floors,
                                        "inner_roof": inner_roof, "outer_roof": outer_roof, "tower_roof": tower_roof,
                                        "stapel_typer": stapel_typer, "fönster_typer": fönster_typer, "churches": churches, "parishes": parishes,
-                                       "frames": frames})
+                                       "frames": frames, "church_states": church_states, "material_restoration": material_restoration})
 
 @app.route('/admin_panel')
 def admin():
@@ -69,7 +70,7 @@ def upload_json(name):
 
 def load_dfs():
     global walls, floors, inner_roof, outer_roof, tower_roof, churches
-    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[8, 9, 10, 11, 12, 13])
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[3, 4, 5, 6, 7, 8])
     df.columns = ["Tjocklek", "Typ", "Beskrivning", "Pris", "Jmf_pris", "Faktor"]
     df.dropna(axis=0, thresh=4, inplace=True)
     walls = []
@@ -77,7 +78,7 @@ def load_dfs():
         walls.append(row["Beskrivning"])
     df.to_json('./static/data/walls.json', orient='records')
 
-    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[18, 19, 20, 21])
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[9, 10, 11, 12])
     df.columns = ["Typ", "Beskrivning", "Pris", "Faktor"]
     df.dropna(axis=0, thresh=4, inplace=True)
     floors = []
@@ -85,7 +86,7 @@ def load_dfs():
         floors.append(row["Beskrivning"])
     df.to_json('./static/data/floors.json', orient='records')
 
-    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[22, 23, 24, 25, 26, 27, 28, 29])
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[13, 14, 15, 16, 17, 18, 19, 20])
     df.columns = ["Typ", "Beskrivning", "Plant", "Tunnavalv", "Kryssvalv", "Plant_faktor", "Tunnavalv_faktor",
                   "Kryssvalv_faktor"]
     df.dropna(axis=0, thresh=4, inplace=True)
@@ -94,7 +95,7 @@ def load_dfs():
         inner_roof.append(row["Beskrivning"])
     df.to_json('./static/data/inner_roofs.json', orient='records')
 
-    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[30, 31, 32, 33, 34, 35])
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[21, 22, 23, 24, 25, 26])
     df.columns = ["Typ", "Beskrivning", "Flack", "Brant", "Flackt_faktor", "Brant_faktor"]
     df.dropna(axis=0, thresh=4, inplace=True)
     outer_roof = []
@@ -102,8 +103,8 @@ def load_dfs():
         outer_roof.append(row["Beskrivning"])
     df.to_json('./static/data/outer_roofs.json', orient='records')
 
-    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[46, 47, 48, 49, 50, 51, 52, 53,
-                                                                                       54, 55])
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[27, 28, 29, 30, 31, 32, 33, 34,
+                                                                                       35, 36])
     df.columns = ["Typ", "Beskrivning", "Pris_4", "Pris_4_12", "Pris_12_20", "Pris_20", "Pris2_4", "Pris2_4_12",
                   "Pris2_12_20", "Pris2_20"]
     df.dropna(axis=0, thresh=4, inplace=True)

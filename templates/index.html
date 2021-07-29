@@ -475,7 +475,9 @@
         </div>
         <div id="första_risk" class = "pages" hidden="true">
           <form class="categories">
-            <h2>Byggnad</h2>
+            <div class="category_title">
+              <h2>Byggnad</h2>
+            </div>
             <div class="category_items">
               <form autocomplete="off">
                 <div class="autocomplete">
@@ -490,7 +492,9 @@
             </form>
           </form>
           <form class="categories">
-            <h2>Grunduppgifter</h2>
+            <div class="category_title">
+              <h2>Grunduppgifter</h2>
+            </div>
             <div class="category_items">
               <label for="stomme">Stomme:</label>
               <select id="stomme" name="stomme" class="value_grund">
@@ -498,7 +502,7 @@
                     <option value="{{categories["frames"][i]}}">{{categories["frames"][i]}}</option>
                   {%endfor%}
               </select>
-              <div class="info"> ? <span class="infotext">Vad kyrkogrunder är uppbyggd av</span> </div><br>
+              <div class="info"> ? <span class="infotext">Materialet kyrkogrunder är uppbyggd av</span> </div><br>
             </div>
             <div class="category_items">
               <label>Byggnadsdelar</label><br>
@@ -525,7 +529,7 @@
                   {%endfor%}
               </select>
               <br class="mobile_break">
-              <button onclick="add_own()" id="eget_knapp_risk" type='button'>Lägg till</button><br id="eget_break_risk">
+              <button onclick="add_own_risk()" id="eget_knapp_risk" type='button'>Lägg till</button><br id="eget_break_risk">
             </div>
             <div class="category_items">
               <label for="konst">Konstnärlig utsmyckning, vägg- tak- och glasmålningar: </label>
@@ -533,14 +537,36 @@
             </div>
           </form>
           <form class="categories">
-            <h2>Justering av förstarisk belopp</h2>
+            <div class="category_title">
+              <h2>Justering av förstarisk belopp</h2>
+            </div>
             <div class="category_items">
               <label for="rivning">Enbart rivning/sanering vid totalskada: </label>
               <input type="checkbox" id="rivning" name="rivning">
             </div>
             <div class="category_items">
               <label for="state_risk">Fastighetens skick: </label>
-              <input type="checkbox" id="state_risk" name="state_risk">
+              <select id="state_risk" name="state_risk" class="value_grund">
+                  {%for i in range(0, len["church_states"])%}
+                    <option value="{{categories["church_states"][i]}}">{{categories["church_states"][i]}}</option>
+                  {%endfor%}
+              </select>
+            </div>
+            <div class="category_items">
+              <label for="other_kvm">Uppbyggnad till annat (kvm):</label>
+              <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="other_kvm" name="other_kvm">
+            </div>
+            <div class="category_items">
+              <label for="material_risk">Återställningsgrad materialval: </label>
+              <select id="material_risk" name="material_risk" class="value_grund">
+                  {%for i in range(0, len["material_restoration"])%}
+                    <option value="{{categories["material_restoration"][i]}}">{{categories["material_restoration"][i]}}</option>
+                  {%endfor%}
+              </select>
+            </div>
+            <div class="category_items">
+              <label for="special_risk">Kulturell särart (Återställning med icke rationella metoder): </label>
+              <input type="checkbox" id="special_risk" name="special_risk">
             </div>
           </form>
         </div>

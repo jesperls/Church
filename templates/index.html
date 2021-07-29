@@ -30,7 +30,9 @@
             -->
  
             <form onchange="update()" class="categories">
-              <h2>Byggnad</h2>
+              <div class="category_title">
+                <h2>Byggnad</h2>
+              </div>
               <div class="category_items">
                 <form autocomplete="off">
                   <div class="autocomplete">
@@ -61,7 +63,9 @@
               </div>
             </form>
             <form onchange="update()" class="categories">
-              <h2>Kalkylvärde kyrkobyggnad</h2>
+              <div class="category_title">
+                <h2>Kalkylvärde kyrkobyggnad</h2>
+              </div>
               <div class="category_items">
                 <label for="vägg">Vägg:</label>
                 <select id="vägg" name="vägg" class="value_byggnad">
@@ -147,7 +151,9 @@
               </div>
             </form>
             <form onchange="update()" class="categories">
-              <h2>Kalkylvärde tornbyggnad och torntak</h2>
+              <div class="category_title">
+                <h2>Kalkylvärde tornbyggnad och torntak</h2>
+                </div>
               <div class="category_items">
                 <label>Mått tornbyggnad</label>
                 <div class="info"> ? <span class="infotext">Måtten på kyrkans torn i meter</span> </div><br>
@@ -252,7 +258,9 @@
               </div>
             </form>
             <form onchange="update()" class="categories">
-              <h2>Byggnadens tillbehör</h2>
+              <div class="category_title">
+                <h2>Byggnadens tillbehör</h2>
+              </div>
               <div class="category_items">
                 <label>Klockor</label>
                 <div class="info"> ? <span class="infotext">Här lägger du till varje klocka i kyrkobyggnaden var för sig genom att skriva in diametern i meter och vikten i kg, du kan ta bort ett värde genom att klicka på det</span> </div><br>
@@ -320,7 +328,9 @@
               </div>
             </form>
             <form onchange="update()" class="categories">
-              <h2>Särskilt värderade tillbehör</h2>
+              <div class="category_title">
+                <h2>Särskilt värderade tillbehör</h2>
+              </div>
               <div class="category_items">
                 <label for="altargrund">Altargrund (Antal):</label>
                 <select id="altargrund" name="altargrund" class="value_särskilt">
@@ -393,7 +403,9 @@
               </div>
             </form>
             <form onchange="update()" class="categories">
-              <h2>Klockstapel</h2>
+              <div class="category_title">
+                <h2>Klockstapel</h2>
+              </div>
                 <!--<label for="stapel_ett">Typ 1 (höjd, m):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_ett" name="stapel_ett" class="value_stapel"><br>
                 <label for="stapel_två">Typ 2 (höjd, m):</label>

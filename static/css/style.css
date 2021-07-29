@@ -69,6 +69,7 @@ select {
 
 .klocka, .stapel_klocka, .eget, .stapel, .fönster, .fönster_2 {
     font-size: 13pt;
+    font-weight: normal;
 }
 
 
@@ -174,11 +175,10 @@ select {
     justify-content: center;
     clear: both;
 }
-.category_row{
-    display: table-row;
-}
-.category_row *{
-	display: table-cell;
+.category_title{
+    width:100%;
+    background-color: #fed831;
+    border-radius: 0.5rem;
 }
 
 

@@ -595,7 +595,7 @@ function update_pillar(){
     var value_clocks = 0;
     var clocks = document.getElementsByClassName("stapel_klocka");
     for(var i = 0; i < clocks.length; i++){
-        value_clocks += moms * 1.3 * clocks[i].attributes["value"].value * klock_kg + mount_clock;
+        value_clocks += parseInt(moms) * 1.3 * parseInt(clocks[i].attributes["value"].value) * parseInt(klock_kg) + parseInt(mount_clock);
     }
 
     //var elektrisk = document.getElementById("stapel_elektrisk");

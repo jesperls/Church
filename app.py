@@ -25,7 +25,6 @@ material_restoration = ["Budget", "Standard", "Exklusivt"]
 
 @app.route('/')
 def homepage():
-    load_dfs()
     return render_template("index.html",
                            len={"types": len(types), "decorations": len(decorations), "walls": len(walls),
                                 "floors": len(floors), "inner_roof": len(inner_roof), "outer_roof": len(outer_roof),
@@ -41,13 +40,17 @@ def homepage():
 def admin():
     return render_template("admin.html")
 
-@app.route('/import', methods=["POST"])
-def upload():
-    print("AAAA")
+@app.route('/import/<type>', methods=["POST"])
+def upload(type):
     if request.method == 'POST':
         f = request.files['file']
         if(f.filename[-4:] == "xlsx"):
-            f.save(f"./static/data/data.xlsx")
+            if type == "vanlig":
+                f.save(f"./static/data/data.xlsx")
+            elif type == "risk":
+                f.save(f"./static/data/risk_data.xlsx")
+            else:
+                return "Något har gått fel!"
             load_dfs()
             return "Lyckades ladda upp!"
     return "Ej excel fil!"

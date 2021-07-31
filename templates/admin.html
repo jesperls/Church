@@ -34,6 +34,9 @@
         -->
         <div id="form">
             <form class="categories">
+                <div class="category_title">
+                  <h2>Diverse data</h2>
+                </div>
                 <!--PILLAR-->
                 <div class="category_items">
                     <label>Stapel priser</label><br>
@@ -120,10 +123,30 @@
                 <button type="button" onclick="submit_misc()">Ladda in ny data</button>
             </form>
             <div class="categories">
+                <div class="category_title">
+                  <h2>Första risk data</h2>
+                </div>
+                <div id="import" class=category_items>
+                    <p>Här laddar man upp excel filen med data på förstarisk värden</p>
+                    <p>OBS! Filen måste ha exakt samma format som originalfilen</p>
+                    <form action = "/import/risk" method = "POST" enctype = "multipart/form-data">
+                        <input type="file" name="file">
+                        <input type="submit" value="Submit">
+                    </form>
+                    <p>Här kan du extrahera den nuvarande excel filen</p>
+                    <a href="{{ url_for('static',filename='data/risk.xlsx') }}" download>
+                        <button type="button">Extrahera</button>
+                    </a>
+                </div>
+            </div>
+            <div class="categories">
+                <div class="category_title">
+                  <h2>Excel data</h2>
+                </div>
                 <div id="import" class=category_items>
                     <p>Här laddar man upp excel filen med data på väggar, golv etc.</p>
                     <p>OBS! Filen måste ha exakt samma format som originalfilen</p>
-                    <form action = "/import" method = "POST" enctype = "multipart/form-data">
+                    <form action = "/import/vanlig" method = "POST" enctype = "multipart/form-data">
                         <input type="file" name="file">
                         <input type="submit" value="Submit">
                     </form>

@@ -246,6 +246,7 @@ select {
     position: absolute;
     z-index: 1;
     left:-6rem;
+    top: 1rem;
   }
 
 .info:hover .infotext {

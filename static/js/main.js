@@ -13,6 +13,12 @@ var benches = {"Enkla" : 3000, "Påkostade" : 4800};
 var chairs = {"Enkla" : 1400, "Påkostade" : 3000};
 var pianos = {"Kororgel" : 190000, "Läktarorgel" : 235000};
 var spec_prices = {"altargrund": 172175, "altare": 430438, "altaruppstas": 1205225, "dopfunt": 258263, "predikstol": 1033050, "ljuskronor": 137740}
+var bases = {"Sten" : 12, "Trä" : 8};
+var building_parts = {"Klockor" : 500000, "Orgel" : 100000, "Stämmor" : 100000, "Mosaikfönster" : 500000};
+var restoration = {"Budget" : 0.8, "Standard" : 1.0, "Exklusivt" : 2.0};
+var bpi_risk = 33592;
+var raze = 250000;
+var cultural_factor = 2.0;
 
 //THINGS THAT INCREMENT
 var clock_amounts = 0;
@@ -40,31 +46,6 @@ function loadJSON(name){
         return json;
 }
 
-function make_json(){
-    var json = {"pillar_prices" : JSON.stringify(pillar_prices), "BPI": JSON.stringify(BPI), "platform_price": JSON.stringify(platform_price), "win_values": JSON.stringify(win_values), 
-                "moms": JSON.stringify(moms), "klock_kg": JSON.stringify(klock_kg), "mount_clock": JSON.stringify(mount_clock), "pris_klock": JSON.stringify(pris_klock), 
-                "pris_torn": JSON.stringify(pris_torn), "benches": JSON.stringify(benches), "chairs": JSON.stringify(chairs), "pianos": JSON.stringify(pianos),
-                "spec_prices": JSON.stringify(spec_prices)}
-    send_json(json)
-    //download(JSON.stringify(json), 'json.json', 'text/plain');
-}
-
-function send_json(json){
-    $.ajax({
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(json),
-        dataType: 'json',
-        url: '/import_json/misc',
-        success: function (e) {
-            console.log(e);
-        },
-        error: function(error) {
-            console.log(error);
-        }
-     });
-}
-
 function load_values(){
     json = loadJSON("misc");
     pillar_prices = JSON.parse(json["pillar_prices"]);
@@ -80,52 +61,6 @@ function load_values(){
     chairs = JSON.parse(json["chairs"]);
     pianos = JSON.parse(json["pianos"]);
     spec_prices = JSON.parse(json["spec_prices"]);
-}
-
-function submit_misc(){
-    pillar_prices["Typ 1"] = document.getElementById("pillar_one").value;
-    pillar_prices["Typ 2"] = document.getElementById("pillar_two").value;
-    pillar_prices["Typ 3"] = document.getElementById("pillar_three").value;
-    BPI = document.getElementById("BPI").value;
-    platform_price = document.getElementById("läktare").value;
-    win_values["Typ 1"] = document.getElementById("window_one").value;
-    win_values["Typ 2"] = document.getElementById("window_two").value;
-    win_values["Typ 3"] = document.getElementById("window_three").value;
-    moms = document.getElementById("moms").value;
-    klock_kg = document.getElementById("klock_kg").value;
-    mount_clock = document.getElementById("mount_clock").value;
-    pris_klock = document.getElementById("pris_klock").value;
-    pris_torn = document.getElementById("pris_torn").value;
-    benches["Enkla"] = document.getElementById("bänkar_enkla").value;
-    benches["Påkostade"] = document.getElementById("bänkar_påkostade").value;
-    chairs["Enkla"] = document.getElementById("stolar_enkla").value;
-    chairs["Påkostade"] = document.getElementById("stolar_påkostade").value;
-    pianos["Kororgel"] = document.getElementById("kororgel").value;
-    pianos["Läktarorgel"]= document.getElementById("läktarorgel").value;
-    make_json();
-    alert("Nya värden inlästa");
-}
-
-function load_boxes(){
-    document.getElementById("pillar_one").value = pillar_prices["Typ 1"];
-    document.getElementById("pillar_two").value = pillar_prices["Typ 2"];
-    document.getElementById("pillar_three").value = pillar_prices["Typ 3"];
-    document.getElementById("BPI").value = BPI;
-    document.getElementById("läktare").value = platform_price;
-    document.getElementById("window_one").value = win_values["Typ 1"];
-    document.getElementById("window_two").value = win_values["Typ 2"];
-    document.getElementById("window_three").value = win_values["Typ 3"];
-    document.getElementById("moms").value = moms;
-    document.getElementById("klock_kg").value = klock_kg;
-    document.getElementById("mount_clock").value = mount_clock;
-    document.getElementById("pris_klock").value = pris_klock;
-    document.getElementById("pris_torn").value = pris_torn;
-    document.getElementById("bänkar_enkla").value = benches["Enkla"];
-    document.getElementById("bänkar_påkostade").value = benches["Påkostade"];
-    document.getElementById("stolar_enkla").value = chairs["Enkla"];
-    document.getElementById("stolar_påkostade").value = chairs["Påkostade"];
-    document.getElementById("kororgel").value = pianos["Kororgel"];
-    document.getElementById("läktarorgel").value = pianos["Läktarorgel"];
 }
 
 function get_bra(id, selector){
@@ -276,7 +211,7 @@ function add_own_risk(){
     eget.setAttributeNode(del);
     eget.innerHTML = "Namn: ".concat(name.value, " Pris: ", price.value, " Antal: ", choice, "     ✖")
     insertAfter(div, eget);
-    update();
+    update_risk();
 }
 
 function add_stapel(){
@@ -367,11 +302,12 @@ function delete_this(el){
     var element = el;
     element.remove();
     update();
+    update_risk();
 }
 
-function hide_sum(){
-    var x = document.getElementById("sam_form");
-    var arrow = document.getElementById("arrow");
+function hide_sum(form_name, arrow_name){
+    var x = document.getElementById(form_name);
+    var arrow = document.getElementById(arrow_name);
     if (x.style.display === "none") {
         x.style.display = "block";
         arrow.src = "/static/content/up.png";
@@ -608,6 +544,56 @@ function update_pillar(){
     document.getElementById("del_stapel").innerHTML = result_pillar;
     document.getElementById("sam_stapel").innerHTML = result_pillar;
     return(result_pillar);
+
+}
+
+function update_risk(){
+    document.getElementById("sam_kalkylvärde").innerHTML = Math.round(update_risk_calc());
+    document.getElementById("sam_förstarisk").innerHTML = Math.round(update_modify_risk());
+}
+
+function update_risk_calc(){
+    var base = document.getElementById("stomme");
+    var base_value = bases[base.options[base.selectedIndex].value];
+    var bra = document.getElementById("BRA_2").value * (1+base_value/100);
+    var calc_bra = bra  * bpi_risk * cultural_factor;
+
+    var clock = document.getElementById("klockor_förstarisk").value * building_parts["Klockor"];
+    var organ = document.getElementById("orgelstämmor_förstarisk").value * building_parts["Orgel"];
+    var window = document.getElementById("mosaik_förstarisk").value * building_parts["Mosaikfönster"];
+
+    
+    var value_own = 0;
+    var own = document.getElementsByClassName("eget_risk");
+    for(var i = 0; i < own.length; i++){
+        value_own += own[i].attributes["value"].value * own[i].attributes["name"].value;
+    }
+    if (document.getElementById("konst").checked) {
+        return (calc_bra + clock + organ + window + value_own) * 2;
+    }
+    
+    return calc_bra + clock + organ + window + value_own;
+}
+
+function update_modify_risk(){
+    if (document.getElementById("rivning").checked){
+        return raze;
+    }
+    var base = document.getElementById("stomme");
+    var base_value = bases[base.options[base.selectedIndex].value];
+    var rest = document.getElementById("material_risk");
+    var rest_value = restoration[rest.options[rest.selectedIndex].value];
+    var new_bra = document.getElementById("other_kvm").value * (1+base_value/100);
+    var calc_modify = new_bra * rest_value * bpi_risk * cultural_factor;
+
+    var clock = document.getElementById("klockor_förstarisk").value * building_parts["Klockor"];
+    var organ = document.getElementById("orgelstämmor_förstarisk").value * building_parts["Orgel"];
+    var window = document.getElementById("mosaik_förstarisk").value * building_parts["Mosaikfönster"];
+
+    if (document.getElementById("special_risk").checked){
+        return((calc_modify + clock + organ + window)* 2)
+    }
+    return calc_modify + clock + organ + window
 
 }
 

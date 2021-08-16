@@ -30,9 +30,10 @@ form {
 }
 
 
-#arrow {
+#arrow, #arrow_2 {
     width: 10pt;
     height: 10pt;
+    display: none;
 }
 
 #import {
@@ -115,12 +116,7 @@ select {
     background: url(content/portrait.png) top left no-repeat;
 }
 
-
-
-#arrow{
-    display: none;
-}
-#arrow:hover{
+#arrow:hover, #arrow_2:hover{
     cursor: pointer;
 }
 
@@ -152,7 +148,7 @@ select {
     cursor: pointer;
 }
 
-#sam_form{
+#sam_form, #sam_form_2{
     border-radius: 0.5rem;
 }
 
@@ -212,7 +208,7 @@ select {
     flex-wrap: wrap;
 }
 
-#sammanställning{
+#sammanställning, #sammanställning_2{
     position: relative;
     width: 100%;
     background-color: whitesmoke;
@@ -265,7 +261,7 @@ label{
 
 @media only screen and (min-width: 768px) {
     /* LANDSCAPE IPAD  */
-    #sam_title{
+    #sam_title, #sam_title_2{
         font-size:1.2rem;
     }
     .menuitem{
@@ -279,14 +275,14 @@ label{
         flex-basis: 41%;
         flex-grow: 1.5;
     }
-    #sammanställning {
+    #sammanställning, #sammanställning_2 {
         position: fixed;
         top: 3pt;
         right: 3pt;
         width: 20%;
         border: solid 0.5pt;
     }
-    #arrow{
+    #arrow, #arrow_2{
         display: flex;
     }
     #header{
@@ -297,7 +293,7 @@ label{
 
 @media only screen and (min-width: 992px) {
     /* PC   */
-    #sam_title{
+    #sam_title, #sam_title_2{
         font-size:1.6rem;
     }
     .menuitem{

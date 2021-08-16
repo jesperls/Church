@@ -44,7 +44,7 @@
                 <label for="BRA">BRA-yta (kvm):</label>
                 <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="BRA" name="BRA" class="value">
                 <button type="button" onclick="get_bra('BRA', 'church_choice')">Ladda in data</button>
-                <div class="info"> ? <span class="infotext">Storleken av hela kyrkoan i kvadratmeter</span> </div>
+                <div class="info"> ? <span class="infotext">Storleken av hela kyrkon i kvadratmeter</span> </div>
               </div>
 
                 <!-- <label for="kategori">Kategori:</label>
@@ -493,12 +493,14 @@
               <form autocomplete="off">
                 <div class="autocomplete">
                   <input id="church_choice_2" type="text" name="church_choice" placeholder="Kyrka">
+                  <div class="info"> ? <span class="infotext">Vilken församling kyrkan tillhör samt populärnamn på kyrkan</span> </div>
                 </div>
             </div>
             <div class="category_items">
               <label for="BRA">BRA-yta (kvm):</label>
               <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="BRA_2" name="BRA" class="value">
-              <button type="button" onclick="get_bra('BRA_2', 'church_choice_2')">Ladda in data</button>    
+              <button type="button" onclick="get_bra('BRA_2', 'church_choice_2')">Ladda in data</button>
+              <div class="info"> ? <span class="infotext">Storleken av hela kyrkoan i kvadratmeter</span> </div>
             </div>
             </form>
           </form>

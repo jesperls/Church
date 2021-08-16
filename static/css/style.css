@@ -113,7 +113,7 @@ select {
 
 #header{
     background-color: whitesmoke;
-    background: url(content/portrait.png) top left no-repeat;
+    background: url(content/portrait_2.png) top left no-repeat;
 }
 
 #arrow:hover, #arrow_2:hover{
@@ -163,6 +163,7 @@ select {
     height: -moz-fit-content;
     height: fit-content;
     background-color: white;
+    border: solid 1px gray;
 }
 
 .category_items{

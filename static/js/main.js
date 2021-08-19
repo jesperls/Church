@@ -3,6 +3,7 @@ var pillar_prices = {"Typ 1" : 37879, "Typ 2": 89531, "Typ 3": 261706};
 var BPI = 42870;
 var platform_price = 5165;
 var win_values = {"Typ 1" : 18078, "Typ 2" : 49931, "Typ 3": 86088};
+var decoration = {"Enkel": 0.30, "Någon påkostad": 0.50, "Påkostad": 0.70}
 //var win_types = ["Typ 1", "Typ 2", "Typ 3"];
 var moms = 1.25;
 var klock_kg = 400;
@@ -63,6 +64,7 @@ function load_values(){
     chairs = JSON.parse(json["chairs"]);
     pianos = JSON.parse(json["pianos"]);
     spec_prices = JSON.parse(json["spec_prices"]);
+    decoration = JSON.parse(json["decoration"]);
 }
 
 function get_bra(id, selector){
@@ -368,9 +370,24 @@ function get_tower(id, json_name, height){
     }
 }
 
+function show_pictures(id){
+    var boxes = document.getElementsByClassName("picture_box"); 
+    for(var i = 0; i < boxes.length; i++){
+        boxes[i].style.display = "none";
+    }
+    if(id != null){
+        document.getElementById(id).style.display = "flex";
+    }
+}
+
 function update(){
     var total = 0;
-    total += update_building();
+    var building = update_building();
+    total += building;
+
+    var decor = update_decoration(building);
+    total += decor;
+
     total += update_tower();
     total += update_accessories();
     var special = update_special();
@@ -400,6 +417,15 @@ function update(){
         }
     }
     document.getElementById("sum").innerHTML = total;
+}
+
+function update_decoration(building_value){
+    var choice_box = document.getElementById("utsmyckning");
+    var choice = choice_box.options[choice_box.selectedIndex].value;
+    var decor = decoration[choice]
+    var decor_value = Math.round(building_value * decor);
+    document.getElementById("sam_decoration").innerHTML = decor_value;
+    return(decor_value);
 }
 
 function update_building(){

@@ -182,8 +182,6 @@ select {
 
 
 #form {
-    margin: 0;
-    padding: 0;
     display: flex;
     background-color: whitesmoke;
     flex-direction:row;
@@ -218,12 +216,11 @@ select {
     border: none;
     display: flex;
     flex-direction: column;
-    width: -moz-fit-content;
-    width: fit-content;
     margin-left: auto;
     margin-right: auto;
     padding: 5pt 5pt 5pt 5pt;
     border-radius: 0.5rem;
+    border: solid 1px;
 }
 
 #sammanställning:hover #sam_form{
@@ -285,6 +282,24 @@ label{
     flex-direction: column;
 }
 
+.clickable{
+    border-bottom: 1px dotted;
+}
+
+.picture_box{
+    display: none;
+    position: fixed;
+    width: 95%;
+    height: 90%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+    background-color:white;
+    border-radius: 2rem;
+    border: 5px solid
+}
+
 
 /* EVERYTHING ABOVE PHONE  */
 
@@ -316,6 +331,8 @@ label{
         right: 3pt;
         width: 20%;
         border: solid 0.5pt;
+        width: -moz-fit-content;
+        width: fit-content;
     }
     #sam_form{
         display: inline-block;

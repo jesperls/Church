@@ -57,7 +57,7 @@
                 </select><br><br> -->
               <div class="category_items">
                 <label for="utsmyckning">Utsmyckning:</label>
-                <select id="utsmyckning" name="utsmyckning" class="value" disabled>
+                <select id="utsmyckning" name="utsmyckning" class="value">
                     {%for i in range(0, len["decorations"])%}
                       <option value="{{categories["decorations"][i]}}">{{categories["decorations"][i]}}</option>
                     {%endfor%}
@@ -69,7 +69,7 @@
                 <h2>Kalkylvärde kyrkobyggnad</h2>
               </div>
               <div class="category_items">
-                <label for="vägg">Vägg:</label>
+                <label for="vägg" onclick="show_pictures('wall_pictures')" class="clickable">Vägg:</label>
                 <select id="vägg" name="vägg">
                     {%for i in range(0, len["walls"])%}
                       <option value="{{categories["walls"][i]}}">{{categories["walls"][i]}}</option>
@@ -78,7 +78,7 @@
                 <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens vägg är byggt av, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div>
               </div>
               <div class="category_items">
-                <label for="golv">Golv:</label>
+                <label for="golv" onclick="show_pictures('floor_pictures')" class="clickable">Golv:</label>
                 <select id="golv" name="golv">
                     {%for i in range(0, len["floors"])%}
                       <option value="{{categories["floors"][i]}}">{{categories["floors"][i]}}</option>
@@ -511,6 +511,10 @@
                   <span id="sam_byggnad">0</span>
                 </div>
                 <div class="category_items">
+                  <label for="sam_decoration">Byggnadens utsmyckning: </label>
+                  <span id="sam_decoration">0</span>
+                </div>
+                <div class="category_items">
                   <label for="sam_torn">Torn: </label>
                   <span id="sam_torn">0</span>
                 </div>
@@ -536,8 +540,18 @@
               <img src="{{ url_for('static',filename='content/up.png') }}" alt="logo" id="arrow" onclick="hide_sum('sam_form', 'arrow')">
   
             </div>
+
+
+
             <!-- <button id="submit">Submit</button> -->
         </div>
+
+          <div class="picture_box" id="wall_pictures" onclick="show_pictures()">
+            <p>VÄGGAR</p>
+          </div>
+          <div class="picture_box" id="floor_pictures" onclick="show_pictures()">
+            <p>GOLV</p>
+          </div>
 
         <!--
         <div id="första_risk" class = "pages" hidden="true" onchange="update_risk()" >

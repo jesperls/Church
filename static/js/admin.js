@@ -3,6 +3,7 @@ var pillar_prices = {"Typ 1" : 37879, "Typ 2": 89531, "Typ 3": 261706};
 var BPI = 42870;
 var platform_price = 5165;
 var win_values = {"Typ 1" : 18078, "Typ 2" : 49931, "Typ 3": 86088};
+var decoration = {"Enkel": 0.30, "Något påkostad": 0.50, "Påkostad": 0.70};
 var moms = 1.25;
 var klock_kg = 400;
 var mount_clock = 25826;
@@ -37,8 +38,8 @@ function make_json(){
     var json = {"pillar_prices" : JSON.stringify(pillar_prices), "BPI": JSON.stringify(BPI), "platform_price": JSON.stringify(platform_price), "win_values": JSON.stringify(win_values), 
                 "moms": JSON.stringify(moms), "klock_kg": JSON.stringify(klock_kg), "mount_clock": JSON.stringify(mount_clock), "pris_klock": JSON.stringify(pris_klock), 
                 "pris_torn": JSON.stringify(pris_torn), "benches": JSON.stringify(benches), "chairs": JSON.stringify(chairs), "pianos": JSON.stringify(pianos),
-                "spec_prices": JSON.stringify(spec_prices)};
-    send_json(json, 'risk');
+                "spec_prices": JSON.stringify(spec_prices), "decoration" : JSON.stringify(decoration)};
+    send_json(json, 'misc');
     //download(JSON.stringify(json), 'json.json', 'text/plain');
 }
 
@@ -79,8 +80,9 @@ function load_values(){
     chairs = JSON.parse(json["chairs"]);
     pianos = JSON.parse(json["pianos"]);
     spec_prices = JSON.parse(json["spec_prices"]);
+    decoration = JSON.parse(json["decoration"]);
 
-    json = loadJson("misc_risk");
+    json = loadJSON("misc_risk");
     bases = JSON.parse(json["bases"]);
     building_parts = JSON.parse(json["building_parts"]);
     restoration = JSON.parse(json["restoration"]);
@@ -109,6 +111,9 @@ function submit_misc(){
     chairs["Påkostade"] = document.getElementById("stolar_påkostade").value;
     pianos["Kororgel"] = document.getElementById("kororgel").value;
     pianos["Läktarorgel"]= document.getElementById("läktarorgel").value;
+    decoration["Enkel"] = document.getElementById("simple").value;
+    decoration["Något påkostad"] = document.getElementById("somewhat").value;
+    decoration["Påkostad"] = document.getElementById("expensive").value;
     make_json();
     alert("Nya värden inlästa");
 }
@@ -136,4 +141,7 @@ function load_boxes(){
     document.getElementById("stolar_påkostade").value = chairs["Påkostade"];
     document.getElementById("kororgel").value = pianos["Kororgel"];
     document.getElementById("läktarorgel").value = pianos["Läktarorgel"];
+    document.getElementById("simple").value = decoration["Enkel"];
+    document.getElementById("somewhat").value = decoration["Något påkostad"];
+    document.getElementById("expensive").value = decoration["Påkostad"];
 }

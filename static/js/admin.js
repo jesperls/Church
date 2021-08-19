@@ -17,7 +17,7 @@ var building_parts = {"Klockor" : 500000, "Orgel" : 100000, "Stämmor" : 100000,
 var restoration = {"Budget" : 0.8, "Standard" : 1.0, "Exklusivt" : 2.0};
 var bpi_risk = 33592;
 var raze = 250000;
-var cultural_factor = 2.0;
+var factor = 2.0;
 
 function loadJSON(name){
     var json = null;
@@ -37,18 +37,24 @@ function make_json(){
     var json = {"pillar_prices" : JSON.stringify(pillar_prices), "BPI": JSON.stringify(BPI), "platform_price": JSON.stringify(platform_price), "win_values": JSON.stringify(win_values), 
                 "moms": JSON.stringify(moms), "klock_kg": JSON.stringify(klock_kg), "mount_clock": JSON.stringify(mount_clock), "pris_klock": JSON.stringify(pris_klock), 
                 "pris_torn": JSON.stringify(pris_torn), "benches": JSON.stringify(benches), "chairs": JSON.stringify(chairs), "pianos": JSON.stringify(pianos),
-                "spec_prices": JSON.stringify(spec_prices)}
-    send_json(json)
+                "spec_prices": JSON.stringify(spec_prices)};
+    send_json(json, 'risk');
     //download(JSON.stringify(json), 'json.json', 'text/plain');
 }
 
-function send_json(json){
+function make_risk_json(){
+    var json = {"bases" : JSON.stringify(bases), "building_parts" : JSON.stringify(building_parts), "restoration" : JSON.stringify(restoration), "bpi_risk" : JSON.stringify(bpi_risk), 
+                "raze" : JSON.stringify(raze), "factor" : JSON.stringify(factor)};
+    send_json(json, 'misc_risk');
+}
+
+function send_json(json, name){
     $.ajax({
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(json),
         dataType: 'json',
-        url: '/import_json/misc',
+        url: '/import_json/'.concat(name),
         success: function (e) {
             console.log(e);
         },
@@ -73,6 +79,14 @@ function load_values(){
     chairs = JSON.parse(json["chairs"]);
     pianos = JSON.parse(json["pianos"]);
     spec_prices = JSON.parse(json["spec_prices"]);
+
+    json = loadJson("misc_risk");
+    bases = JSON.parse(json["bases"]);
+    building_parts = JSON.parse(json["building_parts"]);
+    restoration = JSON.parse(json["restoration"]);
+    bpi_risk = JSON.parse(json["bpi_risk"]);
+    raze = JSON.parse(json["raze"]);
+    factor = JSON.parse(json["factor"]);
 }
 
 function submit_misc(){
@@ -97,6 +111,9 @@ function submit_misc(){
     pianos["Läktarorgel"]= document.getElementById("läktarorgel").value;
     make_json();
     alert("Nya värden inlästa");
+}
+
+function submit_misc_risk(){
 }
 
 function load_boxes(){

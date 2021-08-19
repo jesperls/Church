@@ -14,9 +14,11 @@
             <img id="title_image" src="{{ url_for('static',filename='content/Logo_main.png') }}" alt="logo">
             <h1 id="title">Beräkningsverktyg byggnadsvärde kyrkor</h1>
             <div id="menubar">
-              <div class="menuitem" onclick="switch_tab('form')">Vanlig försäkring</div>
+              <div class="menuitem" onclick="switch_tab('form')">Försäkrings verktyget</div>
+              <!--
               <div class="menuitem" onclick="switch_tab('första_risk')">Förstarisk</div>
               <div class="menuitem" onclick="switch_tab('bildexempel')">Bildexempel</div>
+              -->
               <div class="menuitem" onclick="switch_tab('information')">Information</div>
             </div>
         </div>
@@ -449,6 +451,58 @@
                 <span id="del_stapel">0</span>
               </div>
             </form>
+
+
+            <form class="categories" onchange="update()">
+              <div class="category_title">
+                <h2>Förstarisk</h2>
+              </div>
+              
+              <ul id="choices_risk">
+                <li id="raze_option" class="risk_option" onclick="risk_menu('raze')">Enbart Rivning</li>
+                <li id="modify_option" class="risk_option" onclick="risk_menu('modify')">Justering av förstarisk</li>
+                <li id="own_option" class="risk_option" onclick="risk_menu('own')">Egenbedömning</li>
+              </ul>
+
+              <div id=raze class="risk_selections">
+                <p>Istället för att återställa kyrkan vid stora skador så kommer den istället att rivas och området saneras, priset för detta är 250 000kr.</p>
+                    
+                <div class="category_items">
+                  <label for="rivning">Enbart rivning/sanering vid totalskada: </label>
+                  <input type="checkbox" id="rivning" name="rivning">
+                </div>
+              </div>
+
+              <div id="modify" class="risk_selections">
+                <p>Om ni istället för att försäkra eran nuvarande kyrka vill att en ny, mindre kyrka ska byggas upp vid stora skador, beskriv hur ni vill ha den. Tillbehör tillagda i "Särskilt värderade tillbehör" kommer att tas med i beräkningen.</p>
+                <div class="category_items">
+                  <label for="other_kvm">Uppbyggnad till annat (kvm):</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="other_kvm" name="other_kvm">
+                  <div class="info"> ? <span class="infotext">Hur stor den nybyggda kyrkan ska vara</span> </div>
+                </div>
+                <div class="category_items">
+                  <label for="material_risk">Återställningsgrad materialval: </label>
+                  <select id="material_risk" name="material_risk" class="value_grund">
+                      {%for i in range(0, len["material_restoration"])%}
+                        <option value="{{categories["material_restoration"][i]}}">{{categories["material_restoration"][i]}}</option>
+                      {%endfor%}
+                  </select>
+                  <div class="info"> ? <span class="infotext">Kvaliteen på materialet nya kyrkan ska byggas upp av</span> </div>
+                </div>
+              </div>
+
+              <div id="own" class="risk_selections">
+                <p>Hur mycket ni har mätt upp att kyrkan ska försäkras för om ni inte vill använda er av verktygets beräknade värde.</p>
+                <div class="category_items">
+                  <label for="own_value">Eget värde:</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="own_value" name="own_value">
+                </div>
+              </div>
+            </form>
+            <br><br><br>
+
+
+
             <div id="sammanställning">
               <h1 id="sam_title">Sammanställning</h1>
               <form id="sam_form">
@@ -484,6 +538,8 @@
             </div>
             <!-- <button id="submit">Submit</button> -->
         </div>
+
+        <!--
         <div id="första_risk" class = "pages" hidden="true" onchange="update_risk()" >
           <form class="categories">
             <div class="category_title">
@@ -550,43 +606,7 @@
               <input type="checkbox" id="konst" name="konst">
             </div>
           </form>
-          <form class="categories">
-            <div class="category_title">
-              <h2>Justering av förstarisk belopp</h2>
-            </div>
-            <div class="category_items">
-              <label for="rivning">Enbart rivning/sanering vid totalskada: </label>
-              <input type="checkbox" id="rivning" name="rivning">
-              <div class="info"> ? <span class="infotext">Om kyrkan enbart ska rivas då stor skada mot byggnaden inträffat</span> </div>
-            </div>
-            <div class="category_items">
-              <label for="state_risk">Fastighetens skick: </label>
-              <select id="state_risk" name="state_risk" class="value_grund">
-                  {%for i in range(0, len["church_states"])%}
-                    <option value="{{categories["church_states"][i]}}">{{categories["church_states"][i]}}</option>
-                  {%endfor%}
-              </select>
-            </div>
-            <div class="category_items">
-              <label for="other_kvm">Uppbyggnad till annat (kvm):</label>
-              <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="other_kvm" name="other_kvm">
-              <div class="info"> ? <span class="infotext">Hur stor den nybyggda kyrkan ska vara</span> </div>
-            </div>
-            <div class="category_items">
-              <label for="material_risk">Återställningsgrad materialval: </label>
-              <select id="material_risk" name="material_risk" class="value_grund">
-                  {%for i in range(0, len["material_restoration"])%}
-                    <option value="{{categories["material_restoration"][i]}}">{{categories["material_restoration"][i]}}</option>
-                  {%endfor%}
-              </select>
-              <div class="info"> ? <span class="infotext">Kvaliteen på materialet nya kyrkan ska byggas upp av</span> </div>
-            </div>
-            <div class="category_items">
-              <label for="special_risk">Kulturell särart (Återställning med icke rationella metoder): </label>
-              <input type="checkbox" id="special_risk" name="special_risk">
-              <div class="info"> ? <span class="infotext">Om kyrkan innehåller många unika föremål som kommer att kosta mer att återställa/ersätta</span> </div>
-            </div>
-          </form>
+          
           
           <div id="sammanställning_2">
             <h1 id="sam_title_2">Sammanställning</h1>
@@ -604,6 +624,7 @@
 
           </div>
         </div>
+        -->
         <div id="information" class = "pages" hidden="true">
           <p>Placeholder information</p>
           <a href="/admin_panel" id="admin">  

@@ -14,7 +14,7 @@
             <img id="title_image" src="{{ url_for('static',filename='content/Logo_main.png') }}" alt="logo">
             <h1 id="title">Beräkningsverktyg adminpanel</h1>
             <div id="menubar">
-              <div class="menuitem" onclick="location.href='/'">Gå tillbaka</div>
+                <div class="menuitem" onclick="location.href='/'">Gå tillbaka</div>
             </div>
         </div>
         <!-- 
@@ -35,7 +35,7 @@
         <div id="form">
             <form class="categories">
                 <div class="category_title">
-                  <h2>Diverse data</h2>
+                    <h2>Diverse data</h2>
                 </div>
                 <!--PILLAR-->
                 <div class="category_items">
@@ -124,7 +124,7 @@
             </form>
             <div class="categories">
                 <div class="category_title">
-                  <h2>Första risk data</h2>
+                    <h2>Första risk data</h2>
                 </div>
                 <div class="category_items">
                     <label>Stomme uppräkning %</label><br>
@@ -170,6 +170,7 @@
                     <label for="factor">Faktor kalkylvärde:</label>
                     <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="factor" name="factor">
                 </div>
+                <button type="button" onclick="make_risk_json()">Ladda in ny data</button>
 
 
 
@@ -190,7 +191,7 @@
             </div>
             <div class="categories">
                 <div class="category_title">
-                  <h2>Excel data</h2>
+                    <h2>Excel data</h2>
                 </div>
                 <div id="import" class=category_items>
                     <p>Här laddar man upp excel filen med data på väggar, golv etc.</p>

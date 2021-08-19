@@ -26,15 +26,15 @@ material_restoration = ["Budget", "Standard", "Exklusivt"]
 @app.route('/')
 def homepage():
     return render_template("index.html",
-                           len={"types": len(types), "decorations": len(decorations), "walls": len(walls),
+                            len={"types": len(types), "decorations": len(decorations), "walls": len(walls),
                                 "floors": len(floors), "inner_roof": len(inner_roof), "outer_roof": len(outer_roof),
                                 "tower_roof": len(tower_roof), "stapel_typer": len(stapel_typer),
                                 "fönster_typer": len(fönster_typer), "churches": len(churches), "parishes": len(parishes),
                                 "frames": len(frames), "church_states": len(church_states), "material_restoration": len(material_restoration)},
-                           categories={"types": types, "decorations": decorations, "walls": walls, "floors": floors,
-                                       "inner_roof": inner_roof, "outer_roof": outer_roof, "tower_roof": tower_roof,
-                                       "stapel_typer": stapel_typer, "fönster_typer": fönster_typer, "churches": churches, "parishes": parishes,
-                                       "frames": frames, "church_states": church_states, "material_restoration": material_restoration})
+                            categories={"types": types, "decorations": decorations, "walls": walls, "floors": floors,
+                                        "inner_roof": inner_roof, "outer_roof": outer_roof, "tower_roof": tower_roof,
+                                        "stapel_typer": stapel_typer, "fönster_typer": fönster_typer, "churches": churches, "parishes": parishes,
+                                        "frames": frames, "church_states": church_states, "material_restoration": material_restoration})
 
 @app.route('/admin_panel')
 def admin():
@@ -91,7 +91,7 @@ def load_dfs():
 
     df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[13, 14, 15, 16, 17, 18, 19, 20])
     df.columns = ["Typ", "Beskrivning", "Plant", "Tunnavalv", "Kryssvalv", "Plant_faktor", "Tunnavalv_faktor",
-                  "Kryssvalv_faktor"]
+                    "Kryssvalv_faktor"]
     df.dropna(axis=0, thresh=4, inplace=True)
     inner_roof = []
     for index, row in df.iterrows():
@@ -107,9 +107,9 @@ def load_dfs():
     df.to_json('./static/data/outer_roofs.json', orient='records')
 
     df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[27, 28, 29, 30, 31, 32, 33, 34,
-                                                                                       35, 36])
+                                                                                        35, 36])
     df.columns = ["Typ", "Beskrivning", "Pris_4", "Pris_4_12", "Pris_12_20", "Pris_20", "Pris2_4", "Pris2_4_12",
-                  "Pris2_12_20", "Pris2_20"]
+                    "Pris2_12_20", "Pris2_20"]
     df.dropna(axis=0, thresh=4, inplace=True)
     tower_roof = []
     for index, row in df.iterrows():

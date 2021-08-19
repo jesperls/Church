@@ -18,11 +18,13 @@ var building_parts = {"Klockor" : 500000, "Orgel" : 100000, "Stämmor" : 100000,
 var restoration = {"Budget" : 0.8, "Standard" : 1.0, "Exklusivt" : 2.0};
 var bpi_risk = 33592;
 var raze = 250000;
-var cultural_factor = 2.0;
+var factor = 2.0;
 
 //THINGS THAT INCREMENT
 var clock_amounts = 0;
 var stapel_clock_amounts = 0;
+
+var selected = "none";
 
 function switch_tab(new_tab){
     pages = document.getElementsByClassName("pages");
@@ -371,8 +373,32 @@ function update(){
     total += update_building();
     total += update_tower();
     total += update_accessories();
-    total += update_special();
+    var special = update_special();
+    total += special;
     total += update_pillar();
+    if (document.getElementById("rivning").checked){
+        if (selected == "raze"){
+            document.getElementById("sum").innerHTML = 250000;
+            return;
+        }
+    }
+    if (selected == "modify"){
+        var bra = document.getElementById("other_kvm").value;
+        if (bra != ""){
+            var rest = document.getElementById("material_risk");
+            var rest_value = restoration[rest.options[rest.selectedIndex].value];
+            var new_bra = document.getElementById("other_kvm").value * rest_value * bpi_risk * factor + special;
+            document.getElementById("sum").innerHTML = new_bra;
+            return;
+        }
+    }
+    if (selected == "own"){
+        var own = document.getElementById("own_value").value;
+        if(own != ""){
+            document.getElementById("sum").innerHTML = own;
+            return;
+        }
+    }
     document.getElementById("sum").innerHTML = total;
 }
 
@@ -595,6 +621,30 @@ function update_modify_risk(){
     }
     return calc_modify + clock + organ + window
 
+}
+
+function risk_menu(option){
+    var clicked = document.getElementById(option.concat("_option")); 
+    if(selected == option){
+        clicked.style.backgroundColor = "#fed831";
+        document.getElementById(option).style.display = "none";
+        selected = "none";
+        update();
+        return;
+    }
+    selected = option;
+    var options = document.getElementsByClassName("risk_option");
+    for(var i = 0; i < options.length; i++){
+        options[i].style.backgroundColor = "#fed831";
+    }
+    clicked.style.backgroundColor = "#a88e1d";
+
+    var selections = document.getElementsByClassName("risk_selections");
+    for(var i = 0; i < selections.length; i++){
+        selections[i].style.display = "none";
+    }
+    document.getElementById(option).style.display = "flex";
+    update();
 }
 
 function init_auto(){

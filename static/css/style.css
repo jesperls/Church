@@ -149,6 +149,7 @@ select {
 }
 
 #sam_form, #sam_form_2{
+    display: none;
     border-radius: 0.5rem;
 }
 
@@ -209,8 +210,9 @@ select {
     flex-wrap: wrap;
 }
 
-#sammanställning, #sammanställning_2{
-    position: relative;
+#sammanställning{
+    position: fixed;
+    bottom: 0;
     width: 100%;
     background-color: whitesmoke;
     border: none;
@@ -222,6 +224,10 @@ select {
     margin-right: auto;
     padding: 5pt 5pt 5pt 5pt;
     border-radius: 0.5rem;
+}
+
+#sammanställning:hover #sam_form{
+    display: inline-block;
 }
 
 .info{
@@ -255,6 +261,29 @@ label{
 }
 
 
+.risk_option{
+    margin: 1rem;
+    align-items:center;
+    justify-content: center;
+    padding: 5pt;
+    font-size: 1rem;
+    background-color: #fed831;
+    border-radius: 7px;
+    text-decoration: none;
+    text-align: left;
+    display: flex;
+    height: 20pt;
+    flex-basis: 30%;
+}
+
+#choices_risk{
+    width: 80%;
+}
+
+.risk_selections{
+    display: none;
+    flex-direction: column;
+}
 
 
 /* EVERYTHING ABOVE PHONE  */
@@ -269,6 +298,10 @@ label{
         flex-basis: 18%;
         font-size: 1rem;
     }
+    
+    .risk_option{
+        font-size: 0.8rem;
+    }
     #menubar{
         flex-direction: row;
     }
@@ -277,11 +310,15 @@ label{
         flex-grow: 1.5;
     }
     #sammanställning, #sammanställning_2 {
+        bottom: auto;
         position: fixed;
         top: 3pt;
         right: 3pt;
         width: 20%;
         border: solid 0.5pt;
+    }
+    #sam_form{
+        display: inline-block;
     }
     #arrow, #arrow_2{
         display: flex;
@@ -300,6 +337,12 @@ label{
     .menuitem{
         flex-basis: 15.5%;
         font-size: 1.3rem;
+    }
+    .risk_option{
+        font-size: 1.3rem;
+    }
+    #choices_risk{
+        display: flex;
     }
     #title_image {
         width: 50rem;

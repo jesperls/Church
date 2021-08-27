@@ -82,10 +82,6 @@ def upload_json(name):
             return "Lyckades ladda upp!"
     return "Ej json fil!"
 
-@app.route('/render_pdf')
-def render_pdf():
-    return render_template("temp.html")
-
 """
 def generate_pdf(json):
     latex_jinja_env = jinja2.Environment(
@@ -186,6 +182,6 @@ def load_dfs():
 
 
 
+load_dfs()
 if __name__ == '__main__':
-    load_dfs()
     app.run(host="0.0.0.0", port="80")

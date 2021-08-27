@@ -179,7 +179,9 @@ select {
     border-radius: 0.5rem;
 }
 
-
+#fin_sum *{
+    font-size:1.2rem;
+}
 
 #form {
     display: flex;

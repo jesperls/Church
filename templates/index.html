@@ -460,8 +460,8 @@
               
               <ul id="choices_risk">
                 <li id="raze_option" class="risk_option" onclick="risk_menu('raze')">Enbart Rivning</li>
-                <li id="modify_option" class="risk_option" onclick="risk_menu('modify')">Justering av förstarisk</li>
-                <li id="own_option" class="risk_option" onclick="risk_menu('own')">Egenbedömning</li>
+                <li id="modify_option" class="risk_option" onclick="risk_menu('modify')">Justering av kalkylerat värde                </li>
+                <li id="own_option" class="risk_option" onclick="risk_menu('own')">Annat belopp</li>
               </ul>
 
               <div id=raze class="risk_selections">
@@ -476,7 +476,7 @@
               <div id="modify" class="risk_selections">
                 <p>Om ni istället för att försäkra eran nuvarande kyrka vill att en ny, mindre kyrka ska byggas upp vid stora skador, beskriv hur ni vill ha den. Tillbehör tillagda i "Särskilt värderade tillbehör" kommer att tas med i beräkningen.</p>
                 <div class="category_items">
-                  <label for="other_kvm">Uppbyggnad till annat (kvm):</label>
+                  <label for="other_kvm">Uppbyggnad till ny (kvm):</label>
                   <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="other_kvm" name="other_kvm">
                   <div class="info"> ? <span class="infotext">Hur stor den nybyggda kyrkan ska vara</span> </div>
                 </div>
@@ -494,11 +494,16 @@
               <div id="own" class="risk_selections">
                 <p>Hur mycket ni har mätt upp att kyrkan ska försäkras för om ni inte vill använda er av verktygets beräknade värde.</p>
                 <div class="category_items">
-                  <label for="own_value">Eget värde:</label>
+                  <label for="own_value">Annat belopp:</label>
                   <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="own_value" name="own_value">
                 </div>
               </div>
             </form>
+            <br>
+            <div>
+              <button type="button" onclick="export_church()">Submit</button>
+            </div>
+
             <br><br><br>
 
 
@@ -532,8 +537,8 @@
                   <label for="sam_stapel">Klockstapel: </label>
                   <span id="sam_stapel">0</span>
                 </div>
-                <div class="category_items">
-                  <label for="sum">Summa: </label>
+                <div class="category_items" id="fin_sum">
+                  <label for="sum">Kalkylerat värde: </label>
                   <span id="sum">0</span>
                 </div>
               </form>

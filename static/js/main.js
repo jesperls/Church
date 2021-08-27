@@ -49,6 +49,22 @@ function loadJSON(name){
         return json;
 }
 
+function send_json(json, name){
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(json),
+        dataType: 'json',
+        url: '/import_json/'.concat(name),
+        success: function (e) {
+            console.log(e);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+     });
+}
+
 function load_values(){
     json = loadJSON("misc");
     pillar_prices = JSON.parse(json["pillar_prices"]);
@@ -69,7 +85,7 @@ function load_values(){
 
 function get_bra(id, selector){
     var bra = document.getElementById(id);
-    var choice = document.getElementById(selector).value;
+    var choice = get_value(selector);
     var json = loadJSON("churches");
     if (test_reg(choice) == true){
         //REMEMBER TO REMOVE
@@ -175,10 +191,13 @@ function add_own(){
     var del = document.createAttribute("onclick");
     var att_name = document.createAttribute("name");
     var att_value = document.createAttribute("value");
+    var att_type = document.createAttribute("type");
     att_value.value = price.value;
     att_name.value = amount.value;
+    att_type.value = get_value("namn_eget");
     eget.setAttributeNode(att_name);
     eget.setAttributeNode(att_value);
+    eget.setAttributeNode(att_type);
     var choice = amount.options[amount.selectedIndex].value;
     cl.value = "eget";
     del.value = "delete_this(this)"
@@ -347,8 +366,7 @@ function get_factor(id, json_name, second_id=null){
 }
 
 function get_tower(id, json_name, height){
-    var selected = document.getElementById(id);
-    var choice = selected.options[selected.selectedIndex].value;
+    var choice = get_choice(id);
     var json = loadJSON(json_name)
     for (var key in json) {
         if (json.hasOwnProperty(key)) {
@@ -370,6 +388,15 @@ function get_tower(id, json_name, height){
     }
 }
 
+function get_choice(id){
+    var element = document.getElementById(id);
+    return(element.options[element.selectedIndex].value);
+}
+
+function get_value(id){
+    return document.getElementById(id).value;
+}
+
 function show_pictures(id){
     var boxes = document.getElementsByClassName("picture_box"); 
     for(var i = 0; i < boxes.length; i++){
@@ -378,6 +405,104 @@ function show_pictures(id){
     if(id != null){
         document.getElementById(id).style.display = "flex";
     }
+}
+
+function export_church(){
+    var export_data = {}
+    if (selected == "raze"){
+        export_data["Type"] = "Rivning";
+    }
+    else if (selected == "modify"){
+        export_data["Type"] = "Justering";
+    }
+    else if (selected == "own"){
+        export_data["Type"] = "Annat belopp";
+    }
+    else{
+        export_data["Type"] = "Normal";
+    }
+    export_data["Namn"] = get_value("church_choice");
+    export_data["BRA"] = get_value("BRA");
+    export_data["Utsmyckning"] = get_choice("utsmyckning");
+    var building = {};
+    building["Vägg"] = get_choice("vägg");
+    building["Golv"] = get_choice("golv");
+    building["Innertak"] = {"Namn": get_choice("innertak"), "Typ": get_choice("innertak_andra")};
+    building["Yttertak"] = {"Namn": get_choice("yttertak"), "Typ": get_choice("yttertak_andra")};
+    building["Läktare"] = get_value("läktare");
+    var windows = document.getElementsByClassName("fönster");
+    var windows_json = {"Mängd": windows.length}
+    for (var i = 0; i < windows.length; i++) {
+        windows_json[i] = {"Typ" : windows[i].attributes["name"].value, "Area": windows[i].attributes["value"].value};
+    }
+    building["Fönster"] = windows_json;
+    building["Takryttare"] = {"Pris": get_value("takryttare"), "Antal": get_choice("takryttare_antal")};
+    export_data["Byggnad"] = building;
+
+    var tower = {};
+    tower["Mått Tornbyggnad"] = {"Bredd": get_value("torn_bredd"), "Längd": get_value("torn_längd")};
+    tower["Vägg"] = get_choice("torn_vägg");
+    tower["Golv"] = get_choice("torn_golv");
+    tower["Torntak"] = {"Typ": get_choice("torn_tak"), "Höjd": get_value("tak_höjd"), "Bredd": get_value("tak_bredd"), "Längd": get_value("tak_längd"), "Antal": get_choice("tak_antal")};
+    var windows = document.getElementsByClassName("fönster_2");
+    var windows_json = {"Mängd": windows.length}
+    for (var i = 0; i < windows.length; i++) {
+        windows_json[i] = {"Typ" : windows[i].attributes["name"].value, "Area": windows[i].attributes["value"].value};
+    }
+    tower["Fönster"] = windows_json;
+    tower["Fial"] = {"Pris": get_value("fial_pris"), "Antal": get_choice("fial_antal")};
+    export_data["Torn"] = tower;
+
+    var accessories = {};
+    var clocks = document.getElementsByClassName("fönster_2");
+    var clocks_json = {"Mängd": clocks.length}
+    for (var i = 0; i < clocks.length; i++) {
+        clocks_json[i] = {"Diameter" : clocks[i].attributes["name"].value, "Vikt": clocks[i].attributes["value"].value};
+    }
+    accessories["Klockor"] = clocks_json;
+    accessories["Tornur"] = get_choice("tornur");
+    accessories["Bänkar"] = {"Enkla": get_value("bänkar_enkla"), "Påkostade": get_value("bänkar_påkostade")};
+    accessories["Stolar"] = {"Enkla": get_value("stolar_enkla"), "Påkostade": get_value("stolar_påkostade")};
+    accessories["Orgel"] = {"Kororgel": get_value("kororgel"), "Läktarorgel": get_value("läktarorgel")};
+    export_data["Tillbehör"] = accessories;
+
+    var special = {};
+    special["Altargrund"] = get_choice("altargrund");
+    special["Altare"] = get_choice("altare");
+    special["Altaruppstas"] = get_choice("altaruppstas");
+    special["Dopfunt"] = get_choice("dopfunt");
+    special["Predikstol"] = get_choice("predikstol");
+    special["Ljuskronor"] = get_choice("ljuskronor");
+    var own = document.getElementsByClassName("eget");
+    var own_json = {"Mängd": own.length}
+    for (var i = 0; i < own.length; i++) {
+        own_json[i] = {"Namn" : own[i].attributes["type"].value, "Pris": own[i].attributes["value"].value, "Antal" : own[i].attributes["name"].value};
+    }
+    special["Egna tillägg"] = own_json;
+    export_data["Särskilt värderade"] = special;
+    
+    var pillar = {};
+    pillar["Klockstapel"] = {"Typ": get_choice("stapel_typ"), "Höjd": get_value("stapel_höjd")};
+    var clocks = document.getElementsByClassName("stapel_klocka");
+    var clocks_json = {"Mängd": clocks.length}
+    for (var i = 0; i < clocks.length; i++) {
+        clocks_json[i] = {"Diameter" : clocks[i].attributes["name"].value, "Vikt": clocks[i].attributes["value"].value};
+    }
+    pillar["Klockor"] = clocks_json;
+    export_data["Klockstapel"] = pillar;
+
+    var sums = {};
+    sums["Byggnad"] = parseInt(document.getElementById("sam_byggnad").innerHTML);
+    sums["Utsmyckning"] = parseInt(document.getElementById("sam_decoration").innerHTML);
+    sums["Torn"] = parseInt(document.getElementById("sam_torn").innerHTML);
+    sums["Byggnadstillbehör"] = parseInt(document.getElementById("sam_btillbehör").innerHTML);
+    sums["Särskilt värderade"] = parseInt(document.getElementById("sam_särskilt").innerHTML);
+    sums["Klockstapel"] = parseInt(document.getElementById("sam_stapel").innerHTML);
+    sums["Kalkylerat värde"] = parseInt(document.getElementById("sum").innerHTML);
+    export_data["Summor"] = sums;
+
+    send_json(export_data, "export");
+
 }
 
 function update(){
@@ -400,17 +525,16 @@ function update(){
         }
     }
     if (selected == "modify"){
-        var bra = document.getElementById("other_kvm").value;
+        var bra = get_value("other_kvm");
         if (bra != ""){
-            var rest = document.getElementById("material_risk");
-            var rest_value = restoration[rest.options[rest.selectedIndex].value];
-            var new_bra = document.getElementById("other_kvm").value * rest_value * bpi_risk * factor + special;
+            var rest_value = restoration[get_choice("material_risk")];
+            var new_bra = bra * rest_value * bpi_risk * factor + special;
             document.getElementById("sum").innerHTML = new_bra;
             return;
         }
     }
     if (selected == "own"){
-        var own = document.getElementById("own_value").value;
+        var own = get_value("own_value");
         if(own != ""){
             document.getElementById("sum").innerHTML = own;
             return;
@@ -420,9 +544,7 @@ function update(){
 }
 
 function update_decoration(building_value){
-    var choice_box = document.getElementById("utsmyckning");
-    var choice = choice_box.options[choice_box.selectedIndex].value;
-    var decor = decoration[choice]
+    var decor = decoration[get_choice("utsmyckning")];
     var decor_value = Math.round(building_value * decor);
     document.getElementById("sam_decoration").innerHTML = decor_value;
     return(decor_value);
@@ -435,24 +557,16 @@ function update_building(){
     var outer_factor = get_factor("yttertak", "outer_roofs", "yttertak_andra");
     var prod_factor = wall_factor*floor_factor*inner_factor*outer_factor;
 
-    var bra = document.getElementById("BRA").value;
-    var tower_width = document.getElementById("torn_bredd").value;
-    var tower_length = document.getElementById("torn_längd").value;
+    var bra = get_value("BRA");
+    var tower_width = get_value("torn_bredd");
+    var tower_length = get_value("torn_längd");
 
     var value_building = (bra - (tower_width*tower_length)) * BPI * prod_factor;
 
-    var value_platform = document.getElementById("läktare").value * platform_price;
+    var value_platform = get_value("läktare") * platform_price;
 
     var value_windows = 0;
     var windows = document.getElementsByClassName("fönster");
-    //for(var i = 0; i < windows.length; i++){
-    //    for(var j = 0; j < win_types.length; j++){
-    //        if(windows[i].attributes["name"].value == win_types[j]){
-    //            value_windows = value_windows + win_values[windows[i].attributes["name"].value] * windows[i].attributes["value"].value;
-    //        }
-    //    }
-    //}
-
     for(var i = 0; i < windows.length; i++){
         for(var key in win_values){
             if(windows[i].attributes["name"].value == key){
@@ -461,10 +575,7 @@ function update_building(){
         }
     }
 
-    var rider_amount = document.getElementById("takryttare_antal");
-    var choice = rider_amount.options[rider_amount.selectedIndex].value;
-
-    var value_roof_rider = document.getElementById("takryttare").value * choice;
+    var value_roof_rider = get_value("takryttare") * get_choice("takryttare_antal");
 
     var result_building = Math.round(value_building + value_platform + value_windows + value_roof_rider);
     document.getElementById("del_byggnad").innerHTML = result_building;
@@ -476,15 +587,15 @@ function update_tower(){
     var wall_factor = get_factor("torn_vägg", "walls");
     var floor_factor = get_factor("torn_golv", "floors");
     var prod_factor = wall_factor*floor_factor;
-    var tower_width = document.getElementById("torn_bredd").value;
-    var tower_length = document.getElementById("torn_längd").value;
+    var tower_width = get_value("torn_bredd");
+    var tower_length = get_value("torn_längd");
 
     var value_tower = tower_length * tower_width * prod_factor * BPI;
 
-    var roof_height = document.getElementById("tak_höjd").value;
-    var roof_width = document.getElementById("tak_bredd").value;
-    var roof_length = document.getElementById("tak_längd").value;
-    var roof_amount = document.getElementById("tak_antal").value;
+    var roof_height = get_value("tak_höjd");
+    var roof_width = get_value("tak_bredd");
+    var roof_length = get_value("tak_längd");
+    var roof_amount = get_value("tak_antal");
     
     var price_tower = get_tower("torn_tak", "tower_roofs", roof_height);
 
@@ -493,14 +604,6 @@ function update_tower(){
     var value_windows = 0;
     var windows = document.getElementsByClassName("fönster_2");
 
-    //for(var i = 0; i < windows.length; i++){
-    //    for(var j = 0; j < win_types.length; j++){
-    //        if(windows[i].attributes["name"].value == win_types[j]){
-    //            value_windows = value_windows + win_values[windows[i].attributes["name"].value] * windows[i].attributes["value"].value;
-    //        }
-    //    }
-    //}
-
     for(var i = 0; i < windows.length; i++){
         for(var key in win_values){
             if(windows[i].attributes["name"].value == key){
@@ -508,11 +611,8 @@ function update_tower(){
             }
         }
     }
-
-    var top_amount = document.getElementById("fial_antal");
-    var choice = top_amount.options[top_amount.selectedIndex].value;
-
-    var value_top = document.getElementById("fial_pris").value * choice;
+    
+    var value_top = get_value("fial_pris") * get_choice("fial_antal");
 
     var result_tower = Math.round(value_tower + value_windows + value_roof + value_top);
     document.getElementById("del_torn").innerHTML = result_tower;
@@ -534,18 +634,16 @@ function update_accessories(){
 
     var value_elek = clocks.length * pris_klock;
 
-    var tower_clock = document.getElementById("tornur");
-    var t_choice = tower_clock.options[tower_clock.selectedIndex].value;
-    var value_tower = t_choice * pris_torn;
+    var value_tower = get_choice("tornur") * pris_torn;
 
     var value_misc = 0;
 
-    value_misc += document.getElementById("bänkar_enkla").value * benches["Enkla"];
-    value_misc += document.getElementById("bänkar_påkostade").value * benches["Påkostade"];
-    value_misc += document.getElementById("stolar_enkla").value * chairs["Enkla"];
-    value_misc += document.getElementById("stolar_påkostade").value * chairs["Påkostade"];
-    value_misc += document.getElementById("kororgel").value * pianos["Kororgel"];
-    value_misc += document.getElementById("läktarorgel").value * pianos["Läktarorgel"];
+    value_misc += get_value("bänkar_enkla") * benches["Enkla"];
+    value_misc += get_value("bänkar_påkostade") * benches["Påkostade"];
+    value_misc += get_value("stolar_enkla") * chairs["Enkla"];
+    value_misc += get_value("stolar_påkostade") * chairs["Påkostade"];
+    value_misc += get_value("kororgel") * pianos["Kororgel"];
+    value_misc += get_value("läktarorgel") * pianos["Läktarorgel"];
 
     var result_accessories = Math.round(value_clocks + value_elek + value_tower + value_misc);
     document.getElementById("del_tillbehör").innerHTML = result_accessories;
@@ -557,9 +655,7 @@ function update_accessories(){
 function update_special(){
     var value_spec = 0
     for (var key in spec_prices){
-        var obj = document.getElementById(key);
-        var val = obj.options[obj.selectedIndex].value;
-        value_spec += val * spec_prices[key];
+        value_spec += get_choice(key) * spec_prices[key];
     }
     
     var value_own = 0;
@@ -575,10 +671,8 @@ function update_special(){
 }
 
 function update_pillar(){
-    var pillar = document.getElementById("stapel_typ");
-    var pillar_choice = pillar.options[pillar.selectedIndex].value;
-    var pillar_height = document.getElementById("stapel_höjd").value;
-    var value_pillar = pillar_prices[pillar_choice] * pillar_height;
+    var pillar_height = get_value("stapel_höjd");
+    var value_pillar = pillar_prices[get_choice("stapel_typ")] * pillar_height;
     
     var value_clocks = 0;
     var clocks = document.getElementsByClassName("stapel_klocka");
@@ -586,10 +680,6 @@ function update_pillar(){
         value_clocks += parseInt(moms) * 1.3 * parseInt(clocks[i].attributes["value"].value) * parseInt(klock_kg) + parseInt(mount_clock);
     }
 
-    //var elektrisk = document.getElementById("stapel_elektrisk");
-    //var elek_choice = elektrisk.options[elektrisk.selectedIndex].value;
-    //var value_elek = elek_choice * pris_klock;
-    
     var value_elek = clocks.length * pris_klock;
 
     var result_pillar = Math.round(value_pillar + value_clocks + value_elek);
@@ -605,14 +695,13 @@ function update_risk(){
 }
 
 function update_risk_calc(){
-    var base = document.getElementById("stomme");
-    var base_value = bases[base.options[base.selectedIndex].value];
+    var base_value = bases[get_choice("stomme")];
     var bra = document.getElementById("BRA_2").value * (1+base_value/100);
     var calc_bra = bra  * bpi_risk * cultural_factor;
 
-    var clock = document.getElementById("klockor_förstarisk").value * building_parts["Klockor"];
-    var organ = document.getElementById("orgelstämmor_förstarisk").value * building_parts["Orgel"];
-    var window = document.getElementById("mosaik_förstarisk").value * building_parts["Mosaikfönster"];
+    var clock = get_value("klockor_förstarisk") * building_parts["Klockor"];
+    var organ = get_value("orgelstämmor_förstarisk") * building_parts["Orgel"];
+    var window = get_value("mosaik_förstarisk") * building_parts["Mosaikfönster"];
 
     
     var value_own = 0;
@@ -631,16 +720,17 @@ function update_modify_risk(){
     if (document.getElementById("rivning").checked){
         return raze;
     }
-    var base = document.getElementById("stomme");
-    var base_value = bases[base.options[base.selectedIndex].value];
-    var rest = document.getElementById("material_risk");
-    var rest_value = restoration[rest.options[rest.selectedIndex].value];
-    var new_bra = document.getElementById("other_kvm").value * (1+base_value/100);
+
+    var base_value = bases[get_choice("stomme")];
+
+    var rest_value = restoration[get_choice("material_risk")];
+
+    var new_bra = get_value("other_kvm") * (1+base_value/100);
     var calc_modify = new_bra * rest_value * bpi_risk * cultural_factor;
 
-    var clock = document.getElementById("klockor_förstarisk").value * building_parts["Klockor"];
-    var organ = document.getElementById("orgelstämmor_förstarisk").value * building_parts["Orgel"];
-    var window = document.getElementById("mosaik_förstarisk").value * building_parts["Mosaikfönster"];
+    var clock = get_value("klockor_förstarisk") * building_parts["Klockor"];
+    var organ = get_value("orgelstämmor_förstarisk") * building_parts["Orgel"];
+    var window = get_value("mosaik_förstarisk") * building_parts["Mosaikfönster"];
 
     if (document.getElementById("special_risk").checked){
         return((calc_modify + clock + organ + window)* 2)

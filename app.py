@@ -2,6 +2,14 @@ from flask import Flask, render_template, request
 import pandas as pd
 import json
 
+import jinja2
+import os
+import subprocess
+import tempfile
+import shutil
+from jinja2 import Template
+
+
 app = Flask(__name__)
 
 types = []
@@ -59,8 +67,10 @@ def upload(type):
 def upload_json(name):
     if request.method == 'POST':
         json_file = request.json
-        print(json)
-        if json:
+        if json_file:
+            if name == "export":
+                generate_pdf(json_file)
+                return render_template("./Kyrka.pdf")
             jsonFile = open(f"./static/data/{name}.json", "w")
             jsonFile.write(json.dumps(json_file))
             jsonFile.close()
@@ -70,6 +80,47 @@ def upload_json(name):
             return "Lyckades ladda upp!"
     return "Ej json fil!"
 
+@app.route('/render_pdf')
+def render_pdf():
+    return render_template("temp.html")
+
+
+def generate_pdf(json):
+    latex_jinja_env = jinja2.Environment(
+        block_start_string = '\BLOCK{',
+        block_end_string = '}',
+        variable_start_string = '\VAR{',
+        variable_end_string = '}',
+        comment_start_string = '\#{',
+        comment_end_string = '}',
+        line_statement_prefix = '%%',
+        line_comment_prefix = '%#',
+        trim_blocks = True,
+        autoescape = False,
+        loader = jinja2.FileSystemLoader(os.path.abspath('.'))
+    )
+    template = latex_jinja_env.get_template('./static/data/template.tex')
+
+    template_vars = {}
+    template_vars["Title"] = json["Namn"]
+    
+    current = os.getcwd()
+    temp = tempfile.mkdtemp()
+    os.chdir(temp)
+    output_file = open("./generated.tex", "w")
+    tex = template.render(template_vars)
+    output_file.write(tex)
+    output_file.close() 
+
+    proc=subprocess.Popen(['pdflatex','-interaction', 'nonstopmode', 'generated.tex'])
+    subprocess.Popen(['pdflatex', tex])
+    proc.communicate()
+
+    os.rename('generated.pdf', "Kyrka.pdf")
+    shutil.copy("Kyrka.pdf", current)
+    os.chdir(current)
+    print(os.getcwd())
+    os.replace("Kyrka.pdf", "./static/content/Kyrka.pdf")
 
 def load_dfs():
     global walls, floors, inner_roof, outer_roof, tower_roof, churches

@@ -297,7 +297,6 @@ function delete_this(el){
     var element = el;
     element.remove();
     update();
-    update_risk();
 }
 
 function hide_sum(form_name, arrow_name){
@@ -504,6 +503,7 @@ function export_church(){
 }
 
 function load_previous(){
+    document.getElementById("previous").disabled = true;
     var json = null;
         $.ajax({
             'async': false,
@@ -590,8 +590,8 @@ function load_previous(){
     selected = "none";
     risk_menu(json["Type"]);
 
-    update_risk();
     update();
+    document.getElementById("previous").disabled = false;
 }
 
 function update(){
@@ -776,55 +776,6 @@ function update_pillar(){
     document.getElementById("sam_stapel").innerHTML = result_pillar;
     return(result_pillar);
 
-}
-
-function update_risk(){
-    document.getElementById("sam_kalkylvärde").innerHTML = Math.round(update_risk_calc());
-    document.getElementById("sam_förstarisk").innerHTML = Math.round(update_modify_risk());
-}
-
-function update_risk_calc(){
-    var base_value = bases[get_choice("stomme")];
-    var bra = document.getElementById("BRA_2").value * (1+base_value/100);
-    var calc_bra = bra  * bpi_risk * cultural_factor;
-
-    var clock = get_value("klockor_förstarisk") * building_parts["Klockor"];
-    var organ = get_value("orgelstämmor_förstarisk") * building_parts["Orgel"];
-    var window = get_value("mosaik_förstarisk") * building_parts["Mosaikfönster"];
-
-    
-    var value_own = 0;
-    var own = document.getElementsByClassName("eget_risk");
-    for(var i = 0; i < own.length; i++){
-        value_own += own[i].attributes["value"].value * own[i].attributes["name"].value;
-    }
-    if (document.getElementById("konst").checked) {
-        return (calc_bra + clock + organ + window + value_own) * 2;
-    }
-    
-    return calc_bra + clock + organ + window + value_own;
-}
-
-function update_modify_risk(){
-    if (document.getElementById("rivning").checked){
-        return raze;
-    }
-
-    var base_value = bases[get_choice("stomme")];
-
-    var rest_value = restoration[get_choice("material_risk")];
-
-    var new_bra = get_value("other_kvm") * (1+base_value/100);
-    var calc_modify = new_bra * rest_value * bpi_risk * cultural_factor;
-
-    var clock = get_value("klockor_förstarisk") * building_parts["Klockor"];
-    var organ = get_value("orgelstämmor_förstarisk") * building_parts["Orgel"];
-    var window = get_value("mosaik_förstarisk") * building_parts["Mosaikfönster"];
-
-    if (document.getElementById("special_risk").checked){
-        return((calc_modify + clock + organ + window)* 2)
-    }
-    return calc_modify + clock + organ + window
 }
 
 function risk_menu(option){

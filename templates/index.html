@@ -39,8 +39,11 @@
                 <form autocomplete="off">
                   <div class="autocomplete">
                     <input id="church_choice" type="text" name="church_choice" placeholder="Kyrka">
-                  </div>
                   <div class="info"> ? <span class="infotext">Vilken församling kyrkan tillhör samt populärnamn på kyrkan</span> </div>
+                  </div>
+              </div>
+              <div class="category_items">
+                <button type="button" onclick="load_previous()">Ladda in tidigare sparade värden för kyrka</button>
               </div>
               <div class="category_items">
                 <label for="BRA">BRA-yta (kvm):</label>
@@ -56,7 +59,7 @@
                     {%endfor%}
                 </select><br><br> -->
               <div class="category_items">
-                <label for="utsmyckning">Utsmyckning:</label>
+                <label for="utsmyckning" onclick="show_pictures('decoration_pictures')" class="clickable">Utsmyckning:</label>
                 <select id="utsmyckning" name="utsmyckning" class="value">
                     {%for i in range(0, len["decorations"])%}
                       <option value="{{categories["decorations"][i]}}">{{categories["decorations"][i]}}</option>
@@ -120,7 +123,7 @@
                 <div class="info"> ? <span class="infotext">Storleken på läktarplattformen i kvadratmeter</span> </div>
               </div>
               <div class="category_items">
-                <label>Dekorerade Fönster</label>
+                <label onclick="show_pictures('window_pictures')" class="clickable">Dekorerade Fönster</label>
                 <div class="info"> ? <span class="infotext">Här lägger du till varje fönster i kyrkobyggnaden var för sig genom att välja typ och skriva in storleken i kvadratmeter, du kan ta bort ett värde genom att klicka på det</span> </div><br>
                 <label for="fönster_typ">Typ</span>
                 <select id="fönster_typ" name="fönster_typ" class="fönster_typ">
@@ -228,7 +231,7 @@
 
 
               <div class="category_items">
-                <label>Dekorerade Fönster</label>
+                <label onclick="show_pictures('window_pictures')" class="clickable">Dekorerade Fönster</label>
                 <div class="info"> ? <span class="infotext">Här lägger du till varje fönster i kyrktornets var för sig genom att välja typ och skriva in storleken i kvadratmeter, du kan ta bort ett värde genom att klicka på det</span> </div><br>
                 <label for="fönster_typ_2">Typ</span>
                 <select id="fönster_typ_2" name="fönster_typ_2" class="fönster_typ_2">
@@ -289,7 +292,7 @@
                 <div class="info"> ? <span class="infotext">Hur många tornur som finns i kyrkan</span> </div><br>
               </div>
               <div class="category_items">
-                <label>Bänkar</label>
+                <label onclick="show_pictures('bench_pictures')" class="clickable">Bänkar</label>
                 <div class="info"> ? <span class="infotext">Hur många av varje typ av bänk som finns i kyrkan</span> </div><br>
                 <div>
                   <label for="bänkar_enkla">Enkla:</label>
@@ -301,7 +304,7 @@
                 </div>
                 </div>
               <div class="category_items">
-                <label>Stolar</label>
+                <label onclick="show_pictures('chair_pictures')" class="clickable">Stolar</label>
                 <div class="info"> ? <span class="infotext">Hur många av varje typ av stol som finns i kyrkan</span> </div><br>
                 <div>
                   <label for="stolar_enkla">Enkla:</label>
@@ -427,7 +430,6 @@
                 <br class="mobile_break">
                 <label for="stapel_höjd">Höjd (m):</label>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_höjd" name="stapel_höjd">
-                <!--<button onclick="add_stapel()" id="stepl_knapp" type='button'>Lägg till</button><br id="stapel_break">-->
               </div>
               <div class="category_items">
                 <label>Klockor</label>
@@ -500,15 +502,8 @@
               </div>
             </form>
             <br>
-            <div>
-              <button type="button" onclick="export_church()">Submit</button>
-              <a href="{{ url_for('static',filename='content/Kyrka.pdf') }}" download>
-                  <button type="button">Extrahera</button>
-              </a>
-            </div>
 
             <br><br><br>
-
 
 
             <div id="sammanställning">
@@ -544,6 +539,8 @@
                   <label for="sum">Kalkylerat värde: </label>
                   <span id="sum">0</span>
                 </div>
+                
+                <button type="button" onclick="export_church()">Spara kyrka</button>
               </form>
               <img src="{{ url_for('static',filename='content/up.png') }}" alt="logo" id="arrow" onclick="hide_sum('sam_form', 'arrow')">
   
@@ -553,12 +550,106 @@
 
             <!-- <button id="submit">Submit</button> -->
         </div>
+        
 
           <div class="picture_box" id="wall_pictures" onclick="show_pictures()">
-            <p>VÄGGAR</p>
+            <div class="image_items">
+            </div>
           </div>
           <div class="picture_box" id="floor_pictures" onclick="show_pictures()">
             <p>GOLV</p>
+          </div>
+          <div class="picture_box" id="bench_pictures" onclick="show_pictures()">
+            <div class="child_picture">
+              <div class="image_items">
+                <label for="bench1">Bänk enkel</label>
+                <img src="{{ url_for('static',filename='content/Bilder/bänk_enkel.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Bänk påkostad</label>
+                <img src="{{ url_for('static',filename='content/Bilder/bänk_påkostad.jpg')}}" class="images">
+              </div>
+            </div>
+          </div>
+          <div class="picture_box" id="chair_pictures" onclick="show_pictures()">
+            <div class="child_picture">
+              <div class="image_items">
+                <label for="bench1">Stol enkel</label>
+                <img src="{{ url_for('static',filename='content/Bilder/stol_enkel.jpg')}}" class="images">
+              </div>
+              <div class="image_items"><br>
+                <label for="bench1">Stol påkostad</label>
+                <img src="{{ url_for('static',filename='content/Bilder/stol_påkostad.jpg')}}" class="images">
+              </div>
+            </div>
+          </div>
+          <div class="picture_box" id="window_pictures" onclick="show_pictures()">
+            <div class="child_picture">
+              <div class="image_items">
+                <label for="bench1">Fönster typ 1</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Fönster_typ1.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Fönster typ 2a</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Fönster_typ2a.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Fönster typ 2b</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Fönster_typ2b.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Fönster typ 3a</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Fönster_typ3a.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Fönster typ 3b</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Fönster_typ3b.jpg')}}" class="images">
+              </div>
+            </div>
+          </div>
+          <div class="picture_box" id="decoration_pictures" onclick="show_pictures()">
+            <div class="child_picture">
+              <div class="image_items">
+                <label for="bench1">Utsmyckning enkel a</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_enkel_a.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Utsmyckning enkel b</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_enkel_b.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Utsmyckning enkel c</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_enkel_c.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Utsmyckning något påkostad a</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_något_påkostad_a.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Utsmyckning något påkostad b</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_något_påkostad_b.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Utsmyckning påkostad a</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_påkostad_a.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Utsmyckning påkostad b</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_påkostad_b.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Utsmyckning påkostad c</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_påkostad_c.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Utsmyckning påkostad d</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_påkostad_d.jpg')}}" class="images">
+              </div>
+              <div class="image_items">
+                <label for="bench1">Utsmyckning påkostad e</label>
+                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_påkostad_e.jpg')}}" class="images">
+              </div>
+            </div>
           </div>
 
         <!--
@@ -660,12 +751,6 @@
             width="100%"
           ></iframe>
         </div>
-        <div id="bildexempel" class = "pages" hidden="true">
-          <p>BILDEXEMPEL EJ IMPLEMENTERAT</p>
-        </div>
-
-        
-        
         <!-- <button type="button" id="json" onclick="make_json()">JSON</button> -->
     </body>
 </html>

@@ -69,8 +69,10 @@ def upload_json(name):
         json_file = request.json
         if json_file:
             if name == "export":
-                generate_pdf(json_file)
-                return render_template("./Kyrka.pdf")
+                jsonFile = open(f"./static/saved/{json_file['Namn']}.json", "w")
+                jsonFile.write(json.dumps(json_file))
+                jsonFile.close()
+                return "Success!"
             jsonFile = open(f"./static/data/{name}.json", "w")
             jsonFile.write(json.dumps(json_file))
             jsonFile.close()
@@ -84,7 +86,7 @@ def upload_json(name):
 def render_pdf():
     return render_template("temp.html")
 
-
+"""
 def generate_pdf(json):
     latex_jinja_env = jinja2.Environment(
         block_start_string = '\BLOCK{',
@@ -121,6 +123,7 @@ def generate_pdf(json):
     os.chdir(current)
     print(os.getcwd())
     os.replace("Kyrka.pdf", "./static/content/Kyrka.pdf")
+    """
 
 def load_dfs():
     global walls, floors, inner_roof, outer_roof, tower_roof, churches

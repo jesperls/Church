@@ -143,7 +143,7 @@ function add_clock(){
     clock.setAttributeNode(cl);
     clock.setAttributeNode(del);
     clock_amounts += 1;
-    clock.innerHTML = "Klocka ".concat(clock_amounts, ": Diameter : ", diam.value, " Vikt: ", weight.value, "     ✖")
+    clock.innerHTML = "<b>Klocka</b> ".concat(clock_amounts, ": <b>Diameter:</b> ", diam.value, " <b>Vikt:</b> ", weight.value, "     ✖")
     insertAfter(div, clock);
     update();
 }
@@ -171,7 +171,7 @@ function add_stapel_clock(){
     clock.setAttributeNode(cl);
     clock.setAttributeNode(del);
     stapel_clock_amounts += 1;
-    clock.innerHTML = "Klocka ".concat(stapel_clock_amounts, ": Diameter : ", diam.value, " Vikt: ", weight.value, "     ✖")
+    clock.innerHTML = "<b>Klocka</b> ".concat(stapel_clock_amounts, ": <b>Diameter:</b> ", diam.value, " <b>Vikt:</b> ", weight.value, "     ✖")
     insertAfter(div, clock);
     update();
 }
@@ -203,7 +203,7 @@ function add_own(){
     del.value = "delete_this(this)"
     eget.setAttributeNode(cl);
     eget.setAttributeNode(del);
-    eget.innerHTML = "Namn: ".concat(name.value, " Pris: ", price.value, " Antal: ", choice, "     ✖")
+    eget.innerHTML = "<b>Namn:</b> ".concat(name.value, " <b>Pris:</b> ", price.value, " <b>Antal:</b> ", choice, "     ✖")
     insertAfter(div, eget);
     update();
 }
@@ -232,37 +232,9 @@ function add_own_risk(){
     del.value = "delete_this(this)"
     eget.setAttributeNode(cl);
     eget.setAttributeNode(del);
-    eget.innerHTML = "Namn: ".concat(name.value, " Pris: ", price.value, " Antal: ", choice, "     ✖")
+    eget.innerHTML = "<b>Namn:</b> ".concat(name.value, " <b>Pris:</b> ", price.value, " <b>Antal:</b> ", choice, "     ✖")
     insertAfter(div, eget);
     update_risk();
-}
-
-function add_stapel(){
-    var name = document.getElementById("stapel_typ");
-    var choice = name.options[name.selectedIndex].value;
-    var height = document.getElementById("stapel_höjd");
-    if(choice == null || height.value == null || choice == "" || height.value == ""){
-        alert("Fyll i alla fält!");
-        return false;
-    }
-    var br = document.createElement("br");
-    var div = document.getElementById("stapel_break");
-    var stapel = document.createElement("div");
-    var cl = document.createAttribute("class");
-    var del = document.createAttribute("onclick");
-    var att_name = document.createAttribute("name");
-    var att_value = document.createAttribute("value");
-    att_value.value = height.value;
-    att_name.value = choice;
-    stapel.setAttributeNode(att_name);
-    stapel.setAttributeNode(att_value);
-    cl.value = "stapel";
-    del.value = "delete_this(this)"
-    stapel.setAttributeNode(cl);
-    stapel.setAttributeNode(del);
-    stapel.innerHTML = "".concat(choice, " Höjd: ", height.value, "m     ✖")
-    insertAfter(div, stapel);
-    update();
 }
 
 function add_window(){
@@ -407,19 +379,38 @@ function show_pictures(id){
     }
 }
 
+function checkFileExist(urlToFile){
+    var xhr = new XMLHttpRequest();
+    xhr.open('HEAD', urlToFile, false);
+    xhr.send();
+    if (xhr.status == "404") {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function export_church(){
+    if (get_value("church_choice") == "" || get_value("church_choice") == null){
+        return;
+    }
+    if (checkFileExist("/static/saved/".concat(get_value("church_choice"), ".json")) == true){ 
+        if (confirm("Det finns redan en sparad kyrka vid samma namn, är du säker på att du vill spara över den?") == false){
+            return;
+        }
+    }
     var export_data = {}
     if (selected == "raze"){
-        export_data["Type"] = "Rivning";
+        export_data["Type"] = "raze";
     }
     else if (selected == "modify"){
-        export_data["Type"] = "Justering";
+        export_data["Type"] = "modify";
     }
     else if (selected == "own"){
-        export_data["Type"] = "Annat belopp";
+        export_data["Type"] = "own";
     }
     else{
-        export_data["Type"] = "Normal";
+        export_data["Type"] = "none";
     }
     export_data["Namn"] = get_value("church_choice");
     export_data["BRA"] = get_value("BRA");
@@ -500,9 +491,107 @@ function export_church(){
     sums["Klockstapel"] = parseInt(document.getElementById("sam_stapel").innerHTML);
     sums["Kalkylerat värde"] = parseInt(document.getElementById("sum").innerHTML);
     export_data["Summor"] = sums;
+    
+    var risk = {};
+    risk["Rivning"] = document.getElementById("rivning").checked;
+    risk["Ny kvm"] = get_value("other_kvm");
+    risk["Återställningsgrad"] = get_choice("material_risk");
+    risk["Annat belopp"] = get_value("own_value");
+    export_data["Risk"] = risk;
+
 
     send_json(export_data, "export");
+}
 
+function load_previous(){
+    var json = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': "static/saved/".concat(get_value("church_choice"), ".json"),
+            'dataType': "json",
+            'success': function (data) {
+                json = data;
+            }
+        });
+    document.getElementById("BRA").value = json["BRA"];
+    document.getElementById("utsmyckning").value = json["Utsmyckning"];
+
+    document.getElementById("vägg").value = json["Byggnad"]["Vägg"];
+    document.getElementById("golv").value = json["Byggnad"]["Golv"];
+    document.getElementById("innertak").value = json["Byggnad"]["Innertak"]["Namn"];
+    document.getElementById("innertak_andra").value = json["Byggnad"]["Innertak"]["Typ"];
+    document.getElementById("yttertak").value = json["Byggnad"]["Yttertak"]["Namn"];
+    document.getElementById("yttertak_andra").value = json["Byggnad"]["Yttertak"]["Typ"];
+    document.getElementById("läktare").value = json["Byggnad"]["Läktare"];
+    for(var i = 0; i < json["Byggnad"]["Fönster"]["Mängd"]; i++){
+        document.getElementById("fönster_typ").value = json["Byggnad"]["Fönster"][i]["Typ"];
+        document.getElementById("fönster_storlek").value = json["Byggnad"]["Fönster"][i]["Area"];
+        add_window();
+    }
+    document.getElementById("takryttare").value = json["Byggnad"]["Takryttare"]["Pris"];
+    document.getElementById("takryttare_antal").value = json["Byggnad"]["Takryttare"]["Antal"];
+
+    document.getElementById("torn_bredd").value = json["Torn"]["Mått Tornbyggnad"]["Bredd"];
+    document.getElementById("torn_längd").value = json["Torn"]["Mått Tornbyggnad"]["Längd"];
+    document.getElementById("torn_vägg").value = json["Torn"]["Vägg"];
+    document.getElementById("torn_golv").value = json["Torn"]["Golv"];
+    document.getElementById("torn_tak").value = json["Torn"]["Torntak"]["Typ"];
+    document.getElementById("tak_höjd").value = json["Torn"]["Torntak"]["Höjd"];
+    document.getElementById("tak_bredd").value = json["Torn"]["Torntak"]["Bredd"];
+    document.getElementById("tak_längd").value = json["Torn"]["Torntak"]["Längd"];
+    document.getElementById("tak_antal").value = json["Torn"]["Torntak"]["Antal"];
+    for(var i = 0; i < json["Torn"]["Fönster"]["Mängd"]; i++){
+        document.getElementById("fönster_typ_2").value = json["Torn"]["Fönster"][i]["Typ"];
+        document.getElementById("fönster_storlek_2").value = json["Torn"]["Fönster"][i]["Area"];
+        add_window_2();
+    }
+    document.getElementById("fial_pris").value = json["Torn"]["Fial"]["Pris"];
+    document.getElementById("fial_antal").value = json["Torn"]["Fial"]["Antal"];
+
+    for(var i = 0; i < json["Tillbehör"]["Klockor"]["Mängd"]; i++){
+        document.getElementById("klocka_diameter").value = json["Tillbehör"]["Klockor"][i]["Diameter"];
+        document.getElementById("klocka_vikt").value = json["Tillbehör"]["Klockor"][i]["Vikt"];
+        add_clock();
+    }
+    document.getElementById("tornur").value = json["Tillbehör"]["Tornur"];
+    document.getElementById("bänkar_enkla").value = json["Tillbehör"]["Bänkar"]["Enkla"];
+    document.getElementById("bänkar_påkostade").value = json["Tillbehör"]["Bänkar"]["Påkostade"];
+    document.getElementById("stolar_enkla").value = json["Tillbehör"]["Stolar"]["Enkla"];
+    document.getElementById("stolar_påkostade").value = json["Tillbehör"]["Stolar"]["Påkostade"];
+    document.getElementById("kororgel").value = json["Tillbehör"]["Orgel"]["Kororgel"];
+    document.getElementById("läktarorgel").value = json["Tillbehör"]["Orgel"]["Läktarorgel"];
+
+    document.getElementById("altargrund").value = json["Särskilt värderade"]["Altargrund"];
+    document.getElementById("altare").value = json["Särskilt värderade"]["Altare"];
+    document.getElementById("altaruppstas").value = json["Särskilt värderade"]["Altaruppstas"];
+    document.getElementById("dopfunt").value = json["Särskilt värderade"]["Dopfunt"];
+    document.getElementById("predikstol").value = json["Särskilt värderade"]["Predikstol"];
+    document.getElementById("ljuskronor").value = json["Särskilt värderade"]["Ljuskronor"];
+    for(var i = 0; i < json["Särskilt värderade"]["Egna tillägg"]["Mängd"]; i++){
+        document.getElementById("namn_eget").value = json["Särskilt värderade"]["Egna tillägg"][i]["Namn"];
+        document.getElementById("pris_eget").value = json["Särskilt värderade"]["Egna tillägg"][i]["Pris"];
+        document.getElementById("antal_eget").value = json["Särskilt värderade"]["Egna tillägg"][i]["Antal"];
+        add_own();
+    }
+
+    document.getElementById("stapel_typ").value = json["Klockstapel"]["Klockstapel"]["Typ"];
+    document.getElementById("stapel_höjd").value = json["Klockstapel"]["Klockstapel"]["Höjd"];
+    for(var i = 0; i < json["Klockstapel"]["Klockor"]["Mängd"]; i++){
+        document.getElementById("stapel_klocka_diameter").value = json["Klockstapel"]["Klockor"][i]["Diameter"];
+        document.getElementById("stapel_klocka_vikt").value = json["Klockstapel"]["Klockor"][i]["Vikt"];
+        add_stapel_clock();
+    }
+    document.getElementById("rivning").checked = json["Risk"]["Rivning"];
+    document.getElementById("other_kvm").value = json["Risk"]["Ny kvm"];
+    document.getElementById("material_risk").value = json["Risk"]["Återställningsgrad"];
+    document.getElementById("own_value").value = json["Risk"]["Annat belopp"];
+
+    selected = "none";
+    risk_menu(json["Type"]);
+
+    update_risk();
+    update();
 }
 
 function update(){
@@ -736,7 +825,6 @@ function update_modify_risk(){
         return((calc_modify + clock + organ + window)* 2)
     }
     return calc_modify + clock + organ + window
-
 }
 
 function risk_menu(option){

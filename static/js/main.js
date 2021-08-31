@@ -444,7 +444,7 @@ function export_church(){
     export_data["Torn"] = tower;
 
     var accessories = {};
-    var clocks = document.getElementsByClassName("fönster_2");
+    var clocks = document.getElementsByClassName("klocka");
     var clocks_json = {"Mängd": clocks.length}
     for (var i = 0; i < clocks.length; i++) {
         clocks_json[i] = {"Diameter" : clocks[i].attributes["name"].value, "Vikt": clocks[i].attributes["value"].value};
@@ -503,7 +503,6 @@ function export_church(){
 }
 
 function load_previous(){
-    document.getElementById("previous").disabled = true;
     var json = null;
         $.ajax({
             'async': false,
@@ -591,7 +590,6 @@ function load_previous(){
     risk_menu(json["Type"]);
 
     update();
-    document.getElementById("previous").disabled = false;
 }
 
 function update(){

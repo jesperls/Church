@@ -112,7 +112,7 @@ select {
 
 
 #header{
-    background-color: whitesmoke;
+    background-color: red;
     background: url(content/portrait_2.png) top left no-repeat;
 }
 
@@ -390,6 +390,7 @@ label{
     }
     #header{
         background: url(content/pan_2.png) top left no-repeat;
+        background-size: cover;
     }    
 }
 

@@ -13,10 +13,13 @@ var pris_torn = 43044;
 var benches = {"Enkla" : 3000, "Påkostade" : 4800};
 var chairs = {"Enkla" : 1400, "Påkostade" : 3000};
 var pianos = {"Kororgel" : 190000, "Läktarorgel" : 235000};
-var spec_prices = {"altargrund": 172175, "altare": 430438, "altaruppstas": 1205225, "dopfunt": 258263, "predikstol": 1033050, "ljuskronor": 137740}
+var spec_prices = {"altargrund": 172175, "altare": 430438, "altaruppstas_enkel": 1205225, "altaruppstas_påkostad": 1205225, "altaruppstas_mycket": 1205225, "dopfunt": 258263,
+                    "predikstol_enkel": 1033050, "predikstol_påkostad": 1033050, "predikstol_mycket": 1033050, "ljuskronor_under": 137740, "ljuskronor_över": 137740};
 var bases = {"Sten" : 12, "Trä" : 8};
 var building_parts = {"Klockor" : 500000, "Orgel" : 100000, "Stämmor" : 100000, "Mosaikfönster" : 500000};
 var restoration = {"Budget" : 0.8, "Standard" : 1.0, "Exklusivt" : 2.0};
+var roof_riders = {"Höjd 0-3 m": 111914, "Höjd 3-6 m": 223828, "Höjd >6m": 568178};
+var fials = {"0-3m": 111914, ">3m": 223828};
 var bpi_risk = 33592;
 var raze = 250000;
 var factor = 2.0;
@@ -121,9 +124,16 @@ function download(content, fileName, contentType) {
 }
 
 function add_clock(){
-    var diam = document.getElementById("klocka_diameter");
-    var weight = document.getElementById("klocka_vikt");
-    if(diam.value == null || weight == null || diam.value == "" || weight.value == ""){
+    var weight = document.getElementById("klocka_vikt").value;
+    if(document.getElementById("only_weight").checked){
+        var x = document.getElementById("klocka_diam").value;
+        weight = Math.round(8.02127 * Math.pow(10,-7) * Math.pow(x, 2.9643694));
+        if (weight <= 1){
+            alert("Värdet du angivit är väldigt för lågt!");
+            return;
+        }
+    }
+    if(weight == null || weight.value == ""){
         alert("Fyll i alla fält!");
         return false;
     }
@@ -132,26 +142,30 @@ function add_clock(){
     var clock = document.createElement("div");
     var cl = document.createAttribute("class");
     var del = document.createAttribute("onclick");
-    var att_name = document.createAttribute("name");
     var att_value = document.createAttribute("value");
-    att_value.value = weight.value;
-    att_name.value = diam.value;
-    clock.setAttributeNode(att_name);
+    att_value.value = weight;
     clock.setAttributeNode(att_value);
     cl.value = "klocka";
     del.value = "delete_this(this)"
     clock.setAttributeNode(cl);
     clock.setAttributeNode(del);
     clock_amounts += 1;
-    clock.innerHTML = "<b>Klocka</b> ".concat(clock_amounts, ": <b>Diameter:</b> ", diam.value, " <b>Vikt:</b> ", weight.value, "     ✖")
+    clock.innerHTML = "<b>Klocka</b> ".concat(clock_amounts, " <b>Vikt:</b> ", weight, "     ✖")
     insertAfter(div, clock);
     update();
 }
 
 function add_stapel_clock(){
-    var diam = document.getElementById("stapel_klocka_diameter");
-    var weight = document.getElementById("stapel_klocka_vikt");
-    if(diam.value == null || weight == null || diam.value == "" || weight.value == ""){
+    var weight = document.getElementById("stapel_klocka_vikt").value;
+    if(document.getElementById("only_weight_stapel").checked){
+        var x = document.getElementById("stapel_klocka_diam").value;
+        weight = Math.round(8.02127 * Math.pow(10,-7) * Math.pow(x, 2.9643694));
+        if (weight <= 1){
+            alert("Värdet du angivit är väldigt för lågt!");
+            return;
+        }
+    }
+    if(weight == null || weight.value == ""){
         alert("Fyll i alla fält!");
         return false;
     }
@@ -160,18 +174,15 @@ function add_stapel_clock(){
     var clock = document.createElement("div");
     var cl = document.createAttribute("class");
     var del = document.createAttribute("onclick");
-    var att_name = document.createAttribute("name");
     var att_value = document.createAttribute("value");
-    att_value.value = weight.value;
-    att_name.value = diam.value;
-    clock.setAttributeNode(att_name);
+    att_value.value = weight;
     clock.setAttributeNode(att_value);
     cl.value = "stapel_klocka";
     del.value = "delete_this(this)"
     clock.setAttributeNode(cl);
     clock.setAttributeNode(del);
     stapel_clock_amounts += 1;
-    clock.innerHTML = "<b>Klocka</b> ".concat(stapel_clock_amounts, ": <b>Diameter:</b> ", diam.value, " <b>Vikt:</b> ", weight.value, "     ✖")
+    clock.innerHTML = "<b>Klocka</b> ".concat(stapel_clock_amounts," <b>Vikt:</b> ", weight, "     ✖")
     insertAfter(div, clock);
     update();
 }
@@ -293,6 +304,73 @@ function add_window_2(){
     update();
 }
 
+function add_rider(){
+    var name = document.getElementById("takryttare");
+    var choice = name.options[name.selectedIndex].value;
+    var amount = document.getElementById("takryttare_antal");
+    if(choice == null || amount.value == null || choice == "" || amount.value == ""){
+        alert("Fyll i alla fält!");
+        return false;
+    }
+    var br = document.createElement("br");
+    var div = document.getElementById("takryttare_break");
+    var rider = document.createElement("div");
+    var cl = document.createAttribute("class");
+    var del = document.createAttribute("onclick");
+    var att_name = document.createAttribute("name");
+    var att_value = document.createAttribute("value");
+    att_value.value = amount.value;
+    att_name.value = choice;
+    cl.value = "ryttare";
+    del.value = "delete_this(this)"
+    rider.setAttributeNode(cl);
+    rider.setAttributeNode(del);
+    rider.setAttributeNode(att_name);
+    rider.setAttributeNode(att_value);
+    rider.innerHTML = "".concat(choice, "  ", "Antal: ", amount.value, "     ✖")
+    insertAfter(div, rider);
+    update();
+}
+
+function add_fial(){
+    var name = document.getElementById("fial");
+    var choice = name.options[name.selectedIndex].value;
+    var amount = document.getElementById("fial_antal");
+    if(choice == null || amount.value == null || choice == "" || amount.value == ""){
+        alert("Fyll i alla fält!");
+        return false;
+    }
+    var br = document.createElement("br");
+    var div = document.getElementById("fial_break");
+    var fial = document.createElement("div");
+    var cl = document.createAttribute("class");
+    var del = document.createAttribute("onclick");
+    var att_name = document.createAttribute("name");
+    var att_value = document.createAttribute("value");
+    att_value.value = amount.value;
+    att_name.value = choice;
+    cl.value = "fial";
+    del.value = "delete_this(this)"
+    fial.setAttributeNode(cl);
+    fial.setAttributeNode(del);
+    fial.setAttributeNode(att_name);
+    fial.setAttributeNode(att_value);
+    fial.innerHTML = "".concat(choice, "  ", "Antal: ", amount.value, "     ✖")
+    insertAfter(div, fial);
+    update();
+}
+
+function clock_weigth(checkbox, stapel){
+    if(checkbox.checked == true){
+        document.getElementById("has_weight".concat(stapel)).style.display = "none";
+        document.getElementById("no_weigth".concat(stapel)).style.display = "inline";
+    }
+    else{
+        document.getElementById("has_weight".concat(stapel)).style.display = "inline";
+        document.getElementById("no_weigth".concat(stapel)).style.display = "none";
+    }
+}
+
 function delete_this(el){
     var element = el;
     element.remove();
@@ -305,11 +383,11 @@ function hide_sum(form_name, arrow_name){
     if (x.style.display === "none") {
         x.style.display = "block";
         arrow.src = "/static/content/up.png";
-      }
+    }
     else {
         x.style.display = "none";
         arrow.src = "/static/content/down.png";
-      }
+    }
 }
 
 function get_factor(id, json_name, second_id=null){
@@ -421,12 +499,19 @@ function export_church(){
     building["Yttertak"] = {"Namn": get_choice("yttertak"), "Typ": get_choice("yttertak_andra")};
     building["Läktare"] = get_value("läktare");
     var windows = document.getElementsByClassName("fönster");
-    var windows_json = {"Mängd": windows.length}
+    var windows_json = {"Mängd": windows.length};
     for (var i = 0; i < windows.length; i++) {
         windows_json[i] = {"Typ" : windows[i].attributes["name"].value, "Area": windows[i].attributes["value"].value};
     }
     building["Fönster"] = windows_json;
-    building["Takryttare"] = {"Pris": get_value("takryttare"), "Antal": get_choice("takryttare_antal")};
+    //building["Takryttare"] = {"Pris": get_value("takryttare"), "Antal": get_choice("takryttare_antal")};
+    var roof_riders = document.getElementsByClassName("ryttare");
+    var roof_riders_json = {"Mängd": roof_riders.length};
+    for (var i = 0; i < roof_riders.length; i++) {
+        roof_riders_json[i] = {"Typ" : roof_riders[i].attributes["name"].value, "Antal": roof_riders[i].attributes["value"].value};
+    }
+    building["Takryttare"] = roof_riders_json;
+
     export_data["Byggnad"] = building;
 
     var tower = {};
@@ -435,19 +520,25 @@ function export_church(){
     tower["Golv"] = get_choice("torn_golv");
     tower["Torntak"] = {"Typ": get_choice("torn_tak"), "Höjd": get_value("tak_höjd"), "Bredd": get_value("tak_bredd"), "Längd": get_value("tak_längd"), "Antal": get_choice("tak_antal")};
     var windows = document.getElementsByClassName("fönster_2");
-    var windows_json = {"Mängd": windows.length}
+    var windows_json = {"Mängd": windows.length};
     for (var i = 0; i < windows.length; i++) {
         windows_json[i] = {"Typ" : windows[i].attributes["name"].value, "Area": windows[i].attributes["value"].value};
     }
     tower["Fönster"] = windows_json;
-    tower["Fial"] = {"Pris": get_value("fial_pris"), "Antal": get_choice("fial_antal")};
+    //tower["Fial"] = {"Pris": get_value("fial_pris"), "Antal": get_choice("fial_antal")};
+    var fials = document.getElementsByClassName("fial");
+    var fials_json = {"Mängd": fials.length};
+    for (var i = 0; i < fials.length; i++) {
+        fials_json[i] = {"Typ" : fials[i].attributes["name"].value, "Antal": fials[i].attributes["value"].value};
+    }
+    tower["Fialer"] = fials_json;
     export_data["Torn"] = tower;
 
     var accessories = {};
     var clocks = document.getElementsByClassName("klocka");
-    var clocks_json = {"Mängd": clocks.length}
+    var clocks_json = {"Mängd": clocks.length};
     for (var i = 0; i < clocks.length; i++) {
-        clocks_json[i] = {"Diameter" : clocks[i].attributes["name"].value, "Vikt": clocks[i].attributes["value"].value};
+        clocks_json[i] = {"Vikt": clocks[i].attributes["value"].value};
     }
     accessories["Klockor"] = clocks_json;
     accessories["Tornur"] = get_choice("tornur");
@@ -459,12 +550,17 @@ function export_church(){
     var special = {};
     special["Altargrund"] = get_choice("altargrund");
     special["Altare"] = get_choice("altare");
-    special["Altaruppstas"] = get_choice("altaruppstas");
+    special["Altaruppstas enkel"] = get_choice("altaruppstas_enkel");
+    special["Altaruppstas påkostad"] = get_choice("altaruppstas_påkostad");
+    special["Altaruppstas mycket"] = get_choice("altaruppstas_mycket");
     special["Dopfunt"] = get_choice("dopfunt");
-    special["Predikstol"] = get_choice("predikstol");
-    special["Ljuskronor"] = get_choice("ljuskronor");
+    special["Predikstol enkel"] = get_choice("predikstol_enkel");
+    special["Predikstol påkostad"] = get_choice("predikstol_påkostad");
+    special["Predikstol mycket"] = get_choice("predikstol_mycket");
+    special["Ljuskronor över"] = get_choice("ljuskronor_över");
+    special["Ljuskronor under"] = get_choice("ljuskronor_under");
     var own = document.getElementsByClassName("eget");
-    var own_json = {"Mängd": own.length}
+    var own_json = {"Mängd": own.length};
     for (var i = 0; i < own.length; i++) {
         own_json[i] = {"Namn" : own[i].attributes["type"].value, "Pris": own[i].attributes["value"].value, "Antal" : own[i].attributes["name"].value};
     }
@@ -474,9 +570,9 @@ function export_church(){
     var pillar = {};
     pillar["Klockstapel"] = {"Typ": get_choice("stapel_typ"), "Höjd": get_value("stapel_höjd")};
     var clocks = document.getElementsByClassName("stapel_klocka");
-    var clocks_json = {"Mängd": clocks.length}
+    var clocks_json = {"Mängd": clocks.length};
     for (var i = 0; i < clocks.length; i++) {
-        clocks_json[i] = {"Diameter" : clocks[i].attributes["name"].value, "Vikt": clocks[i].attributes["value"].value};
+        clocks_json[i] = {"Vikt": clocks[i].attributes["value"].value};
     }
     pillar["Klockor"] = clocks_json;
     export_data["Klockstapel"] = pillar;
@@ -484,7 +580,6 @@ function export_church(){
     var sums = {};
     sums["Byggnad"] = parseInt(document.getElementById("sam_byggnad").innerHTML);
     sums["Utsmyckning"] = parseInt(document.getElementById("sam_decoration").innerHTML);
-    sums["Torn"] = parseInt(document.getElementById("sam_torn").innerHTML);
     sums["Byggnadstillbehör"] = parseInt(document.getElementById("sam_btillbehör").innerHTML);
     sums["Särskilt värderade"] = parseInt(document.getElementById("sam_särskilt").innerHTML);
     sums["Klockstapel"] = parseInt(document.getElementById("sam_stapel").innerHTML);
@@ -528,8 +623,15 @@ function load_previous(){
         document.getElementById("fönster_storlek").value = json["Byggnad"]["Fönster"][i]["Area"];
         add_window();
     }
-    document.getElementById("takryttare").value = json["Byggnad"]["Takryttare"]["Pris"];
-    document.getElementById("takryttare_antal").value = json["Byggnad"]["Takryttare"]["Antal"];
+    //document.getElementById("takryttare").value = json["Byggnad"]["Takryttare"]["Pris"];
+    //document.getElementById("takryttare_antal").value = json["Byggnad"]["Takryttare"]["Antal"];
+    for(var i = 0; i < json["Byggnad"]["Takryttare"]["Mängd"]; i++){
+        document.getElementById("takryttare").value = json["Byggnad"]["Takryttare"][i]["Typ"];
+        document.getElementById("takryttare_antal").value = json["Byggnad"]["Takryttare"][i]["Antal"];
+        add_rider();
+    }
+
+
 
     document.getElementById("torn_bredd").value = json["Torn"]["Mått Tornbyggnad"]["Bredd"];
     document.getElementById("torn_längd").value = json["Torn"]["Mått Tornbyggnad"]["Längd"];
@@ -545,11 +647,15 @@ function load_previous(){
         document.getElementById("fönster_storlek_2").value = json["Torn"]["Fönster"][i]["Area"];
         add_window_2();
     }
-    document.getElementById("fial_pris").value = json["Torn"]["Fial"]["Pris"];
-    document.getElementById("fial_antal").value = json["Torn"]["Fial"]["Antal"];
+    //document.getElementById("fial_pris").value = json["Torn"]["Fial"]["Pris"];
+    //document.getElementById("fial_antal").value = json["Torn"]["Fial"]["Antal"];
+    for(var i = 0; i < json["Torn"]["Fialer"]["Mängd"]; i++){
+        document.getElementById("fial").value = json["Torn"]["Fialer"][i]["Typ"];
+        document.getElementById("fial_antal").value = json["Torn"]["Fialer"][i]["Antal"];
+        add_fial();
+    }
 
     for(var i = 0; i < json["Tillbehör"]["Klockor"]["Mängd"]; i++){
-        document.getElementById("klocka_diameter").value = json["Tillbehör"]["Klockor"][i]["Diameter"];
         document.getElementById("klocka_vikt").value = json["Tillbehör"]["Klockor"][i]["Vikt"];
         add_clock();
     }
@@ -563,10 +669,15 @@ function load_previous(){
 
     document.getElementById("altargrund").value = json["Särskilt värderade"]["Altargrund"];
     document.getElementById("altare").value = json["Särskilt värderade"]["Altare"];
-    document.getElementById("altaruppstas").value = json["Särskilt värderade"]["Altaruppstas"];
+    document.getElementById("altaruppstas_enkel").value = json["Särskilt värderade"]["Altaruppstas enkel"];
+    document.getElementById("altaruppstas_påkostad").value = json["Särskilt värderade"]["Altaruppstas påkostad"];
+    document.getElementById("altaruppstas_mycket").value = json["Särskilt värderade"]["Altaruppstas mycket"];
     document.getElementById("dopfunt").value = json["Särskilt värderade"]["Dopfunt"];
-    document.getElementById("predikstol").value = json["Särskilt värderade"]["Predikstol"];
-    document.getElementById("ljuskronor").value = json["Särskilt värderade"]["Ljuskronor"];
+    document.getElementById("predikstol_enkel").value = json["Särskilt värderade"]["Predikstol enkel"];
+    document.getElementById("predikstol_påkostad").value = json["Särskilt värderade"]["Predikstol påkostad"];
+    document.getElementById("predikstol_mycket").value = json["Särskilt värderade"]["Predikstol mycket"];
+    document.getElementById("ljuskronor_under").value = json["Särskilt värderade"]["Ljuskronor under"];
+    document.getElementById("ljuskronor_över").value = json["Särskilt värderade"]["Ljuskronor över"];
     for(var i = 0; i < json["Särskilt värderade"]["Egna tillägg"]["Mängd"]; i++){
         document.getElementById("namn_eget").value = json["Särskilt värderade"]["Egna tillägg"][i]["Namn"];
         document.getElementById("pris_eget").value = json["Särskilt värderade"]["Egna tillägg"][i]["Pris"];
@@ -577,7 +688,6 @@ function load_previous(){
     document.getElementById("stapel_typ").value = json["Klockstapel"]["Klockstapel"]["Typ"];
     document.getElementById("stapel_höjd").value = json["Klockstapel"]["Klockstapel"]["Höjd"];
     for(var i = 0; i < json["Klockstapel"]["Klockor"]["Mängd"]; i++){
-        document.getElementById("stapel_klocka_diameter").value = json["Klockstapel"]["Klockor"][i]["Diameter"];
         document.getElementById("stapel_klocka_vikt").value = json["Klockstapel"]["Klockor"][i]["Vikt"];
         add_stapel_clock();
     }
@@ -587,20 +697,25 @@ function load_previous(){
     document.getElementById("own_value").value = json["Risk"]["Annat belopp"];
 
     selected = "none";
-    risk_menu(json["Type"]);
-
-    update();
+    if(json["Type"] != "none"){
+        risk_menu(json["Type"]);
+    }
+    else{
+        update();
+    }
 }
 
 function update(){
     var total = 0;
     var building = update_building();
     total += building;
+    var tower = update_tower();
+    total += tower;
+    document.getElementById("sam_byggnad").innerHTML = building + tower;
 
-    var decor = update_decoration(building);
+    var decor = update_decoration(building + tower);
     total += decor;
 
-    total += update_tower();
     total += update_accessories();
     var special = update_special();
     total += special;
@@ -615,8 +730,11 @@ function update(){
         var bra = get_value("other_kvm");
         if (bra != ""){
             var rest_value = restoration[get_choice("material_risk")];
-            var new_bra = bra * rest_value * bpi_risk * factor + special;
-            document.getElementById("sum").innerHTML = new_bra;
+            var new_bra = bra * rest_value * bpi_risk * factor;
+            if (document.getElementById("expensive_inventory").checked){
+                new_bra = new_bra * 1.15;
+            }
+            document.getElementById("sum").innerHTML = Math.round(new_bra);
             return;
         }
     }
@@ -662,11 +780,20 @@ function update_building(){
         }
     }
 
-    var value_roof_rider = get_value("takryttare") * get_choice("takryttare_antal");
+    //var value_roof_rider = get_value("takryttare") * get_choice("takryttare_antal");
+    var value_roof_rider = 0;
+    var riders = document.getElementsByClassName("ryttare");
+    for(var i = 0; i < riders.length; i++){
+        for(var key in roof_riders){
+            if(riders[i].attributes["name"].value == key){
+                value_roof_rider += roof_riders[key] * riders[i].attributes["value"].value;
+            }
+        }
+    }
 
     var result_building = Math.round(value_building + value_platform + value_windows + value_roof_rider);
     document.getElementById("del_byggnad").innerHTML = result_building;
-    document.getElementById("sam_byggnad").innerHTML = result_building;
+    //document.getElementById("sam_byggnad").innerHTML = result_building;
     return(result_building);
 }
 
@@ -699,11 +826,21 @@ function update_tower(){
         }
     }
     
-    var value_top = get_value("fial_pris") * get_choice("fial_antal");
+    //var value_top = get_value("fial_pris") * get_choice("fial_antal");
+    var value_top = 0;
+    var fial_items = document.getElementsByClassName("fial");
+    for(var i = 0; i < fial_items.length; i++){
+        for(var key in fials){
+            if(fial_items[i].attributes["name"].value == key){
+                value_top += fials[key] * fial_items[i].attributes["value"].value;
+            }
+        }
+    }
+
 
     var result_tower = Math.round(value_tower + value_windows + value_roof + value_top);
     document.getElementById("del_torn").innerHTML = result_tower;
-    document.getElementById("sam_torn").innerHTML = result_tower;
+    //document.getElementById("sam_torn").innerHTML = result_tower;
     return(result_tower);
 
 }
@@ -713,7 +850,7 @@ function update_accessories(){
     var value_clocks = 0;
     var clocks = document.getElementsByClassName("klocka");
     for(var i = 0; i < clocks.length; i++){
-        value_clocks += parseInt(moms) * 1.3 * parseInt(clocks[i].attributes["value"].value) * parseInt(klock_kg) + parseInt(mount_clock);
+        value_clocks += moms * 1.3 * parseInt(clocks[i].attributes["value"].value) * parseInt(klock_kg) + parseInt(mount_clock);
     }
     //var elektrisk = document.getElementById("elektrisk");
     //var elek_choice = elektrisk.options[elektrisk.selectedIndex].value;

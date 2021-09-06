@@ -12,7 +12,8 @@ var pris_torn = 43044;
 var benches = {"Enkla" : 3000, "Påkostade" : 4800};
 var chairs = {"Enkla" : 1400, "Påkostade" : 3000};
 var pianos = {"Kororgel" : 190000, "Läktarorgel" : 235000};
-var spec_prices = {"altargrund": 172175, "altare": 430438, "altaruppstas": 1205225, "dopfunt": 258263, "predikstol": 1033050, "ljuskronor": 137740};
+var spec_prices = {"altargrund": 172175, "altare": 430438, "altaruppstas_enkel": 1205225, "altaruppstas_påkostad": 1205225, "altaruppstas_mycket": 1205225, "dopfunt": 258263,
+                    "predikstol_enkel": 1033050, "predikstol_påkostad": 1033050, "predikstol_mycket": 1033050, "ljuskronor_under": 137740, "ljuskronor_över": 137740};
 var bases = {"Sten" : 12, "Trä" : 8};
 var building_parts = {"Klockor" : 500000, "Orgel" : 100000, "Stämmor" : 100000, "Mosaikfönster" : 500000};
 var restoration = {"Budget" : 0.8, "Standard" : 1.0, "Exklusivt" : 2.0};
@@ -81,7 +82,6 @@ function load_values(){
     pianos = JSON.parse(json["pianos"]);
     spec_prices = JSON.parse(json["spec_prices"]);
     decoration = JSON.parse(json["decoration"]);
-
     json = loadJSON("misc_risk");
     bases = JSON.parse(json["bases"]);
     building_parts = JSON.parse(json["building_parts"]);
@@ -114,9 +114,22 @@ function submit_misc(){
     decoration["Enkel"] = document.getElementById("simple").value;
     decoration["Något påkostad"] = document.getElementById("somewhat").value;
     decoration["Påkostad"] = document.getElementById("expensive").value;
+    spec_prices["altargrund"] = document.getElementById("altargrund").value;
+    spec_prices["altare"] = document.getElementById("altare").value;
+    spec_prices["altaruppstas_enkel"] = document.getElementById("altaruppstas_enkel").value;
+    spec_prices["altaruppstas_påkostad"] = document.getElementById("altaruppstas_påkostad").value;
+    spec_prices["altaruppstas_mycket"] = document.getElementById("altaruppstas_mycket").value;
+    spec_prices["dopfunt"] = document.getElementById("dopfunt").value;
+    spec_prices["predikstol_enkel"] = document.getElementById("predikstol_enkel").value;
+    spec_prices["predikstol_påkostad"] = document.getElementById("predikstol_påkostad").value;
+    spec_prices["predikstol_mycket"] = document.getElementById("predikstol_mycket").value;
+    spec_prices["ljuskronor_under"] = document.getElementById("ljuskronor_under").value;
+    spec_prices["ljuskronor_över"] = document.getElementById("ljuskronor_över").value;
     make_json();
     alert("Nya värden inlästa");
 }
+
+
 
 function submit_misc_risk(){
 }
@@ -144,4 +157,15 @@ function load_boxes(){
     document.getElementById("simple").value = decoration["Enkel"];
     document.getElementById("somewhat").value = decoration["Något påkostad"];
     document.getElementById("expensive").value = decoration["Påkostad"];
+    document.getElementById("altargrund").value = spec_prices["altargrund"];
+    document.getElementById("altare").value = spec_prices["altare"];
+    document.getElementById("altaruppstas_enkel").value = spec_prices["altaruppstas_enkel"];
+    document.getElementById("altaruppstas_påkostad").value = spec_prices["altaruppstas_påkostad"];
+    document.getElementById("altaruppstas_mycket").value = spec_prices["altaruppstas_mycket"];
+    document.getElementById("dopfunt").value = spec_prices["dopfunt"];
+    document.getElementById("predikstol_enkel").value = spec_prices["predikstol_enkel"]
+    document.getElementById("predikstol_påkostad").value = spec_prices["predikstol_påkostad"]
+    document.getElementById("predikstol_mycket").value = spec_prices["predikstol_mycket"]
+    document.getElementById("ljuskronor_under").value = spec_prices["ljuskronor_under"];
+    document.getElementById("ljuskronor_över").value = spec_prices["ljuskronor_över"];
 }

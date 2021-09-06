@@ -276,6 +276,13 @@ label{
     margin-left: auto;
 }
 
+.checkbox{
+    margin: 0px;
+    padding:0px;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+
 #choices_risk{
     width: 80%;
 }

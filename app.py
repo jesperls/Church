@@ -25,6 +25,8 @@ churches = []
 parishes = []
 stapel_typer = ["Typ 1", "Typ 2", "Typ 3"]
 fönster_typer = ["Typ 1", "Typ 2", "Typ 3"]
+roof_riders = ["Höjd 0-3 m", "Höjd 3-6 m", "Höjd >6m"]
+fials = ["0-3m", ">3m"]
 
 frames = ["Sten", "Trä"]
 church_states = ["Normalt bruksskick", "Underhållsbehov", "Nyrenoverat/Toppskick"]
@@ -38,11 +40,13 @@ def homepage():
                                 "floors": len(floors), "inner_roof": len(inner_roof), "outer_roof": len(outer_roof),
                                 "tower_roof": len(tower_roof), "stapel_typer": len(stapel_typer),
                                 "fönster_typer": len(fönster_typer), "churches": len(churches), "parishes": len(parishes),
-                                "frames": len(frames), "church_states": len(church_states), "material_restoration": len(material_restoration)},
+                                "frames": len(frames), "church_states": len(church_states), "material_restoration": len(material_restoration),
+                                "roof_riders": len(roof_riders), "fials": len(fials)},
                             categories={"types": types, "decorations": decorations, "walls": walls, "floors": floors,
                                         "inner_roof": inner_roof, "outer_roof": outer_roof, "tower_roof": tower_roof,
                                         "stapel_typer": stapel_typer, "fönster_typer": fönster_typer, "churches": churches, "parishes": parishes,
-                                        "frames": frames, "church_states": church_states, "material_restoration": material_restoration})
+                                        "frames": frames, "church_states": church_states, "material_restoration": material_restoration,
+                                        "roof_riders": roof_riders, "fials": fials})
 
 @app.route('/admin_panel')
 def admin():
@@ -166,6 +170,25 @@ def load_dfs():
         tower_roof.append(row["Beskrivning"])
     df.to_json('./static/data/tower_roofs.json', orient='records')
 
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[37, 38, 39, 40])
+    df.columns = ["Typ", "Beskrivning", "Pris 1980", "Pris 2019"]
+    df.dropna(axis=0, thresh=4, inplace=True)
+    roof_riders = []
+    for index, row in df.iterrows():
+        roof_riders.append(row["Beskrivning"])
+    df.to_json('./static/data/roof_riders.json', orient='records')
+
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[41, 42, 43, 44])
+    df.columns = ["Typ", "Höjd", "Pris 1980", "Pris 2019"]
+    df.dropna(axis=0, thresh=4, inplace=True)
+    fials = []
+    for index, row in df.iterrows():
+        fials.append(row["Höjd"])
+    df.to_json('./static/data/fials.json', orient='records')
+
+
+
+
     df = pd.read_excel("kyrkor.xlsx")
     df.drop(df.columns.difference(['Byggnadsverksnamn','Funktion', "Bruksarea(m²)", "Enhetsnamn"]), 1, inplace=True)
     df = df[df["Funktion"] == "Kyrka/kapell"]
@@ -174,6 +197,7 @@ def load_dfs():
     churches = []
     for index, row in df.iterrows():
         churches.append(f"{row['Enhetsnamn']} {row['Byggnadsverksnamn']}")
+    
     df.to_json('./static/data/churches.json', orient='records')
     #df = pd.read_excel("static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[4, 5, 35, 56, 61, 62, 64])
     #df.dropna(axis=0, thresh=4, inplace=True)

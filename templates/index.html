@@ -49,7 +49,7 @@
                 <label for="BRA">BRA-yta (kvm):</label>
                 <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="BRA" name="BRA" class="value">
                 <button type="button" onclick="get_bra('BRA', 'church_choice')">Ladda in data</button>
-                <div class="info"> ? <span class="infotext">Storleken av hela kyrkon i kvadratmeter</span> </div>
+                <div class="info"> ? <span class="infotext">Storleken av hela kyrkan i kvadratmeter</span> </div>
               </div>
 
                 <!-- <label for="kategori">Kategori:</label>
@@ -78,7 +78,7 @@
                       <option value="{{categories["walls"][i]}}">{{categories["walls"][i]}}</option>
                     {%endfor%}
                 </select>
-                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens vägg är byggt av, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div>
+                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens vägg är byggt av</span> </div>
               </div>
               <div class="category_items">
                 <label for="golv" onclick="show_pictures('floor_pictures')" class="clickable">Golv:</label>
@@ -87,7 +87,7 @@
                       <option value="{{categories["floors"][i]}}">{{categories["floors"][i]}}</option>
                     {%endfor%}
                 </select>
-                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens golv är byggt av, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div>
+                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens golv är byggt av</span> </div>
               </div>
               <div class="category_items">
                 <label for="innertak">Innertak:</label>
@@ -101,7 +101,7 @@
                     <option value="Tunnavalv">Tunnavalv</option>
                     <option value="Kryssvalv">Kryssvalv</option>
                 </select>
-                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens inre tak är byggt av samt formen på innertaket, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div>
+                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens inre tak är byggt av samt formen på innertaket</span> </div>
               </div>
               <div class="category_items">
                 <label for="yttertak">Yttertak:</label>
@@ -115,7 +115,7 @@
                     <option value="Brant">Brant</option>
                     <option value="Flackt">Flackt</option>
                 </select>
-                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens yttre tak är byggt av samt formen på yttertaket, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div>
+                <div class="info"> ? <span class="infotext">Materialet huvudbyggnadens yttre tak är byggt av samt formen på yttertaket</span> </div>
               </div>
               <div class="category_items">
                 <label for="läktare">Läktare (kvm):</label>
@@ -139,16 +139,23 @@
               </div>
               <div class="category_items">
                 <label>Takryttare</label>
-                <div class="info"> ? <span class="infotext">Priset som kyrkobyggnadens takryttare kostar samt antalet takryttare kyrkan har</span> </div><br>
-                <label for="takryttare">Pris:</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="takryttare" name="takryttare">
-                <br class="mobile_break">
+                <div class="info"> ? <span class="infotext">Storleken av kyrkobyggnadens takryttare samt antalet takryttare kyrkan har</span> </div><br>
+
+                <label for="takryttare">Takryttare:</label>
+                <select id="takryttare" name="takryttare">
+                  {%for i in range(0, len["roof_riders"])%}
+                    <option value="{{categories["roof_riders"][i]}}">{{categories["roof_riders"][i]}}</option>
+                  {%endfor%}
+                </select>
                 <label for="takryttare_antal">Antal:</label>
                 <select id="takryttare_antal" name="takryttare_antal">
-                    {%for i in range(0, 10)%}
+                    {%for i in range(1, 10)%}
                       <option value="{{i}}">{{i}}</option>
                     {%endfor%}
                 </select>
+                <button onclick="add_rider()" id="takryttare_knapp" type='button'>Lägg till</button><br id="takryttare_break">
+
+
               </div>
               <div class="category_items">
                 <label for="del_byggnad">Delsumma: </label>
@@ -175,7 +182,7 @@
                       <option value="{{categories["walls"][i]}}">{{categories["walls"][i]}}</option>
                     {%endfor%}
                 </select>
-                <div class="info"> ? <span class="infotext">Materialet kyrkotornets vägg är byggt av, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div><br>
+                <div class="info"> ? <span class="infotext">Materialet kyrkotornets vägg är byggt av</span> </div><br>
               </div>
               <div class="category_items">
                 <label for="torn_golv">Golv:</label>
@@ -184,7 +191,7 @@
                       <option value="{{categories["floors"][i]}}">{{categories["floors"][i]}}</option>
                     {%endfor%}
                 </select>
-                <div class="info"> ? <span class="infotext">Materialet kyrkotornets golv är byggt av, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div><br>
+                <div class="info"> ? <span class="infotext">Materialet kyrkotornets golv är byggt av</span> </div><br>
               </div>
               <div class="category_items">
                 <label>Torntak</label>
@@ -245,17 +252,23 @@
                 <button onclick="add_window_2()" id="fönster_knapp_2" type='button'>Lägg till</button><br id="fönster_break_2">
               </div>
               <div class="category_items">
-                <label>Fial</label>
-                <div class="info"> ? <span class="infotext">Priset som kyrkobyggnadens fial kostar samt antalet fialer kyrktornet har</span> </div><br>
-                <label for="fial_pris">Pris:</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fial_pris" name="fial_pris">
-                <br class="mobile_break">
+                <label for="fial">Fial:</label>
+                <select id="fial" name="fial">
+                  {%for i in range(0, len["fials"])%}
+                    <option value="{{categories["fials"][i]}}">{{categories["fials"][i]}}</option>
+                  {%endfor%}
+                </select>
                 <label for="fial_antal">Antal:</label>
                 <select id="fial_antal" name="fial_antal">
-                    {%for i in range(0, 10)%}
+                    {%for i in range(1, 10)%}
                       <option value="{{i}}">{{i}}</option>
                     {%endfor%}
                 </select>
+                <button onclick="add_fial()" id="fial_knapp" type='button'>Lägg till</button><br id="fial_break">
+
+
+
+
               </div>
               <div class="category_items">
                 <label for="del_torn">Delsumma: </label>
@@ -268,14 +281,23 @@
               </div>
               <div class="category_items">
                 <label>Klockor</label>
-                <div class="info"> ? <span class="infotext">Här lägger du till varje klocka i kyrkobyggnaden var för sig genom att skriva in diametern i meter och vikten i kg, du kan ta bort ett värde genom att klicka på det</span> </div><br>
-                <label for="klocka_diameter">Diameter:</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_diameter" name="klocka_diameter">
-                <br class="mobile_break">
-                <label for="klocka_vikt">Vikt (kg):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_vikt" name="klocka_vikt">
+                <div class="info"> ? <span class="infotext">Här lägger du till varje klocka i kyrkobyggnaden var för sig genom att skriva in vikten i kg, du kan ta bort ett värde genom att klicka på det</span> </div><br>
+                <label for="only_weight">Klicka här om du enbart har diametern: </label>
+                <input type="checkbox" id="only_weight" onclick="clock_weigth(this, '')" class="checkbox">
+                <div class="info"> ? <span class="infotext">Har du inte vikten så kan vi försöka beräkna den med relativt hög precision enbart med diametern</span></div><br>
+                <span id="has_weight">
+                  <label for="klocka_vikt">Vikt (kg):</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_vikt" name="klocka_vikt">
+                </span>
+                <span id="no_weigth" style="display:none;">
+                  <label for="klocka_diam">Diameter (cm):</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_diam" name="klocka_diam">
+                </span>
                 <br class="mobile_break">
                 <button onclick="add_clock()" id="klocka_knapp" type='button'>Lägg till</button><br id="klock_break">
+
+
+
               </div>
                 <!--<label for="elektrisk">Elektrisk ringanordning (Antal klockor):</label>
                 <select id="elektrisk" name="elektrisk">
@@ -353,8 +375,21 @@
                 </select>
               </div>
               <div class="category_items">
-                <label for="altaruppstas">Altaruppstas/skåp (Antal):</label>
-                <select id="altaruppstas" name="altaruppstas">
+                <label>Altaruppstas (Antal):</label><br>
+                <label for="altaruppstas_enkel">Enkel:</label>
+                <select id="altaruppstas_enkel" name="altaruppstas_enkel">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br class="mobile_break">
+                <label for="altaruppstas_påkostad">Påkostad:</label>
+                <select id="altaruppstas_påkostad" name="altaruppstas_påkostad">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br class="mobile_break">
+                <label for="altaruppstas_mycket">Mycket påkostad:</label>
+                <select id="altaruppstas_mycket" name="altaruppstas_mycket">
                     {%for i in range(0, 10)%}
                       <option value="{{i}}">{{i}}</option>
                     {%endfor%}
@@ -369,16 +404,37 @@
                 </select>
               </div>
               <div class="category_items">
-                <label for="predikstol">Predikstol (Antal):</label>
-                <select id="predikstol" name="predikstol">
+                <label>Predikstol (Antal):</label><br>
+                <label for="predikstol_enkel">Enkel:</label>
+                <select id="predikstol_enkel" name="predikstol_enkel">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br class="mobile_break">
+                <label for="predikstol_påkostad">Påkostad:</label>
+                <select id="predikstol_påkostad" name="predikstol_påkostad">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select><br class="mobile_break">
+                <label for="predikstol_mycket">Mycket påkostad:</label>
+                <select id="predikstol_mycket" name="predikstol_mycket">
                     {%for i in range(0, 10)%}
                       <option value="{{i}}">{{i}}</option>
                     {%endfor%}
                 </select>
               </div>
               <div class="category_items">
-                <label for="ljuskronor">Ljuskronor (Antal):</label>
-                <select id="ljuskronor" name="ljuskronor">
+                <label for="ljuskronor_under">Ljuskronor under 1m (Antal):</label>
+                <select id="ljuskronor_under" name="ljuskronor_under">
+                    {%for i in range(0, 10)%}
+                      <option value="{{i}}">{{i}}</option>
+                    {%endfor%}
+                </select>
+              </div>
+              <div class="category_items">
+                <label for="ljuskronor_över">Ljuskronor över 1m (Antal):</label>
+                <select id="ljuskronor_över" name="ljuskronor_över">
                     {%for i in range(0, 10)%}
                       <option value="{{i}}">{{i}}</option>
                     {%endfor%}
@@ -420,7 +476,7 @@
 
               <div class="category_items">
                 <label>Klockstapel</label>
-                <div class="info"> ? <span class="infotext">Vilken typ av klockstapel kyrkan har samt hur hög den är, se fliken bildexempel för exempel (EJ IMPLEMENTERAT)</span> </div><br>
+                <div class="info"> ? <span class="infotext">Vilken typ av klockstapel kyrkan har samt hur hög den är</span> </div><br>
                 <label for="stapel_typ">Typ</span>
                 <select id="stapel_typ" name="stapel_typ">
                     {%for i in range(0, len["stapel_typer"])%}
@@ -433,12 +489,18 @@
               </div>
               <div class="category_items">
                 <label>Klockor</label>
-                <div class="info"> ? <span class="infotext">Här lägger du till varje klocka i kyrkostapeln var för sig genom att skriva in diametern i meter och vikten i kg, du kan ta bort ett värde genom att klicka på det</span> </div><br>
-                <label for="stapel_klocka_diameter">Diameter:</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_klocka_diameter" name="stapel_klocka_diameter">
-                <br class="mobile_break">
-                <label for="stapel_klocka_vikt">Vikt (kg):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_klocka_vikt" name="stapel_klocka_vikt">
+                <div class="info"> ? <span class="infotext">Här lägger du till varje klocka i kyrkostapeln var för sig genom att skriva in vikten i kg, du kan ta bort ett värde genom att klicka på det</span> </div><br>
+                <label for="only_weight_stapel">Klicka här om du enbart har diametern: </label>
+                <input type="checkbox" id="only_weight_stapel" onclick="clock_weigth(this, '_stapel')" class="checkbox">
+                <div class="info"> ? <span class="infotext">Har du inte vikten så kan vi försöka beräkna den med relativt hög precision enbart med diametern</span></div><br>
+                <span id="has_weight_stapel">
+                  <label for="stapel_klocka_vikt">Vikt (kg):</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_klocka_vikt" name="stapel_klocka_vikt">
+                </span>
+                <span id="no_weigth_stapel" style="display:none;">
+                  <label for="stapel_klocka_diam">Diameter (cm):</label>
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_klocka_diam" name="stapel_klocka_diam">
+                </span>
                 <br class="mobile_break">
                 <button onclick="add_stapel_clock()" id="stapel_klocka_knapp" type='button'>Lägg till</button><br id="stapel_klock_break">
               </div>
@@ -471,12 +533,12 @@
                     
                 <div class="category_items">
                   <label for="rivning">Enbart rivning/sanering vid totalskada: </label>
-                  <input type="checkbox" id="rivning" name="rivning">
+                  <input type="checkbox" id="rivning" name="rivning" class="checkbox">
                 </div>
               </div>
 
               <div id="modify" class="risk_selections">
-                <p>Om ni istället för att försäkra eran nuvarande kyrka vill att en ny, mindre kyrka ska byggas upp vid stora skador, beskriv hur ni vill ha den. Tillbehör tillagda i "Särskilt värderade tillbehör" kommer att tas med i beräkningen.</p>
+                <p>Om ni istället för att försäkra eran nuvarande kyrka vill att en ny, mindre kyrka ska byggas upp vid stora skador, beskriv hur ni vill ha den. </p>
                 <div class="category_items">
                   <label for="other_kvm">Uppbyggnad till ny (kvm):</label>
                   <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="other_kvm" name="other_kvm">
@@ -490,6 +552,11 @@
                       {%endfor%}
                   </select>
                   <div class="info"> ? <span class="infotext">Kvaliteen på materialet nya kyrkan ska byggas upp av</span> </div>
+                </div>
+                <div class="category_items">
+                  <label for="expensive_inventory">Dyra tillbehör: </label>
+                  <input type="checkbox" id="expensive_inventory" name="expensive_inventory"  class="checkbox">
+                  <div class="info"> ? <span class="infotext">Om det bör finnas dyra tillbehör inuti kyrkan</span> </div>
                 </div>
               </div>
 
@@ -517,10 +584,10 @@
                   <label for="sam_decoration">Byggnadens utsmyckning: </label>
                   <span id="sam_decoration">0</span>
                 </div>
-                <div class="category_items">
+                <!--<div class="category_items">
                   <label for="sam_torn">Torn: </label>
                   <span id="sam_torn">0</span>
-                </div>
+                </div> -->
                 <div class="category_items">
                   <label for="sam_btillbehör">Byggnadstillbehör: </label>
                   <span id="sam_btillbehör">0</span>

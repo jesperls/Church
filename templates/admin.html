@@ -135,6 +135,61 @@
 
                 <button type="button" onclick="submit_misc()">Ladda in ny data</button>
             </form>
+            <form class="categories">
+                <div class="category_title">
+                    <h2>Speciellt värderade tillbehör</h2>
+                </div>
+                <div class="category_items">
+                    <label for="altargrund">Altargrund:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="altargrund" name="altargrund">
+                </div>
+                <div class="category_items">
+                    <label for="altare">Altare:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="altare" name="altare">
+                </div>
+                
+                <div class="category_items">
+                    <label>Altarupstas</label><br>
+                    <label for="altaruppstas_enkel">Enkel:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="altaruppstas_enkel" name="altaruppstas_enkel">
+                    <br class="mobile_break">
+                    <label for="altaruppstas_påkostad">Något påkostad:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="altaruppstas_påkostad" name="altaruppstas_påkostad">
+                    <br class="mobile_break">
+                    <label for="altaruppstas_mycket">Påkostad:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="altaruppstas_mycket" name="altaruppstas_mycket">
+                    <br class="mobile_break">
+                </div>
+
+                <div class="category_items">
+                    <label for="dopfunt">Dopfunt:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="dopfunt" name="dopfunt">
+                </div>
+                
+                <div class="category_items">
+                    <label>Predikstol:</label><br>
+                    <label for="predikstol_enkel">Enkel:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="predikstol_enkel" name="predikstol_enkel">
+                    <br class="mobile_break">
+                    <label for="predikstol_påkostad">Något påkostad:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="predikstol_påkostad" name="predikstol_påkostad">
+                    <br class="mobile_break">
+                    <label for="predikstol_mycket">Påkostad:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="predikstol_mycket" name="predikstol_mycket">
+                    <br class="mobile_break">
+                </div>
+
+                <div class="category_items">
+                    <label for="ljuskronor_under">Ljuskronor under 1m:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="ljuskronor_under" name="ljuskronor_under">
+                </div>
+                <div class="category_items">
+                    <label for="ljuskronor_över">Ljuskronor över 1m:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="ljuskronor_över" name="ljuskronor_över">
+                </div>
+                <button type="button" onclick="submit_misc()">Ladda in ny data</button>
+
+            </form>
 
             <!--
             <div class="categories">

@@ -219,35 +219,6 @@ function add_own(){
     update();
 }
 
-function add_own_risk(){
-    var name = document.getElementById("namn_eget_risk");
-    var price = document.getElementById("pris_eget_risk");
-    var amount = document.getElementById("antal_eget_risk");
-    if(name.value == null || price == null || name.value == "" || price.value == ""){
-        alert("Fyll i alla fält!");
-        return false;
-    }
-    var br = document.createElement("br");
-    var div = document.getElementById("eget_break_risk");
-    var eget = document.createElement("div");
-    var cl = document.createAttribute("class");
-    var del = document.createAttribute("onclick");
-    var att_name = document.createAttribute("name");
-    var att_value = document.createAttribute("value");
-    att_value.value = price.value;
-    att_name.value = amount.value;
-    eget.setAttributeNode(att_name);
-    eget.setAttributeNode(att_value);
-    var choice = amount.options[amount.selectedIndex].value;
-    cl.value = "eget_risk";
-    del.value = "delete_this(this)"
-    eget.setAttributeNode(cl);
-    eget.setAttributeNode(del);
-    eget.innerHTML = "<b>Namn:</b> ".concat(name.value, " <b>Pris:</b> ", price.value, " <b>Antal:</b> ", choice, "     ✖")
-    insertAfter(div, eget);
-    update_risk();
-}
-
 function add_window(){
     var name = document.getElementById("fönster_typ");
     var choice = name.options[name.selectedIndex].value;
@@ -588,6 +559,7 @@ function export_church(){
     
     var risk = {};
     risk["Rivning"] = document.getElementById("rivning").checked;
+    risk["Dyra tillbehör"] = document.getElementById("expensive_inventory").checked;
     risk["Ny kvm"] = get_value("other_kvm");
     risk["Återställningsgrad"] = get_choice("material_risk");
     risk["Annat belopp"] = get_value("own_value");
@@ -608,6 +580,14 @@ function load_previous(){
                 json = data;
             }
         });
+    var objects = [document.getElementsByClassName("fönster"), document.getElementsByClassName("ryttare"), document.getElementsByClassName("fönster_2"),
+                    document.getElementsByClassName("fial"), document.getElementsByClassName("klocka"), document.getElementsByClassName("eget"),
+                    document.getElementsByClassName("stapel_klocka")];
+    for (var i = 0; i < objects.length; i++){
+        for(var j = 0; j < objects[i].length; j++){
+            delete_this(objects[i][j]);
+        }
+    }
     document.getElementById("BRA").value = json["BRA"];
     document.getElementById("utsmyckning").value = json["Utsmyckning"];
 
@@ -695,6 +675,7 @@ function load_previous(){
     document.getElementById("other_kvm").value = json["Risk"]["Ny kvm"];
     document.getElementById("material_risk").value = json["Risk"]["Återställningsgrad"];
     document.getElementById("own_value").value = json["Risk"]["Annat belopp"];
+    document.getElementById("expensive_inventory").checked = json["Risk"]["Dyra tillbehör"];
 
     selected = "none";
     if(json["Type"] != "none"){

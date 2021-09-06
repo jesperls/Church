@@ -21,7 +21,7 @@ body {
 
 
 form {
-    background-color: white;
+    background-color: whitesmoke;
     width: -moz-fit-content;
     width: fit-content;
     margin-left: auto;
@@ -114,6 +114,7 @@ select {
 #header{
     background-color: red;
     background: url(content/portrait_2.png) top left no-repeat;
+    border-bottom:solid 3pt;
 }
 
 #arrow:hover, #arrow_2:hover{

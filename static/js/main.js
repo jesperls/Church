@@ -585,20 +585,12 @@ function load_previous(){
         });
     var objects = [document.getElementsByClassName("fönster"), document.getElementsByClassName("ryttare"), document.getElementsByClassName("fönster_2"),
                     document.getElementsByClassName("fial"), document.getElementsByClassName("eget"),
-                    document.getElementsByClassName("stapel_klocka")];
+                    document.getElementsByClassName("stapel_klocka"), document.getElementsByClassName("klocka")];
+    var obj_lens = [objects[0].length, objects[1].length, objects[2].length, objects[3].length, objects[4].length, objects[5].length, objects[6].length];
     for (var i = 0; i < objects.length; i++){
-        for(var j = 0; j < objects[i].length; j++){
-            if(objects[i][j].attributes["class"].value == "klocka"){
-                alert("E");
-            }
-            delete_this(objects[i][j]);
+        for(var j = 0; j < obj_lens[i]; j++){
+            delete_this(objects[i][0]);
         }
-    }
-    //BUGFIX FOR CODE ACTING WIERD
-    var clocks = document.getElementsByClassName("klocka");
-    var c_amount = clocks.length;
-    for(var i = 0; i < c_amount; i++){
-        delete_this(clocks[0]);
     }
     clock_amounts = 0;
     stapel_clock_amounts = 0;

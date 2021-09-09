@@ -234,7 +234,10 @@ select {
     justify-self: center;
     align-self: center;
     display: flex;
+    overflow: wrap;
+    display:inline-block;
 }
+
 
 .info{
     justify-self: center;

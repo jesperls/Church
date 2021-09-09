@@ -754,7 +754,7 @@ function update_building(){
     var floor_factor = get_factor("golv", "floors");
     var inner_factor = get_factor("innertak", "inner_roofs", "innertak_andra");
     var outer_factor = get_factor("yttertak", "outer_roofs", "yttertak_andra");
-    var prod_factor = wall_factor*floor_factor*inner_factor*outer_factor;
+    var prod_factor = (wall_factor + floor_factor + inner_factor + outer_factor) / 4;
 
     var bra = get_value("BRA");
     var tower_width = get_value("torn_bredd");

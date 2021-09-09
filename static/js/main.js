@@ -32,10 +32,14 @@ var selected = "none";
 
 function switch_tab(new_tab){
     pages = document.getElementsByClassName("pages");
+    document.getElementById("legend").style.display ="none";
     for(var i = 0; i < pages.length; i++){
         pages[i].style.display = 'none';
     }
     document.getElementById(new_tab).style.display = 'flex';
+    if(new_tab == "form"){
+        document.getElementById("legend").style.display ="flex";
+    }
 }
 
 function loadJSON(name){
@@ -159,7 +163,7 @@ function add_stapel_clock(){
     var weight = document.getElementById("stapel_klocka_vikt").value;
     if(document.getElementById("only_weight_stapel").checked){
         var x = document.getElementById("stapel_klocka_diam").value;
-        weight = Math.round(8.02127 * Math.pow(10,-7) * Math.pow(x, 2.9643694));
+        weight = Math.round(8.0212675425928 * Math.pow(10,-7) * Math.pow(x, 2.96436941116879));
         if (weight <= 1){
             alert("Värdet du angivit är väldigt för lågt!");
             return;
@@ -704,12 +708,17 @@ function update(){
     if (document.getElementById("rivning").checked){
         if (selected == "raze"){
             document.getElementById("sum").innerHTML = 250000;
+            document.getElementById("sam_type").innerHTML = "Rivning"
+            document.getElementById("all_but_sum").style.display = "none";
             return;
         }
     }
+
     if (selected == "modify"){
         var bra = get_value("other_kvm");
         if (bra != ""){
+            document.getElementById("sam_type").innerHTML = "Justering"
+            document.getElementById("all_but_sum").style.display = "none";
             var rest_value = restoration[get_choice("material_risk")];
             var new_bra = bra * rest_value * bpi_risk * factor;
             if (document.getElementById("expensive_inventory").checked){
@@ -722,10 +731,14 @@ function update(){
     if (selected == "own"){
         var own = get_value("own_value");
         if(own != ""){
+            document.getElementById("all_but_sum").style.display = "none";
+            document.getElementById("sam_type").innerHTML = "Eget"
             document.getElementById("sum").innerHTML = own;
             return;
         }
     }
+    document.getElementById("all_but_sum").style.display = "block";
+    document.getElementById("sam_type").innerHTML = "Vanlig"
     document.getElementById("sum").innerHTML = total;
 }
 

@@ -569,7 +569,6 @@ function export_church(){
     risk["Annat belopp"] = get_value("own_value");
     export_data["Risk"] = risk;
 
-
     send_json(export_data, "export");
 }
 
@@ -585,13 +584,24 @@ function load_previous(){
             }
         });
     var objects = [document.getElementsByClassName("fönster"), document.getElementsByClassName("ryttare"), document.getElementsByClassName("fönster_2"),
-                    document.getElementsByClassName("fial"), document.getElementsByClassName("klocka"), document.getElementsByClassName("eget"),
+                    document.getElementsByClassName("fial"), document.getElementsByClassName("eget"),
                     document.getElementsByClassName("stapel_klocka")];
     for (var i = 0; i < objects.length; i++){
         for(var j = 0; j < objects[i].length; j++){
+            if(objects[i][j].attributes["class"].value == "klocka"){
+                alert("E");
+            }
             delete_this(objects[i][j]);
         }
     }
+    //BUGFIX FOR CODE ACTING WIERD
+    var clocks = document.getElementsByClassName("klocka");
+    var c_amount = clocks.length;
+    for(var i = 0; i < c_amount; i++){
+        delete_this(clocks[0]);
+    }
+    clock_amounts = 0;
+    stapel_clock_amounts = 0;
     document.getElementById("BRA").value = json["BRA"];
     document.getElementById("utsmyckning").value = json["Utsmyckning"];
 

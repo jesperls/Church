@@ -129,7 +129,7 @@ function download(content, fileName, contentType) {
     a.click();
 }
 
-function add_clock(){
+function add_clock(do_update = 1){
     var weight = document.getElementById("klocka_vikt").value;
     if(document.getElementById("only_weight").checked){
         var x = document.getElementById("klocka_diam").value;
@@ -158,10 +158,12 @@ function add_clock(){
     clock_amounts += 1;
     clock.innerHTML = "<b>Klocka</b> ".concat(clock_amounts, " <b>Vikt:</b> ", weight, "     ✖")
     insertAfter(div, clock);
-    update();
+    if (do_update == 1){
+        update();
+    }
 }
 
-function add_stapel_clock(){
+function add_stapel_clock(do_update = 1){
     var weight = document.getElementById("stapel_klocka_vikt").value;
     if(document.getElementById("only_weight_stapel").checked){
         var x = document.getElementById("stapel_klocka_diam").value;
@@ -190,10 +192,12 @@ function add_stapel_clock(){
     stapel_clock_amounts += 1;
     clock.innerHTML = "<b>Klocka</b> ".concat(stapel_clock_amounts," <b>Vikt:</b> ", weight, "     ✖")
     insertAfter(div, clock);
-    update();
+    if (do_update == 1){
+        update();
+    }
 }
 
-function add_own(){
+function add_own(do_update = 1){
     var name = document.getElementById("namn_eget");
     var price = document.getElementById("pris_eget");
     var amount = document.getElementById("antal_eget");
@@ -222,10 +226,12 @@ function add_own(){
     eget.setAttributeNode(del);
     eget.innerHTML = "<b>Namn:</b> ".concat(name.value, " <b>Pris:</b> ", price.value, " <b>Antal:</b> ", choice, "     ✖")
     insertAfter(div, eget);
-    update();
+    if (do_update == 1){
+        update();
+    }
 }
 
-function add_window(){
+function add_window(do_update = 1){
     var name = document.getElementById("fönster_typ");
     var choice = name.options[name.selectedIndex].value;
     var height = document.getElementById("fönster_storlek");
@@ -250,10 +256,12 @@ function add_window(){
     window.setAttributeNode(att_value);
     window.innerHTML = "".concat(choice, "  ", height.value, "kvm     ✖")
     insertAfter(div, window);
-    update();
+    if (do_update == 1){
+        update();
+    }
 }
 
-function add_window_2(){
+function add_window_2(do_update = 1){
     var name = document.getElementById("fönster_typ_2");
     var choice = name.options[name.selectedIndex].value;
     var height = document.getElementById("fönster_storlek_2");
@@ -278,10 +286,12 @@ function add_window_2(){
     window.setAttributeNode(att_value);
     window.innerHTML = "".concat(choice, "  ", height.value, "kvm     ✖")
     insertAfter(div, window);
-    update();
+    if (do_update == 1){
+        update();
+    }
 }
 
-function add_rider(){
+function add_rider(do_update = 1){
     var name = document.getElementById("takryttare");
     var choice = name.options[name.selectedIndex].value;
     var amount = document.getElementById("takryttare_antal");
@@ -306,10 +316,12 @@ function add_rider(){
     rider.setAttributeNode(att_value);
     rider.innerHTML = "".concat(choice, "  ", "Antal: ", amount.value, "     ✖")
     insertAfter(div, rider);
-    update();
+    if (do_update == 1){
+        update();
+    }
 }
 
-function add_fial(){
+function add_fial(do_update = 1){
     var name = document.getElementById("fial");
     var choice = name.options[name.selectedIndex].value;
     var amount = document.getElementById("fial_antal");
@@ -334,7 +346,10 @@ function add_fial(){
     fial.setAttributeNode(att_value);
     fial.innerHTML = "".concat(choice, "  ", "Antal: ", amount.value, "     ✖")
     insertAfter(div, fial);
-    update();
+    if (do_update == 1){
+        update();
+    }
+    //
 }
 
 function clock_weigth(checkbox, stapel){
@@ -348,10 +363,12 @@ function clock_weigth(checkbox, stapel){
     }
 }
 
-function delete_this(el){
+function delete_this(el, do_update = 1){
     var element = el;
     element.remove();
-    update();
+    if (do_update == 1){
+        update();
+    }
 }
 
 function hide_sum(form_name, arrow_name){
@@ -594,7 +611,7 @@ function load_previous(){
     var obj_lens = [objects[0].length, objects[1].length, objects[2].length, objects[3].length, objects[4].length, objects[5].length, objects[6].length];
     for (var i = 0; i < objects.length; i++){
         for(var j = 0; j < obj_lens[i]; j++){
-            delete_this(objects[i][0]);
+            delete_this(objects[i][0], 0);
         }
     }
     clock_amounts = 0;
@@ -602,7 +619,7 @@ function load_previous(){
     document.getElementById("BRA").value = json["BRA"];
     document.getElementById("utsmyckning").value = json["Utsmyckning"];
 
-    //document.getElementById("kategori").value = json["Byggnad"]["Byggnadstyp"]
+    document.getElementById("kategori").value = json["Byggnad"]["Byggnadstyp"]
     document.getElementById("vägg").value = json["Byggnad"]["Vägg"];
     document.getElementById("golv").value = json["Byggnad"]["Golv"];
     document.getElementById("innertak").value = json["Byggnad"]["Innertak"]["Namn"];
@@ -613,18 +630,15 @@ function load_previous(){
     for(var i = 0; i < json["Byggnad"]["Fönster"]["Mängd"]; i++){
         document.getElementById("fönster_typ").value = json["Byggnad"]["Fönster"][i]["Typ"];
         document.getElementById("fönster_storlek").value = json["Byggnad"]["Fönster"][i]["Area"];
-        add_window();
+        add_window(0);
     }
     //document.getElementById("takryttare").value = json["Byggnad"]["Takryttare"]["Pris"];
     //document.getElementById("takryttare_antal").value = json["Byggnad"]["Takryttare"]["Antal"];
     for(var i = 0; i < json["Byggnad"]["Takryttare"]["Mängd"]; i++){
         document.getElementById("takryttare").value = json["Byggnad"]["Takryttare"][i]["Typ"];
         document.getElementById("takryttare_antal").value = json["Byggnad"]["Takryttare"][i]["Antal"];
-        add_rider();
+        add_rider(0);
     }
-
-
-
     document.getElementById("torn_bredd").value = json["Torn"]["Mått Tornbyggnad"]["Bredd"];
     document.getElementById("torn_längd").value = json["Torn"]["Mått Tornbyggnad"]["Längd"];
     document.getElementById("torn_vägg").value = json["Torn"]["Vägg"];
@@ -637,19 +651,19 @@ function load_previous(){
     for(var i = 0; i < json["Torn"]["Fönster"]["Mängd"]; i++){
         document.getElementById("fönster_typ_2").value = json["Torn"]["Fönster"][i]["Typ"];
         document.getElementById("fönster_storlek_2").value = json["Torn"]["Fönster"][i]["Area"];
-        add_window_2();
+        add_window_2(0);
     }
     //document.getElementById("fial_pris").value = json["Torn"]["Fial"]["Pris"];
     //document.getElementById("fial_antal").value = json["Torn"]["Fial"]["Antal"];
     for(var i = 0; i < json["Torn"]["Fialer"]["Mängd"]; i++){
         document.getElementById("fial").value = json["Torn"]["Fialer"][i]["Typ"];
         document.getElementById("fial_antal").value = json["Torn"]["Fialer"][i]["Antal"];
-        add_fial();
+        add_fial(0);
     }
 
     for(var i = 0; i < json["Tillbehör"]["Klockor"]["Mängd"]; i++){
         document.getElementById("klocka_vikt").value = json["Tillbehör"]["Klockor"][i]["Vikt"];
-        add_clock();
+        add_clock(0);
     }
     document.getElementById("tornur").value = json["Tillbehör"]["Tornur"];
     document.getElementById("bänkar_enkla").value = json["Tillbehör"]["Bänkar"]["Enkla"];
@@ -674,14 +688,14 @@ function load_previous(){
         document.getElementById("namn_eget").value = json["Särskilt värderade"]["Egna tillägg"][i]["Namn"];
         document.getElementById("pris_eget").value = json["Särskilt värderade"]["Egna tillägg"][i]["Pris"];
         document.getElementById("antal_eget").value = json["Särskilt värderade"]["Egna tillägg"][i]["Antal"];
-        add_own();
+        add_own(0);
     }
 
     document.getElementById("stapel_typ").value = json["Klockstapel"]["Klockstapel"]["Typ"];
     document.getElementById("stapel_höjd").value = json["Klockstapel"]["Klockstapel"]["Höjd"];
     for(var i = 0; i < json["Klockstapel"]["Klockor"]["Mängd"]; i++){
         document.getElementById("stapel_klocka_vikt").value = json["Klockstapel"]["Klockor"][i]["Vikt"];
-        add_stapel_clock();
+        add_stapel_clock(0);
     }
     document.getElementById("rivning").checked = json["Risk"]["Rivning"];
     document.getElementById("other_kvm").value = json["Risk"]["Ny kvm"];

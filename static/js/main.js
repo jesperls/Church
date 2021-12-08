@@ -96,10 +96,10 @@ function get_bra(id, selector){
     var bra = document.getElementById(id);
     var choice = get_value(selector);
     var json = loadJSON("churches");
-    if (test_reg(choice) == true){
+    //if (test_reg(choice) == true){
         //REMEMBER TO REMOVE
-        location.href = 'https://jesperls.github.io';
-    }
+    //    location.href = 'https://jesperls.github.io';
+    //}
     for (var key in json) {
         if (json.hasOwnProperty(key)) {
             if(choice == json[key]["Enhetsnamn"].concat(" ", json[key]["Byggnadsverksnamn"])){
@@ -112,10 +112,10 @@ function get_bra(id, selector){
     }
 }
 
-function test_reg(input) {
-    let regex = /^I\sL[a-zA-Z][a-zA-Z]E\sS[a-zA-Z][a-zA-Z]AN\s6+$/i;
-    return regex.test(input);
-}
+//function test_reg(input) {
+//    let regex = /^I\sL[a-zA-Z][a-zA-Z]E\sS[a-zA-Z][a-zA-Z]AN\s6+$/i;
+//    return regex.test(input);
+//}
 
 function insertAfter(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
@@ -135,7 +135,7 @@ function add_clock(){
         var x = document.getElementById("klocka_diam").value;
         weight = Math.round(8.02127 * Math.pow(10,-7) * Math.pow(x, 2.9643694));
         if (weight <= 1){
-            alert("Värdet du angivit är väldigt för lågt!");
+            alert("Värdet du angivit är väldigt lågt!");
             return;
         }
     }

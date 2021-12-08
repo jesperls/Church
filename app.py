@@ -25,6 +25,7 @@ churches = []
 parishes = []
 stapel_typer = ["Typ 1", "Typ 2", "Typ 3"]
 fönster_typer = ["Typ 1", "Typ 2", "Typ 3"]
+byggnads_typer = []
 roof_riders = ["Höjd 0-3 m", "Höjd 3-6 m", "Höjd >6m"]
 fials = ["0-3m", ">3m"]
 
@@ -35,18 +36,19 @@ material_restoration = ["Budget", "Standard", "Exklusivt"]
 
 @app.route('/')
 def homepage():
+    print(byggnads_typer)
     return render_template("index.html",
                             len={"types": len(types), "decorations": len(decorations), "walls": len(walls),
                                 "floors": len(floors), "inner_roof": len(inner_roof), "outer_roof": len(outer_roof),
                                 "tower_roof": len(tower_roof), "stapel_typer": len(stapel_typer),
                                 "fönster_typer": len(fönster_typer), "churches": len(churches), "parishes": len(parishes),
                                 "frames": len(frames), "church_states": len(church_states), "material_restoration": len(material_restoration),
-                                "roof_riders": len(roof_riders), "fials": len(fials)},
+                                "roof_riders": len(roof_riders), "fials": len(fials), "byggnads_typer": len(byggnads_typer)},
                             categories={"types": types, "decorations": decorations, "walls": walls, "floors": floors,
                                         "inner_roof": inner_roof, "outer_roof": outer_roof, "tower_roof": tower_roof,
                                         "stapel_typer": stapel_typer, "fönster_typer": fönster_typer, "churches": churches, "parishes": parishes,
                                         "frames": frames, "church_states": church_states, "material_restoration": material_restoration,
-                                        "roof_riders": roof_riders, "fials": fials})
+                                        "roof_riders": roof_riders, "fials": fials, "byggnads_typer": byggnads_typer})
 
 @app.route('/admin_panel')
 def admin():
@@ -126,7 +128,7 @@ def generate_pdf(json):
     """
 
 def load_dfs():
-    global walls, floors, inner_roof, outer_roof, tower_roof, churches
+    global walls, floors, inner_roof, outer_roof, tower_roof, churches, byggnads_typer
     df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[3, 4, 5, 6, 7, 8])
     df.columns = ["Tjocklek", "Typ", "Beskrivning", "Pris", "Jmf_pris", "Faktor"]
     df.dropna(axis=0, thresh=4, inplace=True)
@@ -186,6 +188,14 @@ def load_dfs():
         fials.append(row["Höjd"])
     df.to_json('./static/data/fials.json', orient='records')
 
+    df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[45, 46])
+    df.columns = ["Typ", "Faktor"]
+    df.dropna(axis=0, thresh=2, inplace=True)
+    byggnads_typer = []
+    for index, row in df.iterrows():
+        byggnads_typer.append(row["Typ"])
+    df.to_json('./static/data/byggnads_typer.json', orient='records')
+
 
 
 
@@ -206,6 +216,6 @@ def load_dfs():
 
 
 
-load_dfs()
 if __name__ == '__main__':
+    load_dfs()
     app.run(host="0.0.0.0", port="80")

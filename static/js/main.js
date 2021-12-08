@@ -19,6 +19,7 @@ var bases = {"Sten" : 12, "Trä" : 8};
 var building_parts = {"Klockor" : 500000, "Orgel" : 100000, "Stämmor" : 100000, "Mosaikfönster" : 500000};
 var restoration = {"Budget" : 0.8, "Standard" : 1.0, "Exklusivt" : 2.0};
 var roof_riders = {"Höjd 0-3 m": 111914, "Höjd 3-6 m": 223828, "Höjd >6m": 568178};
+var categories = {};
 var fials = {"0-3m": 111914, ">3m": 223828};
 var bpi_risk = 33592;
 var raze = 250000;
@@ -88,6 +89,7 @@ function load_values(){
     pianos = JSON.parse(json["pianos"]);
     spec_prices = JSON.parse(json["spec_prices"]);
     decoration = JSON.parse(json["decoration"]);
+    categories = JSON.parse(json["categories"]);
 }
 
 function get_bra(id, selector){
@@ -116,7 +118,7 @@ function test_reg(input) {
 }
 
 function insertAfter(referenceNode, newNode) {
-  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
 function download(content, fileName, contentType) {
@@ -442,6 +444,7 @@ function checkFileExist(urlToFile){
     }
 }
 
+//Converts the current values to a JSON file
 function export_church(){
     if (get_value("church_choice") == "" || get_value("church_choice") == null){
         return;
@@ -473,6 +476,7 @@ function export_church(){
     building["Innertak"] = {"Namn": get_choice("innertak"), "Typ": get_choice("innertak_andra")};
     building["Yttertak"] = {"Namn": get_choice("yttertak"), "Typ": get_choice("yttertak_andra")};
     building["Läktare"] = get_value("läktare");
+    building["Byggnadstyp"] = get_choice("kategori");
     var windows = document.getElementsByClassName("fönster");
     var windows_json = {"Mängd": windows.length};
     for (var i = 0; i < windows.length; i++) {
@@ -566,12 +570,13 @@ function export_church(){
     risk["Dyra tillbehör"] = document.getElementById("expensive_inventory").checked;
     risk["Ny kvm"] = get_value("other_kvm");
     risk["Återställningsgrad"] = get_choice("material_risk");
-    risk["Annat belopp"] = get_value("own_value");
+    //risk["Annat belopp"] = get_value("own_value");
     export_data["Risk"] = risk;
 
     send_json(export_data, "export");
 }
 
+//Loads in a previously saved church by name
 function load_previous(){
     var json = null;
         $.ajax({
@@ -597,6 +602,7 @@ function load_previous(){
     document.getElementById("BRA").value = json["BRA"];
     document.getElementById("utsmyckning").value = json["Utsmyckning"];
 
+    //document.getElementById("kategori").value = json["Byggnad"]["Byggnadstyp"]
     document.getElementById("vägg").value = json["Byggnad"]["Vägg"];
     document.getElementById("golv").value = json["Byggnad"]["Golv"];
     document.getElementById("innertak").value = json["Byggnad"]["Innertak"]["Namn"];
@@ -680,7 +686,7 @@ function load_previous(){
     document.getElementById("rivning").checked = json["Risk"]["Rivning"];
     document.getElementById("other_kvm").value = json["Risk"]["Ny kvm"];
     document.getElementById("material_risk").value = json["Risk"]["Återställningsgrad"];
-    document.getElementById("own_value").value = json["Risk"]["Annat belopp"];
+    //document.getElementById("own_value").value = json["Risk"]["Annat belopp"];
     document.getElementById("expensive_inventory").checked = json["Risk"]["Dyra tillbehör"];
 
     selected = "none";
@@ -692,6 +698,7 @@ function load_previous(){
     }
 }
 
+//Updates the "Sammanställning" box
 function update(){
     var total = 0;
     var building = update_building();
@@ -758,6 +765,9 @@ function update_building(){
     var outer_factor = get_factor("yttertak", "outer_roofs", "yttertak_andra");
     var prod_factor = (wall_factor + floor_factor + inner_factor + outer_factor) / 4;
 
+    var category = get_choice("kategori");
+    var category_factor = categories[category];
+
     var bra = get_value("BRA");
     var tower_width = get_value("torn_bredd");
     var tower_length = get_value("torn_längd");
@@ -787,7 +797,7 @@ function update_building(){
         }
     }
 
-    var result_building = Math.round(value_building + value_platform + value_windows + value_roof_rider);
+    var result_building = Math.round(value_building + value_platform + value_windows + value_roof_rider + BPI*category_factor);
     document.getElementById("del_byggnad").innerHTML = result_building;
     //document.getElementById("sam_byggnad").innerHTML = result_building;
     return(result_building);

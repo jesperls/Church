@@ -121,7 +121,25 @@
                     <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktarorgel" name="läktarorgel">
                 </div>
                 <div class="category_items">
-                    <label>Utsmycknings faktorer</label><br>
+                    <label>Byggnadstyper</label><br>
+                    <label for="kyrka">Kyrka:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="kyrka" name="kyrka">
+                    <br>
+                    <label for="tegner">Tegnérlada:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tegner" name="tegner">
+                    <br>
+                    <label for="trä_ej">Träkyrka, ej timmer:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="trä_ej" name="trä_ej">
+                    <br>
+                    <label for="trä_tim">Träkyrka, timmer:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="trä_tim" name="trä_tim">
+                    <br>
+                    <label for="medeltidskyrka">Medeltidskyrka:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="medeltidskyrka" name="medeltidskyrka">
+                </div>
+
+                <div class="category_items">
+                    <label>Byggnadstyper</label><br>
                     <label for="simple">Enkel:</label>
                     <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="simple" name="simple">
                     <br class="mobile_break">
@@ -132,6 +150,7 @@
                     <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="expensive" name="expensive">
                     <br class="mobile_break">
                 </div>
+
 
                 <button type="button" onclick="submit_misc()">Ladda in ny data</button>
             </form>

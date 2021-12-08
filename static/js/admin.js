@@ -20,6 +20,7 @@ var restoration = {"Budget" : 0.8, "Standard" : 1.0, "Exklusivt" : 2.0};
 var bpi_risk = 33592;
 var raze = 250000;
 var factor = 2.0;
+var categories = {};
 
 function loadJSON(name){
     var json = null;
@@ -39,7 +40,7 @@ function make_json(){
     var json = {"pillar_prices" : JSON.stringify(pillar_prices), "BPI": JSON.stringify(BPI), "platform_price": JSON.stringify(platform_price), "win_values": JSON.stringify(win_values), 
                 "moms": JSON.stringify(moms), "klock_kg": JSON.stringify(klock_kg), "mount_clock": JSON.stringify(mount_clock), "pris_klock": JSON.stringify(pris_klock), 
                 "pris_torn": JSON.stringify(pris_torn), "benches": JSON.stringify(benches), "chairs": JSON.stringify(chairs), "pianos": JSON.stringify(pianos),
-                "spec_prices": JSON.stringify(spec_prices), "decoration" : JSON.stringify(decoration)};
+                "spec_prices": JSON.stringify(spec_prices), "decoration" : JSON.stringify(decoration), "categories": JSON.stringify(categories)};
     send_json(json, 'misc');
     //download(JSON.stringify(json), 'json.json', 'text/plain');
 }
@@ -63,7 +64,7 @@ function send_json(json, name){
         error: function(error) {
             console.log(error);
         }
-     });
+    });
 }
 
 function load_values(){
@@ -82,6 +83,8 @@ function load_values(){
     pianos = JSON.parse(json["pianos"]);
     spec_prices = JSON.parse(json["spec_prices"]);
     decoration = JSON.parse(json["decoration"]);
+    categories = JSON.parse(json["categories"]);
+    
     json = loadJSON("misc_risk");
     bases = JSON.parse(json["bases"]);
     building_parts = JSON.parse(json["building_parts"]);
@@ -125,6 +128,11 @@ function submit_misc(){
     spec_prices["predikstol_mycket"] = document.getElementById("predikstol_mycket").value;
     spec_prices["ljuskronor_under"] = document.getElementById("ljuskronor_under").value;
     spec_prices["ljuskronor_över"] = document.getElementById("ljuskronor_över").value;
+    categories["Kyrka"] = document.getElementById("kyrka").value;
+    categories["Tegnérlada"] = document.getElementById("tegner").value;
+    categories["Träkyrka, ej timmer"] = document.getElementById("trä_ej").value;
+    categories["Träkyrka, timmer"] = document.getElementById("trä_tim").value;
+    categories["Medeltidskyrka"] = document.getElementById("medeltidskyrka").value;
     make_json();
     alert("Nya värden inlästa");
 }
@@ -168,4 +176,9 @@ function load_boxes(){
     document.getElementById("predikstol_mycket").value = spec_prices["predikstol_mycket"]
     document.getElementById("ljuskronor_under").value = spec_prices["ljuskronor_under"];
     document.getElementById("ljuskronor_över").value = spec_prices["ljuskronor_över"];
+    document.getElementById("kyrka").value = categories["Kyrka"];
+    document.getElementById("tegner").value = categories["Tegnérlada"];
+    document.getElementById("trä_ej").value = categories["Träkyrka, ej timmer"];
+    document.getElementById("trä_tim").value = categories["Träkyrka, timmer"];
+    document.getElementById("medeltidskyrka").value = categories["Medeltidskyrka"];
 }

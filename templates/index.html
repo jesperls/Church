@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Försäkrings Verktyg</title>
+        <title>Försäkringsvärdering</title>
         <script type=text/javascript src="{{url_for('static', filename='js/main.js') }}"></script>
         <script type=text/javascript src="{{url_for('static', filename='js/jquery.js') }}"></script>
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class ="category_items">
-          <div id="legend">Klicka på text med ... under sig för att visa bilder, håll musen över &nbsp <span class="info"> <span class="infotext">Exempel text</span> </span> &nbsp för information om raden du är på</div>
+          <div id="legend">Klicka på texter som är understrukna med ”.....” för bilder och beskrivningar. Håll muspekaren över ikonen &nbsp <span class="info"> <span class="infotext">Exempel text</span> </span> &nbsp för förklaring om respektive parameter. </div>
         </div>
           <div id="form" class = "pages">
             <!--
@@ -54,12 +54,17 @@
                 <div class="info">  <span class="infotext">Storleken av hela kyrkan i kvadratmeter</span> </div>
               </div>
 
-                <!-- <label for="kategori">Kategori:</label>
+
+              <div class="category_items">
+                <label for="kategori">Byggnadstyp:</label>
                 <select id="kategori" name="kategori" class="value">
-                    {%for i in range(0, len["types"])%}
-                      <option value="{{categories["types"][i]}}">{{categories["types"][i]}}</option>
+                    {%for i in range(0, len["byggnads_typer"])%}
+                      <option value="{{categories["byggnads_typer"][i]}}">{{categories["byggnads_typer"][i]}}</option>
                     {%endfor%}
-                </select><br><br> -->
+                </select>
+              </div>
+
+
               <div class="category_items">
                 <label for="utsmyckning" onclick="show_pictures('decoration_pictures')" class="clickable">Utsmyckning:</label>
                 <select id="utsmyckning" name="utsmyckning" class="value">
@@ -292,7 +297,7 @@
                   <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_vikt" name="klocka_vikt">
                 </span>
                 <span id="no_weigth" style="display:none;">
-                  <label for="klocka_diam">Diameter (cm):</label>
+                  <label for="klocka_diam">Diameter (mm):</label>
                   <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_diam" name="klocka_diam">
                 </span>
                 <br class="mobile_break">
@@ -521,17 +526,17 @@
 
             <form class="categories" onchange="update()">
               <div class="category_title">
-                <h2>Förstarisk</h2>
+                <h2>Justering av kalkylerat värde</h2>
               </div>
               
               <ul id="choices_risk">
-                <li id="raze_option" class="risk_option" onclick="risk_menu('raze')">Enbart Rivning</li>
-                <li id="modify_option" class="risk_option" onclick="risk_menu('modify')">Justering av kalkylerat värde                </li>
-                <li id="own_option" class="risk_option" onclick="risk_menu('own')">Annat belopp</li>
+                <li id="raze_option" class="risk_option" onclick="risk_menu('raze')">Rivning/Sanering</li>
+                <li id="modify_option" class="risk_option" onclick="risk_menu('modify')">Annan storlek på byggnad                </li>
+                <!--<li id="own_option" class="risk_option" onclick="risk_menu('own')">Annat belopp</li>-->
               </ul>
 
               <div id=raze class="risk_selections">
-                <p>Istället för att återställa kyrkan vid stora skador så kommer den istället att rivas och området saneras, priset för detta är 250 000kr.</p>
+                <p>Man kan välja att bara försäkra in en kostnad för rivning och återställning av området vid en totalskada/stor skada, i stället för att återställa kyrkan.</p>
                     
                 <div class="category_items">
                   <label for="rivning">Enbart rivning/sanering vid totalskada: </label>
@@ -540,7 +545,7 @@
               </div>
 
               <div id="modify" class="risk_selections">
-                <p>Om ni istället för att försäkra eran nuvarande kyrka vill att en ny, mindre kyrka ska byggas upp vid stora skador, beskriv hur ni vill ha den. </p>
+                <p>Om ni önskar kalkylera på en mindre byggnad som ersättning vid totalskada istället för befintlig enligt ovan. </p>
                 <div class="category_items">
                   <label for="other_kvm">Uppbyggnad till ny (kvm):</label>
                   <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="other_kvm" name="other_kvm">
@@ -561,7 +566,7 @@
                   <div class="info">  <span class="infotext">Om det bör finnas dyra tillbehör inuti kyrkan</span> </div>
                 </div>
               </div>
-
+              <!--
               <div id="own" class="risk_selections">
                 <p>Hur mycket ni har mätt upp att kyrkan ska försäkras för om ni inte vill använda er av verktygets beräknade värde.</p>
                 <div class="category_items">
@@ -569,6 +574,7 @@
                   <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="own_value" name="own_value">
                 </div>
               </div>
+            -->
             </form>
             <br>
 

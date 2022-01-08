@@ -233,6 +233,7 @@ select {
 #legend{
     justify-self: center;
     align-self: center;
+    margin: auto;
     display: flex;
     overflow: wrap;
     display:inline-block;
@@ -301,6 +302,10 @@ label{
 
 #choices_risk{
     width: 80%;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
 }
 
 .risk_selections{
@@ -314,6 +319,8 @@ label{
     border-bottom: 1px dotted;
     cursor: pointer;
 }
+
+
 
 .picture_box{
     display: none;
@@ -385,6 +392,8 @@ label{
     
     .risk_option{
         font-size: 0.8rem;
+        justify-self: center;
+        margin: auto;
     }
     #menubar{
         flex-direction: row;

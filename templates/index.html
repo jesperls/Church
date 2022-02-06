@@ -23,7 +23,8 @@
             </div>
         </div>
         <div class ="category_items">
-          <div id="legend">Klicka på texter som är understrukna med ”.....” för bilder och beskrivningar. Håll muspekaren över ikonen &nbsp <span class="info"> <span class="infotext">Exempel text</span> </span> &nbsp för förklaring om respektive parameter. </div>
+          <div id="legend">Klicka på texter som är understrukna med ”.....” för bilder och beskrivningar.
+          <br>Håll muspekaren över ikonen &nbsp <span class="info"> <span class="infotext">Exempel text</span> </span> &nbsp för förklaring om respektive parameter. </div>
         </div>
           <div id="form" class = "pages">
             <!--
@@ -148,7 +149,7 @@
                 <label>Takryttare</label>
                 <div class="info">  <span class="infotext">Storleken av kyrkobyggnadens takryttare samt antalet takryttare kyrkan har</span> </div><br>
 
-                <label for="takryttare">Takryttare:</label>
+                <label onclick="show_pictures('takryttare_pictures')" class="clickable">Takryttare:</label>
                 <select id="takryttare" name="takryttare">
                   {%for i in range(0, len["roof_riders"])%}
                     <option value="{{categories["roof_riders"][i]}}">{{categories["roof_riders"][i]}}</option>
@@ -213,7 +214,7 @@
                 </div>
                 
                 <div>
-                  <label for="tak_höjd">Höjd (m):</label>
+                  <label for="tak_höjd" onclick="show_pictures('höjd_pictures')" class="clickable">Höjd (m):</label>
                   <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_höjd" name="tak_höjd">
                 </div>
                 
@@ -259,7 +260,7 @@
                 <button onclick="add_window_2()" id="fönster_knapp_2" type='button'>Lägg till</button><br id="fönster_break_2">
               </div>
               <div class="category_items">
-                <label for="fial">Fial:</label>
+                <label for="fial" onclick="show_pictures('fial_pictures')" class="clickable">Fial:</label>
                 <select id="fial" name="fial">
                   {%for i in range(0, len["fials"])%}
                     <option value="{{categories["fials"][i]}}">{{categories["fials"][i]}}</option>
@@ -740,6 +741,30 @@
               </div>
             </div>
           </div>
+
+          <div class="picture_box" id="takryttare_pictures" onclick="show_pictures()">
+            <div class="child_picture">
+              <div class="image_items">
+                <img src="{{ url_for('static',filename='content/Bilder/Takryttare.png')}}" class="images">
+              </div>
+            </div>
+          </div>
+
+          <div class="picture_box" id="höjd_pictures" onclick="show_pictures()">
+            <div class="child_picture">
+              <div class="image_items">
+                <img src="{{ url_for('static',filename='content/Bilder/Höjd.png')}}" class="images">
+              </div>
+            </div>
+          </div>
+
+          <div class="picture_box" id="fial_pictures" onclick="show_pictures()">
+            <div class="child_picture">
+              <div class="image_items">
+                <img src="{{ url_for('static',filename='content/Bilder/Fial.png')}}" class="images">
+              </div>
+            </div>
+          </div>
           
           <div class="picture_box" id="light2_pictures" onclick="show_pictures()">
             <div class="child_picture">
@@ -882,18 +907,41 @@
         </div>
         -->
         <div id="information" class = "pages" hidden="true">
-          <p>Placeholder information</p>
+          <div class="category_items">
+            <div id="menubar2">
+              <div class="menuitem2" onclick="switch_tab('information')">Varför värderingsmetod för kyrkor?</div>
+              <!--
+              <div class="menuitem" onclick="switch_tab('första_risk')">Förstarisk</div>
+              <div class="menuitem" onclick="switch_tab('bildexempel')">Bildexempel</div>
+              -->
+              <div class="menuitem2" onclick="switch_tab('information')">Så har metoden tagits fram?</div>
+              <div class="menuitem2" onclick="switch_tab('information')">Vad värde står för?</div>
+              <div class="menuitem2" onclick="switch_tab('information')">Så beräknas värdet?</div>
+            </div>
+          </div>
+          <div class=pages2>
+
+          </div>
+          <div class=pages2>
+            
+          </div>
+          <div class=pages2>
+            
+          </div>
+          <div class=pages2>
+            
+          </div>
           <a href="/admin_panel" id="admin">  
             <button src="/admin_panel" type='button'>Admin</button>
           </a>
-          <iframe
+          <!--<iframe
             src="{{ url_for('static',filename='content/info.pdf') }}"
             frameBorder="0"
             scrolling="auto"
             height="1000px"
             width="100%"
           ></iframe>
-        </div>
+        </div>-->
         <!-- <button type="button" id="json" onclick="make_json()">JSON</button> -->
     </body>
 </html>

@@ -130,6 +130,15 @@ select {
     flex-direction: column;
     top: 0pt;
 }
+#menubar2{
+    width:100%;
+    align-items:center;
+    justify-content: center;
+    background-color: transparent;
+    display:flex;
+    flex-direction: column;
+    top: 0pt;
+}
 
 .menuitem{
     margin: 1rem;
@@ -144,8 +153,24 @@ select {
     display: flex;
     height: 20pt;
     flex-basis: 20%;
+}.menuitem2{
+    margin: 1rem;
+    align-items:center;
+    justify-content: center;
+    padding: 5pt;
+    font-size: 2rem;
+    background-color: #fed831;
+    border-radius: 7px;
+    text-decoration: none;
+    text-align: left;
+    display: flex;
+    height: 20pt;
+    flex-basis: 20%;
 }
 .menuitem:hover{
+    cursor: pointer;
+}
+.menuitem2:hover{
     cursor: pointer;
 }
 
@@ -275,7 +300,6 @@ label{
     font-weight: bold;
 }
 
-
 .risk_option{
     margin: 1rem;
     align-items:center;
@@ -389,6 +413,11 @@ label{
         flex-basis: 18%;
         font-size: 1rem;
     }
+    .menuitem2{
+        flex-basis: 24%;
+        font-size: 0.8rem;
+        text-align: center;
+    }
     
     .risk_option{
         font-size: 0.8rem;
@@ -396,6 +425,9 @@ label{
         margin: auto;
     }
     #menubar{
+        flex-direction: row;
+    }
+    #menubar2{
         flex-direction: row;
     }
     .categories{
@@ -433,6 +465,11 @@ label{
     .menuitem{
         flex-basis: 15.5%;
         font-size: 1.3rem;
+    }
+    .menuitem2{
+        flex-basis: 24%;
+        font-size: 1.1rem;
+        text-align: center;
     }
     .risk_option{
         font-size: 1.3rem;

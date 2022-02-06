@@ -39,7 +39,7 @@ function switch_tab(new_tab){
     }
     document.getElementById(new_tab).style.display = 'flex';
     if(new_tab == "form"){
-        document.getElementById("legend").style.display ="flex";
+        document.getElementById("legend").style.display ="inline-block";
     }
 }
 
@@ -741,7 +741,7 @@ function update(){
         var bra = get_value("other_kvm");
         if (bra != ""){
             document.getElementById("sam_type").innerHTML = "Justering"
-            document.getElementById("all_but_sum").style.display = "none";
+            //document.getElementById("all_but_sum").style.display = "none";
             var rest_value = restoration[get_choice("material_risk")];
             var new_bra = bra * rest_value * bpi_risk * factor;
             if (document.getElementById("expensive_inventory").checked){

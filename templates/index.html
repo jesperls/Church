@@ -214,7 +214,7 @@
                 </div>
                 
                 <div>
-                  <label for="tak_höjd" onclick="show_pictures('höjd_pictures')" class="clickable">Höjd (m):</label>
+                  <label for="tak_höjd" onclick="show_pictures('tower_pictures')" class="clickable">Höjd (m):</label>
                   <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_höjd" name="tak_höjd">
                 </div>
                 
@@ -618,11 +618,11 @@
                   </div>
                 </div>
                 <div class="category_items" id="fin_sum">
-                  <label for="sum">Summa: </label>
+                  <label for="sum">Kalkylerat Värde: </label>
                   <span id="sum">0</span>
                 </div>
                 <div class="category_items" id="mod_sum" style="display: none;">
-                  <label for="modified_sum">Summa ny: </label>
+                  <label for="modified_sum">Annat värde: </label>
                   <span id="modified_sum">0</span>
                 </div>
                 <button type="button" onclick="export_church()">Spara kyrka</button>

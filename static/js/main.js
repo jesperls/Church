@@ -156,7 +156,7 @@ function add_clock(do_update = 1){
     clock.setAttributeNode(cl);
     clock.setAttributeNode(del);
     clock_amounts += 1;
-    clock.innerHTML = "<b>Klocka</b> ".concat(clock_amounts, " <b>Vikt:</b> ", weight, "     ✖")
+    clock.innerHTML = "<b>Klocka</b> ".concat(clock_amounts, " <b>Vikt:</b> ", weight, "kg     ✖")
     insertAfter(div, clock);
     if (do_update == 1){
         update();

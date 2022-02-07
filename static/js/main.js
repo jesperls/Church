@@ -747,7 +747,9 @@ function update(){
             if (document.getElementById("expensive_inventory").checked){
                 new_bra = new_bra * 1.15;
             }
-            document.getElementById("sum").innerHTML = Math.round(new_bra);
+            document.getElementById("sum").innerHTML = total;
+            document.getElementById("modified_sum").innerHTML = Math.round(new_bra);
+            document.getElementById("mod_sum").style.display = "block";
             return;
         }
     }
@@ -756,10 +758,11 @@ function update(){
         if(own != ""){
             document.getElementById("all_but_sum").style.display = "none";
             document.getElementById("sam_type").innerHTML = "Eget"
-            document.getElementById("sum").innerHTML = own;
+            document.getElementById("sum").innerHTML = total;
             return;
         }
     }
+    document.getElementById("mod_sum").style.display = "none";
     document.getElementById("all_but_sum").style.display = "block";
     document.getElementById("sam_type").innerHTML = "Vanlig"
     document.getElementById("sum").innerHTML = total;
@@ -950,6 +953,30 @@ function risk_menu(option){
     clicked.style.backgroundColor = "#a88e1d";
 
     var selections = document.getElementsByClassName("risk_selections");
+    for(var i = 0; i < selections.length; i++){
+        selections[i].style.display = "none";
+    }
+    document.getElementById(option).style.display = "flex";
+    update();
+}
+
+function info_menu(option){
+    var clicked = document.getElementById(option.concat("_option")); 
+    if(selected == option){
+        clicked.style.backgroundColor = "#fed831";
+        document.getElementById(option).style.display = "none";
+        selected = "none";
+        update();
+        return;
+    }
+    selected = option;
+    var options = document.getElementsByClassName("info_option");
+    for(var i = 0; i < options.length; i++){
+        options[i].style.backgroundColor = "#fed831";
+    }
+    clicked.style.backgroundColor = "#a88e1d";
+
+    var selections = document.getElementsByClassName("info_selections");
     for(var i = 0; i < selections.length; i++){
         selections[i].style.display = "none";
     }

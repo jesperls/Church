@@ -209,6 +209,10 @@ select {
     font-size:1.2rem;
 }
 
+#mod_sum *{
+    font-size:1.2rem;
+}
+
 #form {
     display: flex;
     background-color: whitesmoke;
@@ -227,13 +231,13 @@ select {
     flex-wrap: wrap;
 }
 #information {
-    margin: 0;
     padding: 0;
     display: none;
     background-color: whitesmoke;
     flex-direction:row;
     justify-content: center;
     flex-wrap: wrap;
+    top:0;
 }
 
 #sammanställning{
@@ -317,6 +321,23 @@ label{
     cursor: pointer;
 }
 
+.info_option{
+    margin: 1rem;
+    align-items:center;
+    justify-content: center;
+    font-size: 1rem;
+    background-color: #fed831;
+    border-radius: 7px;
+    text-decoration: none;
+    text-align: left;
+    display: flex;
+    padding: 5pt 5pt 5pt 5pt;
+    height: 20pt;
+    flex-basis: 30%;
+    margin-left: auto;
+    cursor: pointer;
+}
+
 .checkbox{
     margin: 0px;
     padding:0px;
@@ -337,6 +358,13 @@ label{
     flex-direction: column;
     margin-right: auto;
     margin-left: auto;
+}
+.info_selections{
+    display: none;
+    flex-direction: column;
+    margin-right: 10pt;
+    margin-left: 10pt;
+    text-align: left;
 }
 
 .clickable{
@@ -453,6 +481,11 @@ label{
     #header{
         background: url(content/pan_2.png) top left no-repeat;
         background-size: cover;
+    }
+    
+    .info_selections{
+        margin-right: 40pt;
+        margin-left: 40pt;
     }    
 }
 
@@ -484,4 +517,8 @@ label{
     .mobile_break{
         display: none;
     }
+    .info_selections{
+        margin-right: 100pt;
+        margin-left: 100pt;
+    }    
 }

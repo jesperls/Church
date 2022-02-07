@@ -292,7 +292,7 @@
                 <div class="info">  <span class="infotext">Här lägger du till varje klocka i kyrkobyggnaden var för sig genom att skriva in vikten i kg, du kan ta bort ett värde genom att klicka på det</span> </div><br>
                 <label for="only_weight">Klicka här om du enbart har diametern: </label>
                 <input type="checkbox" id="only_weight" onclick="clock_weigth(this, '')" class="checkbox">
-                <div class="info">  <span class="infotext">Har du inte vikten så kan vi försöka beräkna den med relativt hög precision enbart med diametern</span></div><br>
+                <div class="info">  <span class="infotext">Har du inte vikten så kan vi försöka beräkna den med relativt hög precision enbart med diametern, OBS måste minst vara 150cm</span></div><br>
                 <span id="has_weight">
                   <label for="klocka_vikt">Vikt (kg):</label>
                   <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_vikt" name="klocka_vikt">
@@ -621,6 +621,10 @@
                   <label for="sum">Summa: </label>
                   <span id="sum">0</span>
                 </div>
+                <div class="category_items" id="mod_sum" style="display: none;">
+                  <label for="modified_sum">Summa ny: </label>
+                  <span id="modified_sum">0</span>
+                </div>
                 <button type="button" onclick="export_church()">Spara kyrka</button>
               </form>
               <img src="{{ url_for('static',filename='content/up.png') }}" alt="logo" id="arrow" onclick="hide_sum('sam_form', 'arrow')">
@@ -907,13 +911,87 @@
         </div>
         -->
         <div id="information" class = "pages" hidden="true">
+
+
+          <form class="categories" onchange="update()">
+            <div class="category_title">
+            </div>
+            
+            <ul id="choices_risk">
+              <li id="why_option" class="info_option" onclick="info_menu('why')">Varför värderingsmetod för kyrkor?</li>
+              <li id="how_option" class="info_option" onclick="info_menu('how')">Så har metoden tagits fram?</li>
+              <li id="what_option" class="info_option" onclick="info_menu('what')">Vad värde står för?</li>
+              <li id="additional_option" class="info_option" onclick="info_menu('additional')">Så beräknas värdet</li>
+            </ul>
+
+            <div id="why" class="info_selections">
+              <p>Vanligt är att en förvärdering av olika typer av byggnader görs innan en försäkring tecknas. För olika byggnader finns det olika typer av värderingsmetoder. Värdering sker vanligtvis enligt så kallade schablonmetoder vilka ska vara enkla och billiga att utföra, samtidigt som de är tillräckligt noggranna för att ge ett tillfredställande försäkringsbelopp att ta ställning till. Värdet är också ett underlag för premieberäkning.
+              <p>Tidigare fanns en branschgemensam kommitté, Försäkringsbolagens Förvärderingskommitté (FFK) som skapade och underhöll ett antal värderingsmetoder, däribland en gammal kyrkometod ”Beräkning av försäkringsbelopp för kyrkobyggnader, FFK 801:2”. Denna metod syftade till att beräkna ett tänkt första riskvärde för en ny kyrkobyggnad, med samma profil, yta och volym som den befintliga, men byggd med rationella metoder och modernt material. Under början av 1990-talet upphörde dock samarbetet i kommittén och i stället startade Sveriges Försäkringsförbund ett arbete som innebar att FKB-metoden kom till och ersatte alla andra tidigare kalkylmetoder avseende försäkringsbelopp för byggnader. Avsikten med denna metod är att den ska passa för normala hustyper och för avvikande objekt måste egna justeringar eller andra kalkyler göras. I samband med detta hamnade kyrkometoden i malpåse och har inte uppdaterats sedan år 1980.
+              <p>Enligt anvisningarna till gamla kyrkometoden är den inte heller tillämpbar för mycket exklusiva kyrkor, exempelvis vissa domkyrkor. Svårigheten ligger i att äldre kyrkor är uppförda med en gammal byggnadsteknik och gammalt material som gör att byggnads- och det kulturhistoriska värdet är svårt att beräkna. Dessutom är ofta inredning och konstverk integrerade med kyrkobyggnaden som sådan, exempelvis vägg-, glas- och takmålningar, tornprydnader, etc.
+              <p>Värden på kyrkor är satta på olika antaganden och gamla beräkningsmetoder. Kyrkor av samma storlek, konstruktionsmetod och ålder kan ha olika värderingar. Och i förlängningen ojämn fördelning av premien. Mot bakgrund av detta gjordes bedömningen att det behöver tas fram en ny gemensam värderingsmetod för kyrkobyggnader som kan anses generera ett tillfredställande och rättvist försäkringsbelopp. 
+                
+            </div>
+
+            <div id="how" class="info_selections">
+              <p>För att ta en ny metod bildades en referens/styrgrupp inom Svenska kyrkan med företrädare från 4 olika stift inom fastighetsförvaltning och antikvarier tillsammans med Kyrkans Försäkring AB.
+                <p>Referensgruppen utförde:
+                <ul>
+                  <li>Studier och jämförelser av försäkringsbelopp för kyrkor som liknar varandra till byggnadsyta, konstruktion och utsmyckning.</li>
+                  <li>Olika befintliga metoder har testats och utvärderas, såsom gamla kyrkovärderingsmetoden men även utländska metoder från norska KNIF (motsvarande Kyrkans Försäkring AB i Norge) och brittiska Ecclesiastical.</li>
+                  <li>Dessutom har prisuppgifter av verkliga kostnader från olika tjänste- och produktleverantörer gjorts.</li>
+                  <li>Samt undersökningar av faktiska kyrkoprojekt på nybyggnationer och renoveringar från olika delar av landet inom Svenska kyrkan.</li>
+                </ul>
+                <p>Avstämningar har även skett mot andra instanser och myndigheter som relaterar till kulturhistoriska byggnader som Kammarkollegiet och Statens fastighetsverk.
+                <p>Metoden avgränsar sig till att gälla kyrkor byggda före 1946.
+                <p><u>Referensgruppen:</u>
+                <p>Anna Güthlein, Antikvarie, Västerås stift
+                <p>Christian Ferm, Fastighetsstrateg, Härnösand stift
+                <p>Johan Stråhle, Stiftssamordnare, Västerås stift
+                <p>Mikael Karlsson Aili, Antikvarie, Västerås stift
+                <p>Mikael Andersson Ekholst, Fastighetsstrateg, Växjö stift
+                <p> Rickard Isaksson, Antikvarie, Stockholms stift
+                <p>Anders Engström, Byggnadsingenjör, Kyrkans Försäkring AB
+                <p> Joakim Lindqvist, Risk ingenjör, Kyrkans Försäkring AB
+                
+            </div>
+
+            <div id="what" class="info_selections">
+              <p>Värdet som kalkyleras fram är ett förslag till första riskvärde att ta ställning till som försäkringstagare. Detta första riskvärde är inte nödvändigtvis det slutgiltiga värdet. Det är ett schablonvärde som man kan höja eller sänka.
+              <p>Det kalkylerade värdet är ett tänkt första riskvärde som skall täcka kostnaderna för att uppföra en ny kyrkobyggnad, med samma profil, och yta som den befintliga, men byggd med rationella metoder och modernt material. Den skall även räcka till att täcka kostnader för att återställa byggnaden vid en delskada med rationella metoder och moderna material.
+              <p>Att beakta i sammanhanget är att Länsstyrelsen, Riksantikvarieämbetet och andra aktörer kan komma att ställa andra krav på återställning gällande metoder och materialval. Hur detta i så fall skall finansieras sker då i samverkan och kanske till och med genom ekonomiskt stöd eller insamling.
+                
+            </div>
+
+            <div id="additional" class="info_selections">
+              <p>I grunden för beräkning av värdet ligger Statistiska centralbyråns faktorprisindex för flerbostadshus, FPI. Detta är ett snittpris för vad det kostar att bygga flerbostadshus per kvadratmeter i landet. I detta ingår samtliga projekteringskostnader som byggkostnader.
+              <p>För att detta skall kunna appliceras på kyrkor behöver kvadratmeterpriset justeras. Denna justering sker genom en kvot som beror på olika parametrar av kyrkobyggnadens olika delar. De ingående parametrarna är dels byggnadens material och konstruktion men också byggnadens utsmyckningsnivå.
+              <p>Till detta adderas sedan byggnadsdelar som altare, predikstol, kyrkklockor, orgel mm.
+                
+            </div>
+            <!--
+            <div id="own" class="risk_selections">
+              <p>Hur mycket ni har mätt upp att kyrkan ska försäkras för om ni inte vill använda er av verktygets beräknade värde.</p>
+              <div class="category_items">
+                <label for="own_value">Annat belopp:</label>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="own_value" name="own_value">
+              </div>
+            </div>
+          -->
+          </form>
+
+
+
+
+
+
+<!--
           <div class="category_items">
             <div id="menubar2">
               <div class="menuitem2" onclick="switch_tab('information')">Varför värderingsmetod för kyrkor?</div>
-              <!--
+              
               <div class="menuitem" onclick="switch_tab('första_risk')">Förstarisk</div>
               <div class="menuitem" onclick="switch_tab('bildexempel')">Bildexempel</div>
-              -->
+              
               <div class="menuitem2" onclick="switch_tab('information')">Så har metoden tagits fram?</div>
               <div class="menuitem2" onclick="switch_tab('information')">Vad värde står för?</div>
               <div class="menuitem2" onclick="switch_tab('information')">Så beräknas värdet?</div>
@@ -930,7 +1008,7 @@
           </div>
           <div class=pages2>
             
-          </div>
+          </div>-->
           <a href="/admin_panel" id="admin">  
             <button src="/admin_panel" type='button'>Admin</button>
           </a>

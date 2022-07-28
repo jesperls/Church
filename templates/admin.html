@@ -6,7 +6,7 @@
         <title>Försäkrings Verktyg</title>
         <script type=text/javascript src="{{url_for('static', filename='js/admin.js') }}"></script>
         <script type=text/javascript src="{{url_for('static', filename='js/jquery.js') }}"></script>
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/admin_style.css') }}">
         <link rel="icon" href="{{ url_for('static',filename='content/logo.png') }}">
     </head>
     <body onload="load_values(), load_boxes()">
@@ -209,6 +209,103 @@
                 <button type="button" onclick="submit_misc()">Ladda in ny data</button>
 
             </form>
+            <form class="categories">
+                <div class="category_title">
+                    <h2>Vägg</h2>
+                </div>
+                <div class="category_items">
+                    <div class="data_lists" id="walls">
+                        <script type="text/javascript">
+                            data_load("walls");
+                        </script>
+                        <div id="walls_add">
+                            <input id="walls_name" placeholder="Vägg namn">
+                            <input id="walls_factor" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="Vägg faktor">
+                            <label  onclick="add_data('walls')">+</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="submit_data('walls')">Ladda in ny data</button>
+            </form>
+            
+            <form class="categories">
+                <div class="category_title">
+                    <h2>Golv</h2>
+                </div>
+                <div class="category_items">
+                    <div class="data_lists" id="floors">
+                        <script type="text/javascript">
+                            data_load("floors");
+                        </script>
+                        <div id="floors_add">
+                            <input id="floors_name" placeholder="Golv namn">
+                            <input id="floors_factor" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="Golv faktor">
+                            <label  onclick="add_data('floors')">+</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="submit_data('floors')">Ladda in ny data</button>
+            </form>
+            
+            <form class="categories">
+                <div class="category_title">
+                    <h2>Innertak</h2>
+                </div>
+                <div class="category_items">
+                    <div class="data_lists" id="inner_roofs">
+                        <script type="text/javascript">
+                            data_load("inner_roofs");
+                        </script>
+                        <div id="inner_roofs_add">
+                            <input id="inner_roofs_name" placeholder="Innertak namn">
+                            <input id="inner_roofs_factor" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="Innertak faktor">
+                            <label  onclick="add_data('inner_roofs')">+</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="submit_data('inner_roofs')">Ladda in ny data</button>
+            </form>
+            
+            <form class="categories">
+                <div class="category_title">
+                    <h2>Yttertak</h2>
+                </div>
+                <div class="category_items">
+                    <div class="data_lists" id="outer_roofs">
+                        <script type="text/javascript">
+                            data_load("outer_roofs");
+                        </script>
+                        <div id="outer_roofs_add">
+                            <input id="outer_roofs_name" placeholder="Yttertak namn">
+                            <input id="outer_roofs_factor" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="Yttertak faktor">
+                            <label  onclick="add_data('outer_roofs')">+</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="submit_data('outer_roofs')">Ladda in ny data</button>
+            </form>
+            
+            <form class="categories">
+                <div class="category_title">
+                    <h2>Torntak</h2>
+                </div>
+                <div class="category_items">
+                    <div class="data_lists" id="tower_roofs">
+                        <script type="text/javascript">
+                            roofs_load();
+                        </script>
+                        <div id="tower_roofs_add">
+                            <input id="tower_roofs_name" placeholder="Tak namn">
+                            <input id="tower_roofs_Pris2_4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="Tak <4m pris">
+                            <input id="tower_roofs_Pris2_4_12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="Tak 4-12m pris">
+                            <input id="tower_roofs_Pris2_12_20" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="Tak 12-20m pris">
+                            <input id="tower_roofs_Pris2_20" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" placeholder="Tak >20m pris">
+                            <label  onclick="roofs_add('tower_roofs')">+</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="submit_data('tower_roofs')">Ladda in ny data</button>
+            </form>
 
             <!--
             <div class="categories">
@@ -278,7 +375,7 @@
                 </div>
             -->
             </div>
-            <div class="categories">
+            <!-- <div class="categories">
                 <div class="category_title">
                     <h2>Excel data</h2>
                 </div>
@@ -294,7 +391,7 @@
                         <button type="button">Extrahera</button>
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div>
     </body>
 </html>

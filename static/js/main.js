@@ -778,8 +778,8 @@ function update_decoration(building_value){
 function update_building(){
     var wall_factor = get_factor("vägg", "walls");
     var floor_factor = get_factor("golv", "floors");
-    var inner_factor = get_factor("innertak", "inner_roofs", "innertak_andra");
-    var outer_factor = get_factor("yttertak", "outer_roofs", "yttertak_andra");
+    var inner_factor = get_factor("innertak", "inner_roofs");
+    var outer_factor = get_factor("yttertak", "outer_roofs");
     var prod_factor = (wall_factor + floor_factor + inner_factor + outer_factor) / 4;
 
     var category = get_choice("kategori");
@@ -789,7 +789,7 @@ function update_building(){
     var tower_width = get_value("torn_bredd");
     var tower_length = get_value("torn_längd");
 
-    var value_building = (bra - (tower_width*tower_length)) * BPI * prod_factor;
+    var value_building = (bra - (tower_width*tower_length)) * BPI * prod_factor * category_factor;
 
     var value_platform = get_value("läktare") * platform_price;
 
@@ -814,7 +814,7 @@ function update_building(){
         }
     }
 
-    var result_building = Math.round(value_building + value_platform + value_windows + value_roof_rider + BPI*category_factor);
+    var result_building = Math.round(value_building + value_platform + value_windows + value_roof_rider);
     document.getElementById("del_byggnad").innerHTML = result_building;
     //document.getElementById("sam_byggnad").innerHTML = result_building;
     return(result_building);

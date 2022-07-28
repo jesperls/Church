@@ -142,6 +142,10 @@ function submit_misc(){
 function submit_misc_risk(){
 }
 
+function submit_data(type){
+
+}
+
 function load_boxes(){
     document.getElementById("pillar_one").value = pillar_prices["Typ 1"];
     document.getElementById("pillar_two").value = pillar_prices["Typ 2"];
@@ -181,4 +185,135 @@ function load_boxes(){
     document.getElementById("trä_ej").value = categories["Träkyrka, ej timmer"];
     document.getElementById("trä_tim").value = categories["Träkyrka, timmer"];
     document.getElementById("medeltidskyrka").value = categories["Medeltidskyrka"];
+}
+
+function data_load(type){
+    var json = loadJSON(type);
+    var ul = document.getElementById(type);
+    for (var key in json){
+        var div = document.createElement("div");
+        var label = document.createElement("label");
+        var input = document.createElement("input");
+        var remove = document.createElement("div");
+
+        label.innerHTML = json[key]["Beskrivning"] + ":  ";
+        input.setAttribute("oninput", "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*?)\\..*/g, '$1');");
+        input.value = json[key]["Faktor"];
+        remove.className = "remove";
+        remove.setAttribute("onclick", "this.parentNode.remove()");
+        remove.innerHTML = "&nbsp &nbsp ✖";
+
+        div.appendChild(label);
+        div.appendChild(input);
+        div.appendChild(remove);
+
+        div.className = "data_items";
+        ul.appendChild(div);
+    }
+}
+
+function add_data(type){
+    var add_button = document.getElementById(type + "_add");
+    var name = document.getElementById(type + "_name");
+    var factor = document.getElementById(type + "_factor");
+    
+    var div = document.createElement("div");
+    var label = document.createElement("label");
+    var input = document.createElement("input");
+    var remove = document.createElement("div");
+
+    label.innerHTML = name.value + ":  ";
+    input.setAttribute("oninput", "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*?)\\..*/g, '$1');");
+    input.value = factor.value;
+    remove.className = "remove";
+    remove.setAttribute("onclick", "this.parentNode.remove()");
+    remove.innerHTML = "&nbsp &nbsp ✖";
+
+    div.appendChild(label);
+    div.appendChild(input);
+    div.appendChild(remove);
+
+    div.className = "data_items";
+    add_button.parentNode.insertBefore(div, add_button);
+}
+
+function roofs_load(){
+    var json = loadJSON("tower_roofs");
+    var ul = document.getElementById("tower_roofs");
+    for (var key in json){
+        var div = document.createElement("div");
+        var label = document.createElement("label");
+        var input1 = document.createElement("input");
+        var input2 = document.createElement("input");
+        var input3 = document.createElement("input");
+        var input4 = document.createElement("input");
+        var remove = document.createElement("div");
+
+        label.innerHTML = json[key]["Beskrivning"] + ":  ";
+
+        input1.setAttribute("oninput", "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*?)\\..*/g, '$1');");
+        input1.value = json[key]["Pris2_4"];
+        input2.setAttribute("oninput", "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*?)\\..*/g, '$1');");
+        input2.value = json[key]["Pris2_4_12"];
+        input3.setAttribute("oninput", "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*?)\\..*/g, '$1');");
+        input3.value = json[key]["Pris2_12_20"];
+        input4.setAttribute("oninput", "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*?)\\..*/g, '$1');");
+        input4.value = json[key]["Pris2_20"];
+
+        remove.className = "remove";
+        remove.setAttribute("onclick", "this.parentNode.remove()");
+        remove.innerHTML = "&nbsp &nbsp ✖";
+
+        div.appendChild(label);
+        div.appendChild(input1);
+        div.appendChild(input2);
+        div.appendChild(input3);
+        div.appendChild(input4);
+        div.appendChild(remove);
+
+        div.className = "data_items";
+        ul.appendChild(div);
+
+    }
+}
+
+function roofs_add(type){
+    var add_button = document.getElementById(type + "_add");
+    var name = document.getElementById(type + "_name");
+    
+    var div = document.createElement("div");
+    var label = document.createElement("label");
+    var input1 = document.createElement("input");
+    var input2 = document.createElement("input");
+    var input3 = document.createElement("input");
+    var input4 = document.createElement("input");
+    var remove = document.createElement("div");
+
+    label.innerHTML = name.value + ":  ";
+
+    for (var i = 0; i < 10; i++){
+        
+    }
+    input1.setAttribute("oninput", "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*?)\\..*/g, '$1');");
+    input1.value = document.getElementById("tower_roofs_Pris2_4").value;
+    input2.setAttribute("oninput", "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*?)\\..*/g, '$1');");
+    input2.value = document.getElementById("tower_roofs_Pris2_4_12").value;
+    input3.setAttribute("oninput", "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*?)\\..*/g, '$1');");
+    input3.value = document.getElementById("tower_roofs_Pris2_12_20").value;
+    input4.setAttribute("oninput", "this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\\..*?)\\..*/g, '$1');");
+    input4.value = document.getElementById("tower_roofs_Pris2_20").value;
+
+    remove.className = "remove";
+    remove.setAttribute("onclick", "this.parentNode.remove()");
+    remove.innerHTML = "&nbsp &nbsp ✖";
+
+    div.appendChild(label);
+    div.appendChild(input1);
+    div.appendChild(input2);
+    div.appendChild(input3);
+    div.appendChild(input4);
+    div.appendChild(remove);
+
+    div.className = "data_items";
+    add_button.parentNode.insertBefore(div, add_button);
 }

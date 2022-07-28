@@ -1,0 +1,231 @@
+body {
+    text-align: center;
+    font-family: Sans-serif;
+    display: flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+}
+
+#title {
+    font-size: 30pt;
+    color:white;
+    text-shadow: 0 0 5px black;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+form {
+    background-color: white;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5pt 5pt 5pt 5pt;
+}
+
+#import {
+    width: 90%;
+}
+
+#json{
+    position: fixed;
+    top: 3pt;
+    left: 100pt;
+    background-color: lightslategray;
+}
+
+#admin {
+    position: fixed;
+    top: 3pt;
+    left: 3pt;
+    background-color: lightslategray;
+}
+
+input {
+    width: 68pt;
+}
+
+select {
+    width: fit-content;
+}
+
+#title_image {
+    width: 95%;
+    margin: auto;
+}
+
+#header{
+    background-color: red;
+    background: url(content/portrait_2.png) top left no-repeat;
+    border-bottom:solid 3pt;
+}
+
+#menubar{
+    width:100%;
+    align-items:center;
+    justify-content: center;
+    background-color: transparent;
+    display:flex;
+    flex-direction: column;
+    top: 0pt;
+}
+#menubar2{
+    width:100%;
+    align-items:center;
+    justify-content: center;
+    background-color: transparent;
+    display:flex;
+    flex-direction: column;
+    top: 0pt;
+}
+
+.menuitem{
+    margin: 1rem;
+    align-items:center;
+    justify-content: center;
+    padding: 5pt;
+    font-size: 2rem;
+    background-color: #fed831;
+    border-radius: 7px;
+    text-decoration: none;
+    text-align: left;
+    display: flex;
+    height: 20pt;
+    flex-basis: 20%;
+}
+.menuitem2{
+    margin: 1rem;
+    align-items:center;
+    justify-content: center;
+    padding: 5pt;
+    font-size: 2rem;
+    background-color: #fed831;
+    border-radius: 7px;
+    text-decoration: none;
+    text-align: left;
+    display: flex;
+    height: 20pt;
+    flex-basis: 20%;
+}
+.menuitem:hover{
+    cursor: pointer;
+}
+.menuitem2:hover{
+    cursor: pointer;
+}
+
+#sam_form, #sam_form_2{
+    display: none;
+    border-radius: 0.5rem;
+}
+
+.categories{
+    margin:3rem;
+    border-radius: 0.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    width: 95%;
+    height: -moz-fit-content;
+    height: fit-content;
+    background-color: white;
+    box-shadow: -1px 1px 4px #000000;
+}
+
+.category_items{
+    margin: 1rem;
+    align-items:center;
+    justify-content: center;
+    clear: both;
+}
+.category_title{
+    width:100%;
+    background-color: #fed831;
+    border-radius: 0.5rem;
+}
+
+#form {
+    display: flex;
+    background-color: whitesmoke;
+    flex-direction:row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+label{
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.data_lists{
+    display: flex;
+    align-items: left;
+    flex-direction: column;
+}
+
+.data_items{
+    display: flex;
+    border: .1px dashed gray;
+    padding:1pt;
+    margin: 5pt;
+}
+
+
+/* EVERYTHING ABOVE PHONE  */
+
+
+@media only screen and (min-width: 768px) {
+    /* LANDSCAPE IPAD  */
+    .menuitem{
+        flex-basis: 18%;
+        font-size: 1rem;
+    }
+    .menuitem2{
+        flex-basis: 24%;
+        font-size: 0.8rem;
+        text-align: center;
+    }
+    #menubar{
+        flex-direction: row;
+    }
+    #menubar2{
+        flex-direction: row;
+    }
+    .categories{
+        flex-basis: 41%;
+        flex-grow: 1.5;
+    }
+    #header{
+        background: url(content/pan_2.png) top left no-repeat;
+        background-size: cover;
+    }
+}
+
+
+@media only screen and (min-width: 992px) {
+    /* PC   */
+    .menuitem{
+        flex-basis: 15.5%;
+        font-size: 1.3rem;
+    }
+    .menuitem2{
+        flex-basis: 24%;
+        font-size: 1.1rem;
+        text-align: center;
+    }
+    #title_image {
+        width: 50rem;
+        margin: auto;
+    }
+    .mobile_break{
+        display: none;
+    } 
+}

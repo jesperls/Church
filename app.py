@@ -54,20 +54,20 @@ def homepage():
 def admin():
     return render_template("admin.html")
 
-@app.route('/import/<type>', methods=["POST"])
-def upload(type):
-    if request.method == 'POST':
-        f = request.files['file']
-        if(f.filename[-4:] == "xlsx"):
-            if type == "vanlig":
-                f.save(f"./static/data/data.xlsx")
-            elif type == "risk":
-                f.save(f"./static/data/risk_data.xlsx")
-            else:
-                return "Något har gått fel!"
-            load_dfs()
-            return "Lyckades ladda upp!"
-    return "Ej excel fil!"
+# @app.route('/import/<type>', methods=["POST"])
+# def upload(type):
+#     if request.method == 'POST':
+#         f = request.files['file']
+#         if(f.filename[-4:] == "xlsx"):
+#             if type == "vanlig":
+#                 f.save(f"./static/data/data.xlsx")
+#             elif type == "risk":
+#                 f.save(f"./static/data/risk_data.xlsx")
+#             else:
+#                 return "Något har gått fel!"
+#             load_dfs()
+#             return "Lyckades ladda upp!"
+#     return "Ej excel fil!"
 
 @app.route('/import_json/<name>', methods=["POST"])
 def upload_json(name):
@@ -135,7 +135,7 @@ def load_dfs():
     walls = []
     for index, row in df.iterrows():
         walls.append(row["Beskrivning"])
-    df.to_json('./static/data/walls.json', orient='records')
+    #df.to_json('./static/data/walls.json', orient='records')
 
     df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[9, 10, 11, 12])
     df.columns = ["Typ", "Beskrivning", "Pris", "Faktor"]
@@ -143,24 +143,24 @@ def load_dfs():
     floors = []
     for index, row in df.iterrows():
         floors.append(row["Beskrivning"])
-    df.to_json('./static/data/floors.json', orient='records')
+    #df.to_json('./static/data/floors.json', orient='records')
 
     df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[13, 14, 15, 16, 17, 18, 19, 20])
     df.columns = ["Typ", "Beskrivning", "Plant", "Tunnavalv", "Kryssvalv", "Plant_faktor", "Tunnavalv_faktor",
-                    "Kryssvalv_faktor"]
+                    "Faktor"]
     df.dropna(axis=0, thresh=4, inplace=True)
     inner_roof = []
     for index, row in df.iterrows():
         inner_roof.append(row["Beskrivning"])
-    df.to_json('./static/data/inner_roofs.json', orient='records')
+    #df.to_json('./static/data/inner_roofs.json', orient='records')
 
     df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[21, 22, 23, 24, 25, 26])
-    df.columns = ["Typ", "Beskrivning", "Flack", "Brant", "Flackt_faktor", "Brant_faktor"]
+    df.columns = ["Typ", "Beskrivning", "Flack", "Brant", "Faktor", "Brant_faktor"]
     df.dropna(axis=0, thresh=4, inplace=True)
     outer_roof = []
     for index, row in df.iterrows():
         outer_roof.append(row["Beskrivning"])
-    df.to_json('./static/data/outer_roofs.json', orient='records')
+    #df.to_json('./static/data/outer_roofs.json', orient='records')
 
     df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[27, 28, 29, 30, 31, 32, 33, 34,
                                                                                         35, 36])
@@ -170,7 +170,7 @@ def load_dfs():
     tower_roof = []
     for index, row in df.iterrows():
         tower_roof.append(row["Beskrivning"])
-    df.to_json('./static/data/tower_roofs.json', orient='records')
+    #df.to_json('./static/data/tower_roofs.json', orient='records')
 
     df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[37, 38, 39, 40])
     df.columns = ["Typ", "Beskrivning", "Pris 1980", "Pris 2019"]
@@ -178,7 +178,7 @@ def load_dfs():
     roof_riders = []
     for index, row in df.iterrows():
         roof_riders.append(row["Beskrivning"])
-    df.to_json('./static/data/roof_riders.json', orient='records')
+    #df.to_json('./static/data/roof_riders.json', orient='records')
 
     df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[41, 42, 43, 44])
     df.columns = ["Typ", "Höjd", "Pris 1980", "Pris 2019"]
@@ -186,7 +186,7 @@ def load_dfs():
     fials = []
     for index, row in df.iterrows():
         fials.append(row["Höjd"])
-    df.to_json('./static/data/fials.json', orient='records')
+    #df.to_json('./static/data/fials.json', orient='records')
 
     df = pd.read_excel("./static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[45, 46])
     df.columns = ["Typ", "Faktor"]
@@ -194,10 +194,7 @@ def load_dfs():
     byggnads_typer = []
     for index, row in df.iterrows():
         byggnads_typer.append(row["Typ"])
-    df.to_json('./static/data/byggnads_typer.json', orient='records')
-
-
-
+    #df.to_json('./static/data/byggnads_typer.json', orient='records')
 
     df = pd.read_excel("kyrkor.xlsx")
     df.drop(df.columns.difference(['Byggnadsverksnamn','Funktion', "Bruksarea(m²)", "Enhetsnamn"]), 1, inplace=True)
@@ -208,7 +205,9 @@ def load_dfs():
     for index, row in df.iterrows():
         churches.append(f"{row['Enhetsnamn']} {row['Byggnadsverksnamn']}")
     
-    df.to_json('./static/data/churches.json', orient='records')
+    #df.to_json('./static/data/churches.json', orient='records')
+
+
     #df = pd.read_excel("static/data/data.xlsx", sheet_name="Data", skiprows=3, usecols=[4, 5, 35, 56, 61, 62, 64])
     #df.dropna(axis=0, thresh=4, inplace=True)
     #df.columns = ["BPI", "moms", "platform_price", "klock_kg", "pris_klock", "mount_klock", "pris_torn"]
@@ -218,4 +217,4 @@ def load_dfs():
 
 load_dfs()
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port="80")
+    app.run(host="0.0.0.0", port="8080")

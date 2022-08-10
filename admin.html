@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Försäkrings Verktyg</title>
-        <script type=text/javascript src="{{url_for('static', filename='js/admin.js') }}"></script>
-        <script type=text/javascript src="{{url_for('static', filename='js/jquery.js') }}"></script>
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/admin_style.css') }}">
-        <link rel="icon" href="{{ url_for('static',filename='content/logo.png') }}">
+        <script type=text/javascript src="static/js/admin.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link rel= "stylesheet" type= "text/css" href= "static/css/admin_style.css">
+        <link rel="icon" href="static/content/logo.png">
     </head>
     <body onload="load_values(), load_boxes()">
         <div id="header">
-            <img id="title_image" src="{{ url_for('static',filename='content/Logo_main.png') }}" alt="logo">
+            <img id="title_image" src="static/content/Logo_main.png" alt="logo">
             <h1 id="title">Beräkningsverktyg adminpanel</h1>
             <div id="menubar">
-                <div class="menuitem" onclick="location.href='/'">Gå tillbaka</div>
+                <div class="menuitem" onclick="location.href='index.html'">Gå tillbaka</div>
             </div>
         </div>
         <!-- 
@@ -291,7 +291,7 @@
                         <input type="submit" value="Submit">
                     </form>
                     <p>Här kan du extrahera den nuvarande excel filen</p>
-                    <a href="{{ url_for('static',filename='data/risk_data.xlsx') }}" download>
+                    <a href="static/data/risk_data.xlsx') }}" download>
                         <button type="button">Extrahera</button>
                     </a>
                 </div>
@@ -411,7 +411,7 @@
                         <input type="submit" value="Submit">
                     </form>
                     <p>Här kan du extrahera den nuvarande excel filen</p>
-                    <a href="{{ url_for('static',filename='data/data.xlsx') }}" download>
+                    <a href="static/data/data.xlsx') }}" download>
                         <button type="button">Extrahera</button>
                     </a>
                 </div>

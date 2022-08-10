@@ -30,8 +30,9 @@ function loadJSON(name){
         $.ajax({
             'async': false,
             'global': false,
-            'url': "static/data/".concat(name, ".json"),
+            'url': "data/".concat(name, ".json"),
             'dataType': "json",
+            'cache': false,
             'success': function (data) {
                 json = data;
             }
@@ -55,19 +56,29 @@ function make_risk_json(){
 }
 
 function send_json(json, name){
+    json["filename"] = name;
     $.ajax({
         type: 'POST',
-        contentType: 'application/json',
+        url: '/data_upload.php',
         data: JSON.stringify(json),
         dataType: 'json',
-        url: '/import_json/'.concat(name),
-        success: function (e) {
-            console.log(e);
-        },
-        error: function(error) {
-            console.log(error);
-        }
+        contentType: 'application/json'
     });
+
+
+    // $.ajax({
+    //     type: 'POST',
+    //     contentType: 'application/json',
+    //     data: JSON.stringify(json),
+    //     dataType: 'json',
+    //     url: '/import_json/'.concat(name),
+    //     success: function (e) {
+    //         console.log(e);
+    //     },
+    //     error: function(error) {
+    //         console.log(error);
+    //     }
+    // });
 }
 
 function load_values(){

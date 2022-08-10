@@ -4,17 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Försäkringsvärdering</title>
-        <script type=text/javascript src="{{url_for('static', filename='js/main.js') }}"></script>
-        <script type=text/javascript src="{{url_for('static', filename='js/jquery.js') }}"></script>
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
-        <link rel="icon" href="{{ url_for('static',filename='content/logo.png') }}">
+        <script type=text/javascript src="static/js/main.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link rel= "stylesheet" type= "text/css" href= "static/css/style.css">
+        <link rel="icon" href="static/content/logo.png">
     </head>
     <body onload="init_auto()">
     <script>
       load_values();
     </script>
         <div id="header">
-            <img id="title_image" src="{{ url_for('static',filename='content/Logo_main.png') }}" alt="logo">
+            <img id="title_image" src="static/content/Logo_main.png" alt="logo">
             <h1 id="title">Beräkningsverktyg byggnadsvärde kyrkor</h1>
             <div id="menubar">
               <div class="menuitem" onclick="switch_tab('form')">Försäkringsvärdering</div>
@@ -692,7 +692,7 @@
                 </div>
                 <button type="button" onclick="export_church()">Spara kyrka</button>
               </form>
-              <img src="{{ url_for('static',filename='content/up.png') }}" alt="logo" id="arrow" onclick="hide_sum('sam_form', 'arrow')">
+              <img src="static/content/up.png" alt="logo" id="arrow" onclick="hide_sum('sam_form', 'arrow')">
             </div>
 
 
@@ -703,11 +703,11 @@
             <div class="child_picture">
               <div class="image_items">
                 <label for="bench1">Bänk enkel</label>
-                <img src="{{ url_for('static',filename='content/Bilder/bänk_enkel.jpg')}}" class="images">
+                <img src="static/content/Bilder/bänk_enkel.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Bänk påkostad</label>
-                <img src="{{ url_for('static',filename='content/Bilder/bänk_påkostad.jpg')}}" class="images">
+                <img src="static/content/Bilder/bänk_påkostad.jpg" class="images">
               </div>
             </div>
           </div>
@@ -715,11 +715,11 @@
             <div class="child_picture">
               <div class="image_items">
                 <label for="bench1">Stol enkel</label>
-                <img src="{{ url_for('static',filename='content/Bilder/stol_enkel.jpg')}}" class="images">
+                <img src="static/content/Bilder/stol_enkel.jpg" class="images">
               </div>
               <div class="image_items"><br>
                 <label for="bench1">Stol påkostad</label>
-                <img src="{{ url_for('static',filename='content/Bilder/stol_påkostad.jpg')}}" class="images">
+                <img src="static/content/Bilder/stol_påkostad.jpg" class="images">
               </div>
             </div>
           </div>
@@ -727,23 +727,23 @@
             <div class="child_picture">
               <div class="image_items">
                 <label for="bench1">Fönster typ 1</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Fönster_typ1.jpg')}}" class="images">
+                <img src="static/content/Bilder/Fönster_typ1.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Fönster typ 2</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Fönster_typ2a.jpg')}}" class="images">
+                <img src="static/content/Bilder/Fönster_typ2a.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Fönster typ 2</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Fönster_typ2b.jpg')}}" class="images">
+                <img src="static/content/Bilder/Fönster_typ2b.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Fönster typ 3</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Fönster_typ3a.jpg')}}" class="images">
+                <img src="static/content/Bilder/Fönster_typ3a.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Fönster typ 3</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Fönster_typ3b.jpg')}}" class="images">
+                <img src="static/content/Bilder/Fönster_typ3b.jpg" class="images">
               </div>
             </div>
           </div>
@@ -752,7 +752,7 @@
             <div class="child_picture">
               <div class="image_items">
                 <label for="floorp"></label>
-                <img src="{{ url_for('static',filename='content/Bilder/golv.png')}}" class="images">
+                <img src="static/content/Bilder/golv.png" class="images">
               </div>
             </div>
           </div>
@@ -761,7 +761,7 @@
             <div class="child_picture">
               <div class="image_items">
                 <label for="innerp"></label>
-                <img src="{{ url_for('static',filename='content/Bilder/innertak.png')}}" class="images">
+                <img src="static/content/Bilder/innertak.png" class="images">
               </div>
             </div>
           </div>
@@ -770,7 +770,7 @@
             <div class="child_picture">
               <div class="image_items">
                 <label for="clockp"></label>
-                <img src="{{ url_for('static',filename='content/Bilder/klockstapel.png')}}" class="images">
+                <img src="static/content/Bilder/klockstapel.png" class="images">
               </div>
             </div>
           </div>
@@ -779,7 +779,7 @@
             <div class="child_picture">
               <div class="image_items">
                 <label for="towerp"></label>
-                <img src="{{ url_for('static',filename='content/Bilder/torntak.png')}}" class="images">
+                <img src="static/content/Bilder/torntak.png" class="images">
               </div>
             </div>
           </div>
@@ -788,7 +788,7 @@
             <div class="child_picture">
               <div class="image_items">
                 <label for="wallp"></label>
-                <img src="{{ url_for('static',filename='content/Bilder/väggar.png')}}" class="images">
+                <img src="static/content/Bilder/väggar.png" class="images">
               </div>
             </div>
           </div>
@@ -797,7 +797,7 @@
             <div class="child_picture">
               <div class="image_items">
                 <label for="outerp"></label>
-                <img src="{{ url_for('static',filename='content/Bilder/yttertak.png')}}" class="images">
+                <img src="static/content/Bilder/yttertak.png" class="images">
               </div>
             </div>
           </div>
@@ -806,7 +806,7 @@
             <div class="child_picture">
               <div class="image_items">
                 <label for="light1"></label>
-                <img src="{{ url_for('static',filename='content/Bilder/Ljuskrona_mindre.jpg')}}" class="images">
+                <img src="static/content/Bilder/Ljuskrona_mindre.jpg" class="images">
               </div>
             </div>
           </div>
@@ -814,7 +814,7 @@
           <div class="picture_box" id="takryttare_pictures" onclick="show_pictures()">
             <div class="child_picture">
               <div class="image_items">
-                <img src="{{ url_for('static',filename='content/Bilder/Takryttare.png')}}" class="images">
+                <img src="static/content/Bilder/Takryttare.png" class="images">
               </div>
             </div>
           </div>
@@ -822,7 +822,7 @@
           <div class="picture_box" id="höjd_pictures" onclick="show_pictures()">
             <div class="child_picture">
               <div class="image_items">
-                <img src="{{ url_for('static',filename='content/Bilder/Höjd.png')}}" class="images">
+                <img src="static/content/Bilder/Höjd.png" class="images">
               </div>
             </div>
           </div>
@@ -830,7 +830,7 @@
           <div class="picture_box" id="fial_pictures" onclick="show_pictures()">
             <div class="child_picture">
               <div class="image_items">
-                <img src="{{ url_for('static',filename='content/Bilder/Fial.png')}}" class="images">
+                <img src="static/content/Bilder/Fial.png" class="images">
               </div>
             </div>
           </div>
@@ -839,7 +839,7 @@
             <div class="child_picture">
               <div class="image_items">
                 <label for="light2"></label>
-                <img src="{{ url_for('static',filename='content/Bilder/Ljuskrona_stor.jpg')}}" class="images">
+                <img src="static/content/Bilder/Ljuskrona_stor.jpg" class="images">
               </div>
             </div>
           </div>
@@ -848,43 +848,43 @@
             <div class="child_picture">
               <div class="image_items">
                 <label for="bench1">Utsmyckning enkel a</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_enkel_a.jpg')}}" class="images">
+                <img src="static/content/Bilder/Utsmyckning_enkel_a.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Utsmyckning enkel b</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_enkel_b.jpg')}}" class="images">
+                <img src="static/content/Bilder/Utsmyckning_enkel_b.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Utsmyckning enkel c</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_enkel_c.jpg')}}" class="images">
+                <img src="static/content/Bilder/Utsmyckning_enkel_c.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Utsmyckning något påkostad a</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_något_påkostad_a.jpg')}}" class="images">
+                <img src="static/content/Bilder/Utsmyckning_något_påkostad_a.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Utsmyckning något påkostad b</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_något_påkostad_b.jpg')}}" class="images">
+                <img src="static/content/Bilder/Utsmyckning_något_påkostad_b.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Utsmyckning påkostad a</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_påkostad_a.jpg')}}" class="images">
+                <img src="static/content/Bilder/Utsmyckning_påkostad_a.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Utsmyckning påkostad b</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_påkostad_b.jpg')}}" class="images">
+                <img src="static/content/Bilder/Utsmyckning_påkostad_b.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Utsmyckning påkostad c</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_påkostad_c.jpg')}}" class="images">
+                <img src="static/content/Bilder/Utsmyckning_påkostad_c.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Utsmyckning påkostad d</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_påkostad_d.jpg')}}" class="images">
+                <img src="static/content/Bilder/Utsmyckning_påkostad_d.jpg" class="images">
               </div>
               <div class="image_items">
                 <label for="bench1">Utsmyckning påkostad e</label>
-                <img src="{{ url_for('static',filename='content/Bilder/Utsmyckning_påkostad_e.jpg')}}" class="images">
+                <img src="static/content/Bilder/Utsmyckning_påkostad_e.jpg" class="images">
               </div>
             </div>
           </div>
@@ -964,7 +964,7 @@
                 <span id="sam_förstarisk">0</span>
               </div>
             </form>
-            <img src="{{ url_for('static',filename='content/up.png') }}" alt="logo" id="arrow_2" onclick="hide_sum('sam_form_2', 'arrow_2');">
+            <img src="static/content/up.png " alt="logo" id="arrow_2" onclick="hide_sum('sam_form_2', 'arrow_2');">
 
           </div>
         </div>
@@ -1068,11 +1068,11 @@
           <div class=pages2>
             
           </div>-->
-          <a href="/admin_panel" id="admin">  
-            <button src="/admin_panel" type='button'>Admin</button>
+          <a href="admin.html" id="admin">  
+            <button src="admin.html" type='button'>Admin</button>
           </a>
           <!--<iframe
-            src="{{ url_for('static',filename='content/info.pdf') }}"
+            src="static/content/info.pdf') "
             frameBorder="0"
             scrolling="auto"
             height="1000px"

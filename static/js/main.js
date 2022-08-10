@@ -48,8 +48,9 @@ function loadJSON(name){
         $.ajax({
             'async': false,
             'global': false,
-            'url': "static/data/".concat(name, ".json"),
+            'url': "data/".concat(name, ".json"),
             'dataType': "json",
+            'cache': false,
             'success': function (data) {
                 json = data;
             }
@@ -60,17 +61,24 @@ function loadJSON(name){
 function send_json(json, name){
     $.ajax({
         type: 'POST',
-        contentType: 'application/json',
+        url: '/church_upload.php',
         data: JSON.stringify(json),
         dataType: 'json',
-        url: '/import_json/'.concat(name),
-        success: function (e) {
-            console.log(e);
-        },
-        error: function(error) {
-            console.log(error);
-        }
-     });
+        contentType: 'application/json'
+    });
+    // $.ajax({
+    //     type: 'POST',
+    //     contentType: 'application/json',
+    //     data: JSON.stringify(json),
+    //     dataType: 'json',
+    //     url: '/import_json/'.concat(name),
+    //     success: function (e) {
+    //         console.log(e);
+    //     },
+    //     error: function(error) {
+    //         console.log(error);
+    //     }
+    //  });
 }
 
 function load_values(){
@@ -483,7 +491,7 @@ function export_church(){
     if (get_value("church_choice") == "" || get_value("church_choice") == null){
         return;
     }
-    if (checkFileExist("/static/saved/".concat(get_value("church_choice"), ".json")) == true){ 
+    if (checkFileExist("/saved/".concat(get_value("church_choice"), ".json")) == true){ 
         if (confirm("Det finns redan en sparad kyrka vid samma namn, är du säker på att du vill spara över den?") == false){
             return;
         }
@@ -616,7 +624,7 @@ function load_previous(){
         $.ajax({
             'async': false,
             'global': false,
-            'url': "static/saved/".concat(get_value("church_choice"), ".json"),
+            'url': "saved/".concat(get_value("church_choice"), ".json"),
             'dataType': "json",
             'success': function (data) {
                 json = data;

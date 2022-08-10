@@ -206,9 +206,99 @@
                     <label for="ljuskronor_över">Ljuskronor över 1m:</label>
                     <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="ljuskronor_över" name="ljuskronor_över">
                 </div>
+
+                
+                <div class="category_items">
+                    <label>Takryttare:</label><br>
+                    <label for="takryttare1">Höjd 0-3 m:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="takryttare1" name="takryttare1">
+                    <br class="mobile_break">
+                    <label for="takryttare2">Höjd 3-6 m:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="takryttare2" name="takryttare2">
+                    <br class="mobile_break">
+                    <label for="takryttare3">Höjd >6m:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="takryttare3" name="takryttare3">
+                    <br class="mobile_break">
+                </div>
+                <div class="category_items">
+                    <label>Fial:</label><br>
+                    <label for="fial1">Höjd 0-3m:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fial1" name="fial1">
+                    <br class="mobile_break">
+                    <label for="fial2">Höjd >3 m:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fial2" name="fial2">
+                    <br class="mobile_break">
+                </div>
+
                 <button type="button" onclick="submit_misc()">Ladda in ny data</button>
 
             </form>
+
+            <form class="categories">
+                <div class="category_title">
+                    <h2>Första risk data</h2>
+                </div>
+                <!-- <div class="category_items">
+                    <label>Stomme uppräkning %</label><br>
+                    <label for="stone_base">Sten:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stone_base" name="stone_base">
+                    <span>%</span><br>
+                    <label for="tree_base">Trä:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tree_base" name="tree_base">
+                    <span>%</span>
+                </div> -->
+                <!-- <div class="category_items">
+                    <label>Byggnadsdelar</label><br>
+                    <label for="clocks">Klockor:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="clocks" name="clocks"><br>
+                    <label for="organ">Orgel:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="organ" name="organ"><br>
+                    <label for="tones">Stämmor:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tones" name="tones"><br>
+                    <label for="mosaik_window">Mosaikfönster:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="mosaik_window" name="mosaik_window"><br>
+                    <label for="artistic">Konstnärlig utsmyckning:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="artistic" name="artistic">
+                    <span>%</span>
+                </div> -->
+                <div class="category_items">
+                    <label>Återställningsgrads faktor</label><br>
+                    <label for="budget">Budget:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="budget" name="budget"><br>
+                    <label for="standard">Standard:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="standard" name="standard"><br>
+                    <label for="exklusivt">Exklusivt:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="exklusivt" name="exklusivt">
+                </div>
+                <div class="category_items">
+                    <label for="raze">Rivning/Sanering:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="raze" name="raze">
+                </div>
+                <div class="category_items">
+                    <label for="factor">Faktor kalkylvärde:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="factor" name="factor">
+                </div>
+                <button type="button" onclick="submit_misc_risk()">Ladda in ny data</button>
+
+
+
+
+                <!--<div id="import" class=category_items>
+                    <p>Här laddar man upp excel filen med data på förstarisk värden</p>
+                    <p>OBS! Filen måste ha exakt samma format som originalfilen</p>
+                    <form action = "/import/risk" method = "POST" enctype = "multipart/form-data">
+                        <input type="file" name="file">
+                        <input type="submit" value="Submit">
+                    </form>
+                    <p>Här kan du extrahera den nuvarande excel filen</p>
+                    <a href="{{ url_for('static',filename='data/risk_data.xlsx') }}" download>
+                        <button type="button">Extrahera</button>
+                    </a>
+                </div>
+            -->
+            </form>
+
+
             <form class="categories">
                 <div class="category_title">
                     <h2>Vägg</h2>
@@ -307,74 +397,8 @@
                 <button type="button" onclick="submit_data('tower_roofs')">Ladda in ny data</button>
             </form>
 
-            <!--
-            <div class="categories">
-                <div class="category_title">
-                    <h2>Första risk data</h2>
-                </div>
-                <div class="category_items">
-                    <label>Stomme uppräkning %</label><br>
-                    <label for="stone_base">Sten:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stone_base" name="stone_base">
-                    <span>%</span><br>
-                    <label for="tree_base">Trä:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tree_base" name="tree_base">
-                    <span>%</span>
-                </div>
-                <div class="category_items">
-                    <label>Byggnadsdelar</label><br>
-                    <label for="clocks">Klockor:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="clocks" name="clocks"><br>
-                    <label for="organ">Orgel:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="organ" name="organ"><br>
-                    <label for="tones">Stämmor:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tones" name="tones"><br>
-                    <label for="mosaik_window">Mosaikfönster:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="mosaik_window" name="mosaik_window"><br>
-                    <label for="artistic">Konstnärlig utsmyckning:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="artistic" name="artistic">
-                    <span>%</span>
-                </div>
-                <div class="category_items">
-                    <label>Återställningsgrads faktor</label><br>
-                    <label for="budget">Budget:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="budget" name="budget"><br>
-                    <label for="standard">Standard:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="standard" name="standard"><br>
-                    <label for="exclusive">Exklusivt:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="exclusive" name="exclusive">
-                </div>
-                <div class="category_items">
-                    <label for="bpi_risk">BPI:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bpi_risk" name="bpi_risk">
-                </div>
-                <div class="category_items">
-                    <label for="raze">Rivning/Sanering:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="raze" name="raze">
-                </div>
-                <div class="category_items">
-                    <label for="factor">Faktor kalkylvärde:</label>
-                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="factor" name="factor">
-                </div>
-                <button type="button" onclick="make_risk_json()">Ladda in ny data</button>-->
-
-
-
-
-                <!--<div id="import" class=category_items>
-                    <p>Här laddar man upp excel filen med data på förstarisk värden</p>
-                    <p>OBS! Filen måste ha exakt samma format som originalfilen</p>
-                    <form action = "/import/risk" method = "POST" enctype = "multipart/form-data">
-                        <input type="file" name="file">
-                        <input type="submit" value="Submit">
-                    </form>
-                    <p>Här kan du extrahera den nuvarande excel filen</p>
-                    <a href="{{ url_for('static',filename='data/risk_data.xlsx') }}" download>
-                        <button type="button">Extrahera</button>
-                    </a>
-                </div>
-            -->
-            </div>
+            
+            
             <!-- <div class="categories">
                 <div class="category_title">
                     <h2>Excel data</h2>

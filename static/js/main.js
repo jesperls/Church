@@ -90,6 +90,23 @@ function load_values(){
     spec_prices = JSON.parse(json["spec_prices"]);
     decoration = JSON.parse(json["decoration"]);
     categories = JSON.parse(json["categories"]);
+    fials = JSON.parse(json["fials"]);
+    roof_riders = JSON.parse(json["roof_riders"]);
+
+    
+    json = loadJSON("misc_risk");
+    restoration = JSON.parse(json["restoration"]);
+    raze = JSON.parse(json["raze"]);
+    factor = JSON.parse(json["factor"]);
+}
+
+function load_options(type){
+    var json = loadJSON(type);
+    var options = [];
+    for (var key in json) {
+        options.push(json[key]["Beskrivning"]);
+    }
+    return options;
 }
 
 function get_bra(id, selector){
@@ -522,10 +539,10 @@ function export_church(){
     }
     tower["Fönster"] = windows_json;
     //tower["Fial"] = {"Pris": get_value("fial_pris"), "Antal": get_choice("fial_antal")};
-    var fials = document.getElementsByClassName("fial");
-    var fials_json = {"Mängd": fials.length};
-    for (var i = 0; i < fials.length; i++) {
-        fials_json[i] = {"Typ" : fials[i].attributes["name"].value, "Antal": fials[i].attributes["value"].value};
+    var nfials = document.getElementsByClassName("fial");
+    var fials_json = {"Mängd": nfials.length};
+    for (var i = 0; i < nfials.length; i++) {
+        fials_json[i] = {"Typ" : nfials[i].attributes["name"].value, "Antal": nfials[i].attributes["value"].value};
     }
     tower["Fialer"] = fials_json;
     export_data["Torn"] = tower;
@@ -730,7 +747,7 @@ function update(){
     total += update_pillar();
     if (document.getElementById("rivning").checked){
         if (selected == "raze"){
-            document.getElementById("sum").innerHTML = 250000;
+            document.getElementById("sum").innerHTML = raze;
             document.getElementById("sam_type").innerHTML = "Rivning"
             document.getElementById("all_but_sum").style.display = "none";
             return;
@@ -743,7 +760,7 @@ function update(){
             document.getElementById("sam_type").innerHTML = "Justering"
             //document.getElementById("all_but_sum").style.display = "none";
             var rest_value = restoration[get_choice("material_risk")];
-            var new_bra = bra * rest_value * bpi_risk * factor;
+            var new_bra = bra * rest_value * BPI * factor;
             if (document.getElementById("expensive_inventory").checked){
                 new_bra = new_bra * 1.15;
             }

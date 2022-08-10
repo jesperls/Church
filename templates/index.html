@@ -9,7 +9,10 @@
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
         <link rel="icon" href="{{ url_for('static',filename='content/logo.png') }}">
     </head>
-    <body onload="load_values(), init_auto()">
+    <body onload="init_auto()">
+    <script>
+      load_values();
+    </script>
         <div id="header">
             <img id="title_image" src="{{ url_for('static',filename='content/Logo_main.png') }}" alt="logo">
             <h1 id="title">Beräkningsverktyg byggnadsvärde kyrkor</h1>
@@ -59,9 +62,11 @@
               <div class="category_items">
                 <label for="kategori">Byggnadstyp:</label>
                 <select id="kategori" name="kategori" class="value">
-                    {%for i in range(0, len["byggnads_typer"])%}
-                      <option value="{{categories["byggnads_typer"][i]}}">{{categories["byggnads_typer"][i]}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var category in categories) {
+                      document.write('<option value="' + category + '">' + category + '</option>');
+                    }
+                  </script>
                 </select>
               </div>
 
@@ -69,9 +74,11 @@
               <div class="category_items">
                 <label for="utsmyckning" onclick="show_pictures('decoration_pictures')" class="clickable">Utsmyckning:</label>
                 <select id="utsmyckning" name="utsmyckning" class="value">
-                    {%for i in range(0, len["decorations"])%}
-                      <option value="{{categories["decorations"][i]}}">{{categories["decorations"][i]}}</option>
-                    {%endfor%}
+                    <script type="text/javascript">
+                      for (var decor in decoration) {
+                        document.write('<option value="' + decor + '">' + decor + '</option>');
+                      }
+                    </script>
                 </select>
               </div>
             </form>
@@ -82,18 +89,23 @@
               <div class="category_items">
                 <label for="vägg" onclick="show_pictures('wall_pictures')" class="clickable">Vägg:</label>
                 <select id="vägg" name="vägg">
-                    {%for i in range(0, len["walls"])%}
-                      <option value="{{categories["walls"][i]}}">{{categories["walls"][i]}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    load_options("walls").forEach(function(wall, index) {
+                      document.write('<option value="' + wall + '">' + wall + '</option>');
+                    });
+                  </script>
                 </select>
                 <div class="info">  <span class="infotext">Materialet huvudbyggnadens vägg är byggt av</span> </div>
               </div>
               <div class="category_items">
                 <label for="golv" onclick="show_pictures('floor_pictures')" class="clickable">Golv:</label>
                 <select id="golv" name="golv">
-                    {%for i in range(0, len["floors"])%}
-                      <option value="{{categories["floors"][i]}}">{{categories["floors"][i]}}</option>
-                    {%endfor%}
+                  
+                  <script type="text/javascript">
+                    load_options("floors").forEach(function(floor, index) {
+                      document.write('<option value="' + floor + '">' + floor + '</option>');
+                    });
+                  </script>
                 </select>
                 <div class="info">  <span class="infotext">Materialet huvudbyggnadens golv är byggt av</span> </div>
               </div>
@@ -101,9 +113,11 @@
                 <label for="innertak" onclick="show_pictures('inner_pictures')" class="clickable">Innertak:</label>
                 <br class="mobile_break">
                 <select id="innertak" name="innertak">
-                    {%for i in range(0, len["inner_roof"])%}
-                      <option value="{{categories["inner_roof"][i]}}">{{categories["inner_roof"][i]}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    load_options("inner_roofs").forEach(function(roof, index) {
+                      document.write('<option value="' + roof + '">' + roof + '</option>');
+                    });
+                  </script>
                 </select>
                 <select id="innertak_andra" name="innertak_andra">
                     <option value="Tunnavalv">Tunnavalv</option>
@@ -115,9 +129,11 @@
                 <label for="yttertak" onclick="show_pictures('outer_pictures')" class="clickable">Yttertak:</label>
                 <br class="mobile_break">
                 <select id="yttertak" name="yttertak">
-                    {%for i in range(0, len["outer_roof"])%}
-                      <option value="{{categories["outer_roof"][i]}}">{{categories["outer_roof"][i]}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    load_options("outer_roofs").forEach(function(roof, index) {
+                      document.write('<option value="' + roof + '">' + roof + '</option>');
+                    });
+                  </script>
                 </select>
                 <select id="yttertak_andra" name="yttertak_andra">
                     <option value="Brant">Brant</option>
@@ -135,9 +151,11 @@
                 <div class="info">  <span class="infotext">Här lägger du till varje fönster i kyrkobyggnaden var för sig genom att välja typ och skriva in storleken i kvadratmeter, du kan ta bort ett värde genom att klicka på det</span> </div><br>
                 <label for="fönster_typ">Typ</span>
                 <select id="fönster_typ" name="fönster_typ" class="fönster_typ">
-                    {%for i in range(0, len["fönster_typer"])%}
-                      <option value="{{categories["fönster_typer"][i]}}">{{categories["fönster_typer"][i]}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var win in win_values) {
+                      document.write('<option value="' + win + '">' + win + '</option>');
+                    }
+                  </script>
                 </select>
                 <br class="mobile_break">
                 <label for="fönster_storlek">Area (kvm):</label>
@@ -151,15 +169,19 @@
 
                 <label onclick="show_pictures('takryttare_pictures')" class="clickable">Takryttare:</label>
                 <select id="takryttare" name="takryttare">
-                  {%for i in range(0, len["roof_riders"])%}
-                    <option value="{{categories["roof_riders"][i]}}">{{categories["roof_riders"][i]}}</option>
-                  {%endfor%}
+                  <script type="text/javascript">
+                    load_options("roof_riders").forEach(function(roof, index) {
+                      document.write('<option value="' + roof + '">' + roof + '</option>');
+                    });
+                  </script>
                 </select>
                 <label for="takryttare_antal">Antal:</label>
                 <select id="takryttare_antal" name="takryttare_antal">
-                    {%for i in range(1, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select>
                 <button onclick="add_rider()" id="takryttare_knapp" type='button'>Lägg till</button><br id="takryttare_break">
 
@@ -186,18 +208,22 @@
               <div class="category_items">
                 <label for="torn_vägg" onclick="show_pictures('wall_pictures')" class="clickable">Vägg:</label>
                 <select id="torn_vägg" name="torn_vägg">
-                    {%for i in range(0, len["walls"])%}
-                      <option value="{{categories["walls"][i]}}">{{categories["walls"][i]}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    load_options("walls").forEach(function(wall, index) {
+                      document.write('<option value="' + wall + '">' + wall + '</option>');
+                    });
+                  </script>
                 </select>
                 <div class="info">  <span class="infotext">Materialet kyrkotornets vägg är byggt av</span> </div><br>
               </div>
               <div class="category_items">
                 <label for="torn_golv" onclick="show_pictures('floor_pictures')" class="clickable">Golv:</label>
                 <select id="torn_golv" name="torn_golv">
-                    {%for i in range(0, len["floors"])%}
-                      <option value="{{categories["floors"][i]}}">{{categories["floors"][i]}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    load_options("floors").forEach(function(floor, index) {
+                      document.write('<option value="' + floor + '">' + floor + '</option>');
+                    });
+                  </script>
                 </select>
                 <div class="info">  <span class="infotext">Materialet kyrkotornets golv är byggt av</span> </div><br>
               </div>
@@ -207,9 +233,11 @@
                 <div>
                   <label for="torn_tak" onclick="show_pictures('tower_pictures')" class="clickable">Typ:</label>
                   <select id="torn_tak" name="torn_tak">
-                      {%for i in range(0, len["tower_roof"])%}
-                        <option value="{{categories["tower_roof"][i]}}">{{categories["tower_roof"][i]}}</option>
-                      {%endfor%}
+                    <script type="text/javascript">
+                      load_options("tower_roofs").forEach(function(roof, index) {
+                        document.write('<option value="' + roof + '">' + roof + '</option>');
+                      });
+                    </script>
                   </select>
                 </div>
                 
@@ -231,9 +259,11 @@
                 <div>
                   <label for="tak_antal">Antal:</label>
                   <select id="tak_antal" name="tak_antal">
-                      {%for i in range(0, 10)%}
-                        <option value="{{i}}">{{i}}</option>
-                      {%endfor%}
+                    <script type="text/javascript">
+                      for (var i = 0; i < 10; i++) {
+                        document.write('<option value="' + i + '">' + i + '</option>');
+                      }
+                    </script>
                   </select>
                 </div>
               </div>
@@ -250,9 +280,11 @@
                 <div class="info">  <span class="infotext">Här lägger du till varje fönster i kyrktornets var för sig genom att välja typ och skriva in storleken i kvadratmeter, du kan ta bort ett värde genom att klicka på det</span> </div><br>
                 <label for="fönster_typ_2">Typ</span>
                 <select id="fönster_typ_2" name="fönster_typ_2" class="fönster_typ_2">
-                    {%for i in range(0, len["fönster_typer"])%}
-                      <option value="{{categories["fönster_typer"][i]}}">{{categories["fönster_typer"][i]}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var win in win_values) {
+                      document.write('<option value="' + win + '">' + win + '</option>');
+                    }
+                  </script>
                 </select>
                 <br class="mobile_break">
                 <label for="fönster_storlek_2">Area (kvm):</label>
@@ -261,16 +293,20 @@
               </div>
               <div class="category_items">
                 <label for="fial" onclick="show_pictures('fial_pictures')" class="clickable">Fial:</label>
-                <select id="fial" name="fial">
-                  {%for i in range(0, len["fials"])%}
-                    <option value="{{categories["fials"][i]}}">{{categories["fials"][i]}}</option>
-                  {%endfor%}
+                <select id="fial" name="fial">    
+                  <script type="text/javascript">
+                    for (var fial in fials) {
+                      document.write('<option value="' + fial + '">' + fial + '</option>');
+                    }
+                  </script>
                 </select>
                 <label for="fial_antal">Antal:</label>
                 <select id="fial_antal" name="fial_antal">
-                    {%for i in range(1, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select>
                 <button onclick="add_fial()" id="fial_knapp" type='button'>Lägg till</button><br id="fial_break">
 
@@ -315,9 +351,11 @@
               <div class="category_items">
                 <label for="tornur">Tornur (Antal):</label>
                 <select id="tornur" name="tornur">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select>
                 <div class="info">  <span class="infotext">Hur många tornur som finns i kyrkan</span> </div><br>
               </div>
@@ -369,83 +407,105 @@
               <div class="category_items">
                 <label for="altargrund">Altargrund (Antal):</label>
                 <select id="altargrund" name="altargrund">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select>
               </div>
               <div class="category_items">
                 <label for="altare">Altare (Antal):</label>
                 <select id="altare" name="altare">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select>
               </div>
               <div class="category_items">
                 <label>Altaruppstas (Antal):</label><br>
                 <label for="altaruppstas_enkel">Enkel:</label>
                 <select id="altaruppstas_enkel" name="altaruppstas_enkel">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select><br class="mobile_break">
                 <label for="altaruppstas_påkostad">Påkostad:</label>
                 <select id="altaruppstas_påkostad" name="altaruppstas_påkostad">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select><br class="mobile_break">
                 <label for="altaruppstas_mycket">Mycket påkostad:</label>
                 <select id="altaruppstas_mycket" name="altaruppstas_mycket">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select>
               </div>
               <div class="category_items">
                 <label for="dopfunt">Dopfunt (Antal):</label>
                 <select id="dopfunt" name="dopfunt">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select>
               </div>
               <div class="category_items">
                 <label>Predikstol (Antal):</label><br>
                 <label for="predikstol_enkel">Enkel:</label>
                 <select id="predikstol_enkel" name="predikstol_enkel">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select><br class="mobile_break">
                 <label for="predikstol_påkostad">Påkostad:</label>
                 <select id="predikstol_påkostad" name="predikstol_påkostad">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select><br class="mobile_break">
                 <label for="predikstol_mycket">Mycket påkostad:</label>
                 <select id="predikstol_mycket" name="predikstol_mycket">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select>
               </div>
               <div class="category_items">
                 <label for="ljuskronor_under" onclick="show_pictures('light1_pictures')" class="clickable">Mindre ljuskrona (Antal):</label>
                 <select id="ljuskronor_under" name="ljuskronor_under">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select>
               </div>
               <div class="category_items">
                 <label for="ljuskronor_över" onclick="show_pictures('light2_pictures')" class="clickable">Stor ljuskrona (Antal):</label>
                 <select id="ljuskronor_över" name="ljuskronor_över">
-                    {%for i in range(0, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 0; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select>
               </div>
               <div class="category_items">
@@ -459,9 +519,11 @@
                 <br class="mobile_break">
                 <label for="antal_eget">Antal:</label>
                 <select id="antal_eget" name="antal_eget">
-                    {%for i in range(1, 10)%}
-                      <option value="{{i}}">{{i}}</option>
-                    {%endfor%}
+                  <script type="text/javascript">
+                    for (var i = 1; i < 10; i++) {
+                      document.write('<option value="' + i + '">' + i + '</option>');
+                    }
+                  </script>
                 </select>
                 <br class="mobile_break">
                 <button onclick="add_own()" id="eget_knapp" type='button'>Lägg till</button><br id="eget_break">
@@ -486,10 +548,11 @@
                 <label>Klockstapel</label>
                 <div class="info">  <span class="infotext">Vilken typ av klockstapel kyrkan har samt hur hög den är</span> </div><br>
                 <label for="stapel_typ" onclick="show_pictures('clock_pictures')" class="clickable">Typ</label>
-                <select id="stapel_typ" name="stapel_typ">
-                    {%for i in range(0, len["stapel_typer"])%}
-                      <option value="{{categories["stapel_typer"][i]}}">{{categories["stapel_typer"][i]}}</option>
-                    {%endfor%}
+                <select id="stapel_typ" name="stapel_typ"><script type="text/javascript">
+                  for (var pillar in pillar_prices) {
+                    document.write('<option value="' + pillar + '">' + pillar + '</option>');
+                  }
+              </script>
                 </select>
                 <br class="mobile_break">
                 <label for="stapel_höjd">Höjd (m):</label>
@@ -555,9 +618,11 @@
                 <div class="category_items">
                   <label for="material_risk">Återställningsgrad materialval: </label>
                   <select id="material_risk" name="material_risk" class="value_grund">
-                      {%for i in range(0, len["material_restoration"])%}
-                        <option value="{{categories["material_restoration"][i]}}">{{categories["material_restoration"][i]}}</option>
-                      {%endfor%}
+                    <script type="text/javascript">
+                        for (var material in restoration) {
+                          document.write('<option value="' + material + '">' + material + '</option>');
+                        }
+                    </script>
                   </select>
                   <div class="info">  <span class="infotext">Kvaliteen på materialet nya kyrkan ska byggas upp av</span> </div>
                 </div>
@@ -852,9 +917,6 @@
             <div class="category_items">
               <label for="stomme">Stomme:</label>
               <select id="stomme" name="stomme" class="value_grund">
-                  {%for i in range(0, len["frames"])%}
-                    <option value="{{categories["frames"][i]}}">{{categories["frames"][i]}}</option>
-                  {%endfor%}
               </select>
               <div class="info"> ? <span class="infotext">Materialet kyrkogrunder är uppbyggd av</span> </div><br>
             </div>
@@ -879,9 +941,6 @@
               <br class="mobile_break">
               <label for="antal_eget_risk">Antal:</label>
               <select id="antal_eget_risk" name="antal_eget_risk">
-                  {%for i in range(1, 10)%}
-                    <option value="{{i}}">{{i}}</option>
-                  {%endfor%}
               </select>
               <br class="mobile_break">
               <button onclick="add_own_risk()" id="eget_knapp_risk" type='button'>Lägg till</button><br id="eget_break_risk">

@@ -14,12 +14,15 @@ var chairs = {"Enkla" : 1400, "Påkostade" : 3000};
 var pianos = {"Kororgel" : 190000, "Läktarorgel" : 235000};
 var spec_prices = {"altargrund": 172175, "altare": 430438, "altaruppstas_enkel": 1205225, "altaruppstas_påkostad": 1205225, "altaruppstas_mycket": 1205225, "dopfunt": 258263,
                     "predikstol_enkel": 1033050, "predikstol_påkostad": 1033050, "predikstol_mycket": 1033050, "ljuskronor_under": 137740, "ljuskronor_över": 137740};
-var bases = {"Sten" : 12, "Trä" : 8};
-var building_parts = {"Klockor" : 500000, "Orgel" : 100000, "Stämmor" : 100000, "Mosaikfönster" : 500000};
+                    
+var fials = {"Höjd 0-3m": 111914, "Höjd >3m": 223828};
+var roof_riders = {"Höjd 0-3 m": 111914, "Höjd 3-6 m": 223828, "Höjd >6m": 568178};
+
+
 var restoration = {"Budget" : 0.8, "Standard" : 1.0, "Exklusivt" : 2.0};
-var bpi_risk = 33592;
 var raze = 250000;
 var factor = 2.0;
+
 var categories = {};
 
 function loadJSON(name){
@@ -40,14 +43,14 @@ function make_json(){
     var json = {"pillar_prices" : JSON.stringify(pillar_prices), "BPI": JSON.stringify(BPI), "platform_price": JSON.stringify(platform_price), "win_values": JSON.stringify(win_values), 
                 "moms": JSON.stringify(moms), "klock_kg": JSON.stringify(klock_kg), "mount_clock": JSON.stringify(mount_clock), "pris_klock": JSON.stringify(pris_klock), 
                 "pris_torn": JSON.stringify(pris_torn), "benches": JSON.stringify(benches), "chairs": JSON.stringify(chairs), "pianos": JSON.stringify(pianos),
-                "spec_prices": JSON.stringify(spec_prices), "decoration" : JSON.stringify(decoration), "categories": JSON.stringify(categories)};
+                "spec_prices": JSON.stringify(spec_prices), "decoration" : JSON.stringify(decoration), "categories": JSON.stringify(categories), "fials": JSON.stringify(fials), 
+                "roof_riders": JSON.stringify(roof_riders)};
     send_json(json, 'misc');
     //download(JSON.stringify(json), 'json.json', 'text/plain');
 }
 
 function make_risk_json(){
-    var json = {"bases" : JSON.stringify(bases), "building_parts" : JSON.stringify(building_parts), "restoration" : JSON.stringify(restoration), "bpi_risk" : JSON.stringify(bpi_risk), 
-                "raze" : JSON.stringify(raze), "factor" : JSON.stringify(factor)};
+    var json = {"restoration" : JSON.stringify(restoration), "raze" : JSON.stringify(raze), "factor" : JSON.stringify(factor)};
     send_json(json, 'misc_risk');
 }
 
@@ -84,12 +87,11 @@ function load_values(){
     spec_prices = JSON.parse(json["spec_prices"]);
     decoration = JSON.parse(json["decoration"]);
     categories = JSON.parse(json["categories"]);
+    fials = JSON.parse(json["fials"]);
+    roof_riders = JSON.parse(json["roof_riders"]);
     
     json = loadJSON("misc_risk");
-    bases = JSON.parse(json["bases"]);
-    building_parts = JSON.parse(json["building_parts"]);
     restoration = JSON.parse(json["restoration"]);
-    bpi_risk = JSON.parse(json["bpi_risk"]);
     raze = JSON.parse(json["raze"]);
     factor = JSON.parse(json["factor"]);
 }
@@ -133,6 +135,11 @@ function submit_misc(){
     categories["Träkyrka, ej timmer"] = document.getElementById("trä_ej").value;
     categories["Träkyrka, timmer"] = document.getElementById("trä_tim").value;
     categories["Medeltidskyrka"] = document.getElementById("medeltidskyrka").value;
+    fials["Höjd 0-3m"] = document.getElementById("fial1").value;
+    fials["Höjd >3m"] = document.getElementById("fial2").value;
+    roof_riders["Höjd 0-3 m"] = document.getElementById("takryttare1").value;
+    roof_riders["Höjd 3-6 m"] = document.getElementById("takryttare2").value;
+    roof_riders["Höjd >6m"] = document.getElementById("takryttare3").value;
     make_json();
     alert("Nya värden inlästa");
 }
@@ -140,11 +147,16 @@ function submit_misc(){
 
 
 function submit_misc_risk(){
+    restoration["Budget"] = document.getElementById("budget").value;
+    restoration["Standard"] = document.getElementById("standard").value;
+    restoration["Exklusivt"] = document.getElementById("exklusivt").value;
+    raze = document.getElementById("raze").value;
+    factor = document.getElementById("factor").value;
+    make_risk_json();
+    alert("Nya värden inlästa");
 }
 
-function submit_data(type){
 
-}
 
 function load_boxes(){
     document.getElementById("pillar_one").value = pillar_prices["Typ 1"];
@@ -185,6 +197,18 @@ function load_boxes(){
     document.getElementById("trä_ej").value = categories["Träkyrka, ej timmer"];
     document.getElementById("trä_tim").value = categories["Träkyrka, timmer"];
     document.getElementById("medeltidskyrka").value = categories["Medeltidskyrka"];
+    document.getElementById("fial1").value = fials["Höjd 0-3m"];
+    document.getElementById("fial2").value = fials["Höjd >3m"];
+    document.getElementById("takryttare1").value = roof_riders["Höjd 0-3 m"];
+    document.getElementById("takryttare2").value = roof_riders["Höjd 3-6 m"];
+    document.getElementById("takryttare3").value = roof_riders["Höjd >6m"];
+
+    document.getElementById("budget").value = restoration["Budget"];
+    document.getElementById("standard").value = restoration["Standard"];
+    document.getElementById("exklusivt").value = restoration["Exklusivt"];
+    document.getElementById("raze").value = raze;
+    document.getElementById("factor").value = factor;
+    
 }
 
 function data_load(type){
@@ -316,4 +340,34 @@ function roofs_add(type){
 
     div.className = "data_items";
     add_button.parentNode.insertBefore(div, add_button);
+}
+
+function submit_data(type){
+    var json = {};
+    var parent = document.getElementById(type);
+    var children = parent.childNodes;
+    var index = 0;
+    for (var child in children) {
+        if (children[child].className == "data_items"){
+            if (type != "tower_roofs"){
+                    json[index] = {};
+                    json[index]["Beskrivning"] = children[child].childNodes[0].innerHTML.split(":")[0];
+                    json[index]["Faktor"] = parseFloat(children[child].childNodes[1].value);
+                    index++;
+            }
+            else{
+                if (children[child].className == "data_items"){
+                    json[index] = {};
+                    json[index]["Beskrivning"] = children[child].childNodes[0].innerHTML.split(":")[0];
+                    json[index]["Pris2_4"] = parseFloat(children[child].childNodes[1].value);
+                    json[index]["Pris2_4_12"] = parseFloat(children[child].childNodes[2].value);
+                    json[index]["Pris2_12_20"] = parseFloat(children[child].childNodes[3].value);
+                    json[index]["Pris2_20"] = parseFloat(children[child].childNodes[4].value);
+                    index++;
+                }
+            }
+        }
+    }
+    alert("Nya värden sparade");
+    send_json(json, type);
 }

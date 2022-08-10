@@ -615,6 +615,7 @@ function export_church(){
     //risk["Annat belopp"] = get_value("own_value");
     export_data["Risk"] = risk;
 
+    church_to_pdf(export_data["Namn"], export_data);
     send_json(export_data, "export");
 }
 
@@ -1008,6 +1009,36 @@ function info_menu(option){
     document.getElementById(option).style.display = "flex";
     update();
 }
+
+
+function church_to_pdf(title, json) {
+    let mywindow = window.open("", "PRINT", "height=650,width=900,top=100,left=150");
+
+    mywindow.document.write(`<html><head><title>${title}</title>`);
+    mywindow.document.write("</head><body >");
+    mywindow.document.write("<h1>" + title + "</h1>");
+    mywindow.document.write("<h2>" + "Diverse" + "</h2>");
+    mywindow.document.write("<h3>" + "BRA-yta: " + json["BRA"] + "kvm</h1>");
+    mywindow.document.write("<h3>" + "Utsmyckning: " + json["Utsmyckning"] + "</h1>");
+    mywindow.document.write("<h2>" + "Byggnad" + "</h2>");
+    mywindow.document.write("<h3>" + "Vägg: " + json["Byggnad"]["Vägg"] + "</h3>");
+    mywindow.document.write("<h3>" + "Golv: " + json["Byggnad"]["Golv"] + "</h3>");
+    mywindow.document.write("<h3>" + "Innertak: " + json["Byggnad"]["Innertak"]["Namn"] + "</h3>");
+    mywindow.document.write("<h3>" + "Yttertak: " + json["Byggnad"]["Yttertak"]["Namn"] + "</h3>");
+    mywindow.document.write("<h3>" + "Läktare: " + json["Byggnad"]["Läktare"] + "kvm</h3>");
+    mywindow.document.write("<h3>" + "Fönster: " + "</h3>");
+    mywindow.document.write("</body></html>");
+
+    mywindow.document.close(); 
+    mywindow.focus();
+
+    mywindow.print();
+
+    return true;
+}
+
+
+
 
 function init_auto(){
     var arr = []

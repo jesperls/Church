@@ -53,7 +53,7 @@
               </div>
               <div class="category_items">
                 <label for="BRA">BRA-yta (kvm):</label>
-                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="BRA" name="BRA" class="value">
+                <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="BRA" name="BRA" class="value" value="0">
                 <button type="button" onclick="get_bra('BRA', 'church_choice')">Ladda in data</button>
                 <div class="info">  <span class="infotext">Storleken av hela kyrkan i kvadratmeter</span> </div>
               </div>
@@ -143,7 +143,7 @@
               </div>
               <div class="category_items">
                 <label for="läktare">Läktare (kvm):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktare" name="läktare">
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktare" name="läktare" value="0">
                 <div class="info">  <span class="infotext">Storleken på läktarplattformen i kvadratmeter</span> </div>
               </div>
               <div class="category_items">
@@ -159,7 +159,7 @@
                 </select>
                 <br class="mobile_break">
                 <label for="fönster_storlek">Area (kvm):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_storlek" name="fönster_storlek">
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_storlek" name="fönster_storlek" value="0">
                 <br class="mobile_break">
                 <button onclick="add_window()" id="fönster_knapp" type='button'>Lägg till</button><br id="fönster_break">
               </div>
@@ -200,10 +200,10 @@
                 <label>Mått tornbyggnad</label>
                 <div class="info">  <span class="infotext">Måtten på kyrkans torn i meter</span> </div><br>
                 <label for="torn_bredd">Bredd (m):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="torn_bredd" name="torn_bredd">
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="torn_bredd" name="torn_bredd"  value="0">
                 <br class="mobile_break">
                 <label for="torn_längd">Längd (m):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="torn_längd" name="torn_längd">
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="torn_längd" name="torn_längd"  value="0">
               </div>
               <div class="category_items">
                 <label for="torn_vägg" onclick="show_pictures('wall_pictures')" class="clickable">Vägg:</label>
@@ -243,17 +243,17 @@
                 
                 <div>
                   <label for="tak_höjd" onclick="show_pictures('tower_pictures')" class="clickable">Höjd (m):</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_höjd" name="tak_höjd">
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_höjd" name="tak_höjd"  value="0">
                 </div>
                 
                 <div>
                   <label for="tak_bredd">Bredd (m):</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_bredd" name="tak_bredd">
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_bredd" name="tak_bredd"  value="0">
                 </div>
                 
                 <div>
                   <label for="tak_längd">Längd (m):</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_längd" name="tak_längd">
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="tak_längd" name="tak_längd"  value="0">
                 </div>
                 
                 <div>
@@ -288,7 +288,7 @@
                 </select>
                 <br class="mobile_break">
                 <label for="fönster_storlek_2">Area (kvm):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_storlek_2" name="fönster_storlek_2">
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="fönster_storlek_2" name="fönster_storlek_2"  value="0">
                 <button onclick="add_window_2()" id="fönster_knapp_2" type='button'>Lägg till</button><br id="fönster_break_2">
               </div>
               <div class="category_items">
@@ -331,11 +331,11 @@
                 <div class="info">  <span class="infotext">Har du inte vikten så kan vi försöka beräkna den med relativt hög precision enbart med diametern, OBS måste minst vara 150cm</span></div><br>
                 <span id="has_weight">
                   <label for="klocka_vikt">Vikt (kg):</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_vikt" name="klocka_vikt">
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_vikt" name="klocka_vikt"  value="0">
                 </span>
                 <span id="no_weigth" style="display:none;">
                   <label for="klocka_diam">Diameter (mm):</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_diam" name="klocka_diam">
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="klocka_diam" name="klocka_diam"  value="0">
                 </span>
                 <br class="mobile_break">
                 <button onclick="add_clock()" id="klocka_knapp" type='button'>Lägg till</button><br id="klock_break">
@@ -364,11 +364,11 @@
                 <div class="info">  <span class="infotext">Hur många av varje typ av bänk som finns i kyrkan</span> </div><br>
                 <div>
                   <label for="bänkar_enkla">Enkla:</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_enkla" name="bänkar_enkla">                
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_enkla" name="bänkar_enkla"  value="0">                
                 </div>
                 <div>
                   <label for="bänkar_påkostade">Påkostade:</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_påkostade" name="bänkar_påkostade">
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="bänkar_påkostade" name="bänkar_påkostade"  value="0">
                 </div>
                 </div>
               <div class="category_items">
@@ -376,11 +376,11 @@
                 <div class="info">  <span class="infotext">Hur många av varje typ av stol som finns i kyrkan</span> </div><br>
                 <div>
                   <label for="stolar_enkla">Enkla:</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_enkla" name="stolar_enkla">             
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_enkla" name="stolar_enkla"  value="0">             
                 </div>
                 <div>
                   <label for="stolar_påkostade">Påkostade:</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_påkostade" name="stolar_påkostade">             
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stolar_påkostade" name="stolar_påkostade"  value="0">             
                 </div>
               </div>
               <div class="category_items">
@@ -388,11 +388,11 @@
                 <div class="info">  <span class="infotext">Priset på en orgel mäts i stämmor så hur många stämmor varje typ av orgel har</span> </div><br>
                 <div>
                   <label for="kororgel">Kororgel(stämmor):</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="kororgel" name="kororgel">
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="kororgel" name="kororgel"  value="0">
                 </div>
                 <div>
                   <label for="läktarorgel">Läktarorgel(stämmor):</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktarorgel" name="läktarorgel">
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="läktarorgel" name="läktarorgel"  value="0">
                 </div>
               </div>
               <div class="category_items">
@@ -515,7 +515,7 @@
                 <input id="namn_eget" name="namn_eget">
                 <br class="mobile_break">
                 <label for="pris_eget">Pris (kr):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="pris_eget" name="pris_eget">
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="pris_eget" name="pris_eget"  value="0">
                 <br class="mobile_break">
                 <label for="antal_eget">Antal:</label>
                 <select id="antal_eget" name="antal_eget">
@@ -556,7 +556,7 @@
                 </select>
                 <br class="mobile_break">
                 <label for="stapel_höjd">Höjd (m):</label>
-                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_höjd" name="stapel_höjd">
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_höjd" name="stapel_höjd"  value="0">
               </div>
               <div class="category_items">
                 <label>Klockor</label>
@@ -566,11 +566,11 @@
                 <div class="info">  <span class="infotext">Har du inte vikten så kan vi försöka beräkna den med relativt hög precision enbart med diametern</span></div><br>
                 <span id="has_weight_stapel">
                   <label for="stapel_klocka_vikt">Vikt (kg):</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_klocka_vikt" name="stapel_klocka_vikt">
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_klocka_vikt" name="stapel_klocka_vikt"  value="0">
                 </span>
                 <span id="no_weigth_stapel" style="display:none;">
                   <label for="stapel_klocka_diam">Diameter (cm):</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_klocka_diam" name="stapel_klocka_diam">
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="stapel_klocka_diam" name="stapel_klocka_diam"  value="0">
                 </span>
                 <br class="mobile_break">
                 <button onclick="add_stapel_clock()" id="stapel_klocka_knapp" type='button'>Lägg till</button><br id="stapel_klock_break">
@@ -612,7 +612,7 @@
                 <p>Om ni önskar kalkylera på en mindre byggnad som ersättning vid totalskada istället för befintlig enligt ovan. </p>
                 <div class="category_items">
                   <label for="other_kvm">Uppbyggnad till ny (kvm):</label>
-                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="other_kvm" name="other_kvm">
+                  <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="other_kvm" name="other_kvm"  value="0">
                   <div class="info">  <span class="infotext">Hur stor den nybyggda kyrkan ska vara</span> </div>
                 </div>
                 <div class="category_items">

@@ -66,19 +66,12 @@ function send_json(json, name){
         dataType: 'json',
         contentType: 'application/json'
     });
-    // $.ajax({
-    //     type: 'POST',
-    //     contentType: 'application/json',
-    //     data: JSON.stringify(json),
-    //     dataType: 'json',
-    //     url: '/import_json/'.concat(name),
-    //     success: function (e) {
-    //         console.log(e);
-    //     },
-    //     error: function(error) {
-    //         console.log(error);
-    //     }
-    //  });
+}
+
+
+function login(){
+    var password = prompt("Lösenord: ");
+    window.location.href = "login.php?password_input=" + password;
 }
 
 function load_values(){

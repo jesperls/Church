@@ -8,9 +8,10 @@
 <?php
 // get the password input from var password input
 $password_input = $_GET['password_input'];
-$password_hash = password_hash("KFAB_2000", PASSWORD_DEFAULT);
+$password_hash = '$2y$10$1q2hcOc/mPAew3/M7QIkmerPhsKaDwYwxIZ3Zr349JO1./0R1YmsW';
 if (password_verify($password_input, $password_hash)) {
-    header("Location: index.html");
+    setcookie('login_status', true, time() + 3600);
+    header("Location: main.php");
 }
 else {
     echo "Fel lösenord!";

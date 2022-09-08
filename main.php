@@ -1,3 +1,10 @@
+<?php
+if ($_COOKIE['login_status'] == true) {
+}
+else {
+  header("Location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -1068,6 +1075,8 @@
           <div class=pages2>
             
           </div>-->
-          <button onclick="login()" type='button' id="admin">Admin</button>
+          <a href="login.php" id="admin">
+            <button type='button'>Admin</button>
+          </a>
     </body>
 </html>

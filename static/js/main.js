@@ -68,12 +68,6 @@ function send_json(json, name){
     });
 }
 
-
-function login(){
-    var password = prompt("Lösenord: ");
-    window.location.href = "login.php?password_input=" + password;
-}
-
 function load_values(){
     json = loadJSON("misc");
     pillar_prices = JSON.parse(json["pillar_prices"]);

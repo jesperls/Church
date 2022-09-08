@@ -1,3 +1,10 @@
+<?php
+if ($_COOKIE['admin_status'] == true) {
+}
+else {
+    header("Location: main.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,7 +21,7 @@
             <img id="title_image" src="static/content/Logo_main.png" alt="logo">
             <h1 id="title">Beräkningsverktyg adminpanel</h1>
             <div id="menubar">
-                <div class="menuitem" onclick="location.href='index.html'">Gå tillbaka</div>
+                <div class="menuitem" onclick="location.href='main.php'">Gå tillbaka</div>
             </div>
         </div>
         <!-- 

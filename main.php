@@ -1075,8 +1075,14 @@ else {
           <div class=pages2>
             
           </div>-->
-          <a href="login.php" id="admin">
-            <button type='button'>Admin</button>
-          </a>
+          <?php
+          if ($_COOKIE['admin_status'] == true) {
+            echo '<a href="admin.php" id="admin">';
+            echo '<button type="button">Admin</button>';
+            echo '</a>';
+          }
+          ?>
+         
+            
     </body>
 </html>

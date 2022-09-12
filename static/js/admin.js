@@ -282,7 +282,7 @@ function roofs_load(){
         var input2 = document.createElement("input");
         var input3 = document.createElement("input");
         var input4 = document.createElement("input");
-        var remove = document.createElement("div");
+        var remove = document.createElement("p");
 
         label.innerHTML = json[key]["Beskrivning"] + ":  ";
 
@@ -297,7 +297,7 @@ function roofs_load(){
 
         remove.className = "remove";
         remove.setAttribute("onclick", "this.parentNode.remove()");
-        remove.innerHTML = "&nbsp &nbsp ✖";
+        remove.innerHTML = " ✖";
 
         div.appendChild(label);
         div.appendChild(input1);

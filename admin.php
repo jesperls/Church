@@ -143,6 +143,9 @@ else {
                     <br>
                     <label for="medeltidskyrka">Medeltidskyrka:</label>
                     <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="medeltidskyrka" name="medeltidskyrka">
+                    <br>
+                    <label for="katedral">Katedral:</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" id="katedral" name="katedral">
                 </div>
 
                 <div class="category_items">

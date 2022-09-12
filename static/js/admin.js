@@ -146,6 +146,7 @@ function submit_misc(){
     categories["Träkyrka, ej timmer"] = document.getElementById("trä_ej").value;
     categories["Träkyrka, timmer"] = document.getElementById("trä_tim").value;
     categories["Medeltidskyrka"] = document.getElementById("medeltidskyrka").value;
+    categories["Katedral"] = document.getElementById("katedral").value;
     fials["Höjd 0-3m"] = document.getElementById("fial1").value;
     fials["Höjd >3m"] = document.getElementById("fial2").value;
     roof_riders["Höjd 0-3 m"] = document.getElementById("takryttare1").value;
@@ -208,6 +209,7 @@ function load_boxes(){
     document.getElementById("trä_ej").value = categories["Träkyrka, ej timmer"];
     document.getElementById("trä_tim").value = categories["Träkyrka, timmer"];
     document.getElementById("medeltidskyrka").value = categories["Medeltidskyrka"];
+    document.getElementById("katedral").value = categories["Katedral"];
     document.getElementById("fial1").value = fials["Höjd 0-3m"];
     document.getElementById("fial2").value = fials["Höjd >3m"];
     document.getElementById("takryttare1").value = roof_riders["Höjd 0-3 m"];

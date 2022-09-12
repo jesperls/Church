@@ -1032,7 +1032,7 @@ function init_auto(){
     json = loadJSON("churches");
     for (var key in json) {
         if (json.hasOwnProperty(key)) {
-            arr.push(json[key]["Enhetsnamn"].concat(" ", json[key]["Byggnadsverksnamn"]))
+            arr.push(json[key]["Enhetsnamn"].concat(" ", json[key]["BV-id"]))
         }
     }
     autocomplete(document.getElementById("church_choice"), arr);
